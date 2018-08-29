@@ -2,7 +2,7 @@
   "name": "discourse-js",
   "version": "0.0.1",
   "description": "A client-side javascript wrapper for the discourse API.",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "babel src -d lib",
     "watch": "babel src -d lib --watch",
@@ -13,6 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "babel-preset-env": "^1.7.0"
   }
 }
