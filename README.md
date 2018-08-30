@@ -14,6 +14,19 @@ _note_: This is currently psuedocode.
 $ npm i discourse-js
 ```
 
+### Local Development
+
+This is if you are developing the `discourse-js` API locally on your machine.
+
+```bash
+# Clone the repo
+$ git clone git@gitlab.com:theworkshop/discourse-js.git
+$ cd discourse-js
+# Run npm link to create a global symlink to the local "discourse-js" project
+$ cd <to-your-testing-environment/or-app>
+$ npm link discourse-js
+```
+
 ### Quick Start
 
 ```js
