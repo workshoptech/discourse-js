@@ -4,16 +4,9 @@
   "description": "A client-side javascript wrapper for the discourse API.",
   "main": "src/index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "watch": "babel src -d lib --watch",
     "clean": "rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Karl Taylor <karl_taylor@me.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
-    "babel-preset-env": "^1.7.0"
-  }
+  "license": "MIT"
 }

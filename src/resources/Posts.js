@@ -1,17 +1,4 @@
-// Create body takes in an objects
-// and then maps the object keys:values to FormData.
-function createBody() {
-  const form = new FormData();
-  const params = arguments[0];
-  Object.keys(params).forEach(paramKey => {
-    const paramValue = params[paramKey];
-    form.append(paramKey, paramValue);
-  });
-  // for (var pair of form.entries()) {
-  //   console.log(pair[0] + ", " + pair[1]);
-  // }
-  return form;
-}
+import { createBody } from "../utils";
 
 export default function Posts(discourse) {
   this.create = ({ api_username, topic_id, raw }) => {
@@ -23,18 +10,17 @@ export default function Posts(discourse) {
       if (!topic_id)
         return reject(new Error("No topic_id defined. You must pass a topic to create function."));
 
-      const body = createBody({
-        api_key: discourse._API_KEY,
-        api_username,
-        topic_id,
-        raw
-      })
-
-      return fetch(`${discourse._BASE_URL}/posts`, {
-        method: "POST",
-        mimeType: "multipart/form-data",
-        body,
-      })
+      discourse
+        .DiscourseResource({
+          method: "POST",
+          path: "posts",
+          body: {
+            api_key: discourse._API_KEY,
+            api_username,
+            topic_id,
+            raw
+          }
+        })
         .then(response => {
           if (response.ok) {
             return resolve(response.json());
