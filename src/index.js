@@ -30,7 +30,7 @@ export default class Discourse {
       };
 
       if (method === "POST") {
-        (fetchOptions.body = body), (fetchOptions.body.api_key = this._API_KEY);
+        (fetchOptions.body = createBody(body)), (fetchOptions.body.api_key = this._API_KEY);
       }
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)

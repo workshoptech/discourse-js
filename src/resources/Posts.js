@@ -21,13 +21,7 @@ export default function Posts(discourse) {
             raw
           }
         })
-        .then(response => {
-          if (response.ok) {
-            return resolve(response.json());
-          } else {
-            return reject(new Error(response.statusText, response.status));
-          }
-        })
+        .then(response => resolve(response))
         .catch(function(error) {
           if (error) {
             return reject(new Error(error));
