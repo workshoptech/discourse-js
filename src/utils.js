@@ -12,3 +12,23 @@ export function createBody() {
   // }
   return form;
 }
+
+/**
+ * # objectValidator utility function.
+ *
+ * - Pass in an object
+ * - Returns array of undefined key/value.
+ * - Returns true if all values are defined.
+ */
+export function objectValidator(object) {
+  const undefinedValues = [];
+  for (const objectKey in object) {
+    if (object[objectKey] === undefined) {
+      undefinedValues.push(`${objectKey} is undefined.`);
+    }
+  }
+  if (undefinedValues.length > 0) {
+    return undefinedValues;
+  }
+  return true;
+}

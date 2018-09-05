@@ -1,4 +1,4 @@
-import { createBody } from "../utils";
+import { createBody, objectValidator } from "../utils";
 
 export default function Posts(discourse) {
   this.create = ({ api_username, topic_id, raw }) => {
@@ -71,6 +71,10 @@ export default function Posts(discourse) {
 
   this.like = ({ api_username, id }) =>
     new Promise((resolve, reject) => {
+      const argsValidated = objectValidator({api_username, id})
+
+      if (argsValidated !== true) return reject(new Error(argsValidated))
+
       const body = createBody({
         api_key: discourse._API_KEY,
         api_username,
@@ -87,7 +91,7 @@ export default function Posts(discourse) {
           if (response.ok) {
             return resolve(response.json());
           } else {
-            return reject(new Error(response.statusText, response.status));
+            return reject(new Error(`${response.statusText}: ${response._bodyText}`, response.status));
           }
         })
         .catch(function(error) {
@@ -99,7 +103,12 @@ export default function Posts(discourse) {
 
   this.unlike = ({ api_username, id }) =>
     new Promise((resolve, reject) => {
-      const body = createBody({ api_key: discourse._API_KEY, post_action_type_id: 2 });
+
+      const argsValidated = objectValidator({api_username, id})
+
+      if (argsValidated !== true) return reject(new Error(argsValidated))
+
+      const body = createBody({ api_key: discourse._API_KEY, api_username, post_action_type_id: 2 });
 
       return fetch(`${discourse._BASE_URL}/post_actions/${id}`, {
         method: "DELETE",
@@ -120,18 +129,3 @@ export default function Posts(discourse) {
         });
     });
 }
-
-// raw: is htis a reply to me //
-// unlist_topic: false
-// category: 1
-// topic_id: 11
-// is_warning: false
-// whisper: false
-// archetype: regular //
-// typing_duration_msecs: 1000
-// composer_open_duration_msecs: 5230
-// featured_link:
-// shared_draft: false
-
-// reply_to_post_number: 16 //
-// nested_post: true //
