@@ -2,7 +2,7 @@
 import Posts from "./resources/Posts";
 import Topics from "./resources/Topics";
 
-import { createBody } from "./utils";
+import { createBody, ApiError } from "./utils";
 
 const resources = {
   Posts,
@@ -34,11 +34,23 @@ export default class Discourse {
       }
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)
-        .then(response => {
+        .then(response => { 
           if (response.ok) {
             return resolve(response.json());
           } else {
-            return reject(new Error(response.statusText, response.status));
+            // We have received a bad response, so we should return the response
+            // since it contains useful information.
+            // We got a bad response. We should return the error.
+            let errors = []
+            try {
+              json = JSON.parse(response._bodyInit)
+              errors = json.errors
+            } catch(error) {
+              console.warn(`discourse-js: ${error}`)
+            }
+
+            const { status, statusText } = response
+            return reject(new ApiError(status, statusText, errors))
           }
         })
         .catch(function(error) {

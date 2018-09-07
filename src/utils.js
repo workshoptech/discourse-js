@@ -32,3 +32,13 @@ export function objectValidator(object) {
   }
   return true;
 }
+
+export class ApiError extends Error {
+  constructor(status, statusText, errors) {
+    super();
+    this.name = 'ApiError';
+    this.status = status;
+    this.statusText = statusText;
+    this.errors = errors;
+  }
+}
