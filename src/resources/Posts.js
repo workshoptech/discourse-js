@@ -1,12 +1,8 @@
 import { createBody, objectValidator } from '../utils'
 
 export default function Posts(discourse) {
-  this.create = ({ api_username, topic_id, raw }) => {
+  this.create = ({topic_id, raw }) => {
     return new Promise((resolve, reject) => {
-      if (!api_username)
-        return reject(
-          new Error('No api_username defined. You must pass a username to the create function.')
-        )
       if (!topic_id)
         return reject(new Error('No topic_id defined. You must pass a topic to create function.'))
 
@@ -15,8 +11,6 @@ export default function Posts(discourse) {
           method: 'POST',
           path: 'posts',
           body: {
-            api_key: discourse._API_KEY,
-            api_username,
             topic_id,
             raw
           }
