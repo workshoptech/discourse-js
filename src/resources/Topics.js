@@ -6,15 +6,11 @@ export default function Topics(discourse) {
 
       discourse
         .DiscourseResource({
-          path: `t/${id}.json`,
+          path: `t/${id}.json?api_key=${discourse._API_KEY}&api_username=${discourse._API_USERNAME}`,
           method: 'GET'
         })
         .then(response => resolve(response))
-        .catch(function(error) {
-          if (error) {
-            return reject(new Error(error))
-          }
-        })
+        .catch(error => reject(error))
     })
   }
 }
