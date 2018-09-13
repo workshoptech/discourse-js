@@ -36,9 +36,11 @@ export default class Discourse {
       }
 
       if (method === 'POST') {
-        fetchOptions.body = createBody(body)
-        fetchOptions.body.api_key = this._API_KEY
-        fetchOptions.body.api_username = this._API_USERNAME
+        fetchOptions.body = createBody({
+          ...body,
+          api_key: this._API_KEY,
+          api_username: this._API_USERNAME
+        })
       }
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)
