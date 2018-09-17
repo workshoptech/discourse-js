@@ -35,7 +35,7 @@ export default class Discourse {
         mimeType: 'multipart/form-data'
       }
 
-      if (method === 'POST') {
+      if (method === 'POST' || method === 'DELETE') {
         fetchOptions.body = createBody({
           ...body,
           api_key: this._API_KEY,
@@ -48,23 +48,31 @@ export default class Discourse {
           if (response.ok) {
             return resolve(response.json())
           } else {
+            const { status, statusText } = response
             // We have received a bad response, so we should return the response
             // since it contains useful information.
             // We got a bad response. We should return the error.
             let errors = []
-            try {
-              let json = JSON.parse(response._bodyInit)
-              errors = json.errors
-            } catch (error) {
-              /**
-               * If we get an error, it is usually because response._bodyInit is not a JSON object.
-               * But actually an error string, so we push it into our array.
-               */
-              console.warn(`discourse-js: ${error}`) // eslint-disable-line
-              errors.push(response._bodyInit)
+            /**
+             * If we receive a 404/403 response. We do not want to try and 
+             * parse _bodyInit since it is simple the Discourse 400 HTML Template.
+             */
+            if (response.status !== 404 && response.status !== 403) {
+              try {
+                let json = JSON.parse(response._bodyInit)
+                errors = json.errors
+              } catch (error) {
+                /**
+                 * If we get an error, it is usually because response._bodyInit is not a JSON object.
+                 * But actually an error string, so we push it into our array.
+                 */
+                console.warn(`discourse-js: ${error}`) // eslint-disable-line
+                errors.push(response._bodyInit)
+              }
+            } else {
+              errors.push(statusText) // 404 not found or 403 forbidden
             }
 
-            const { status, statusText } = response
             return reject(new ApiError(status, statusText, errors))
           }
         })
