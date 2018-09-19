@@ -1,33 +1,43 @@
-import { createBody } from '../utils'
+import { createBody } from "../utils";
 
 export default function Posts(discourse) {
   this.create = ({ topic_id, raw }) => {
     return new Promise((resolve, reject) => {
       if (!topic_id)
-        return reject(new Error('No topic_id defined. You must pass a topic to create function.'))
+        return reject(
+          new Error(
+            "No topic_id defined. You must pass a topic to create function."
+          )
+        );
 
       discourse
         .DiscourseResource({
-          method: 'POST',
-          path: 'posts',
+          method: "POST",
+          path: "posts",
           body: {
             topic_id,
             raw
           }
         })
         .then(response => resolve(response))
-        .catch(error => reject(error))
-    })
-  }
+        .catch(error => reject(error));
+    });
+  };
 
   this.reply = ({ api_username, topic_id, raw, reply_to_post_number }) => {
     return new Promise((resolve, reject) => {
       if (!api_username)
         return reject(
-          new Error('No api_username defined. You must pass a username to the reply function.')
-        )
+          new Error(
+            "No api_username defined. You must pass a username to the reply function."
+          )
+        );
       if (!topic_id)
-        return reject(new Error('No topic_id defined. You must pass a topic to reply function.'))
+        return reject(
+          new Error(
+            "No topic_id defined. You must pass a topic to reply function."
+          )
+        );
 
       const body = createBody({
         api_key: discourse._API_KEY,
@@ -35,56 +45,56 @@ export default function Posts(discourse) {
         topic_id,
         raw,
         reply_to_post_number,
-        archetype: 'regular',
+        archetype: "regular",
         nested_post: true
-      })
+      });
 
       return fetch(`${discourse._BASE_URL}/posts`, {
-        method: 'POST',
-        mimeType: 'multipart/form-data',
+        method: "POST",
+        mimeType: "multipart/form-data",
         body
       })
         .then(response => {
           if (response.ok) {
-            return resolve(response.json())
+            return resolve(response.json());
           } else {
-            return reject(new Error(response.statusText, response.status))
+            return reject(new Error(response.statusText, response.status));
           }
         })
         .catch(function(error) {
           if (error) {
-            return reject(new Error(error))
+            return reject(new Error(error));
           }
-        })
-    })
-  }
+        });
+    });
+  };
 
   this.like = ({ id }) =>
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: 'POST',
-          path: 'post_actions',
+          method: "POST",
+          path: "post_actions",
           body: {
             id,
             post_action_type_id: 2
           }
         })
         .then(response => resolve(response))
-        .catch(error => reject(error))
-    })
+        .catch(error => reject(error));
+    });
 
   this.unlike = ({ id }) =>
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: 'DELETE',
+          method: "DELETE",
           path: `post_actions/${id}`,
           body: {
             post_action_type_id: 2
           }
         })
         .then(response => resolve(response))
-        .catch(error => reject(error))
-    })
+        .catch(error => reject(error));
+    });
 }
