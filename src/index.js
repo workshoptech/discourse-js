@@ -2,7 +2,7 @@
 import Posts from "./resources/Posts";
 import Topics from "./resources/Topics";
 
-import { createBody } from "./utils";
+import { createBody, ApiError } from "./utils";
 
 const resources = {
   Posts,
@@ -15,10 +15,16 @@ export default class Discourse {
     this._API_KEY = apiKey;
     this._BASE_URL = baseUrl;
 
-    for (resource in resources) {
-      this[resource.toLowerCase()] = new resources[resource](this)
+    for (let resource in resources) {
+      this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
+
+  config = ({ apiKey, apiUsername, baseUrl } = {}) => {
+    this._API_KEY = apiKey;
+    this._BASE_URL = baseUrl;
+    this._API_USERNAME = apiUsername;
+  };
 
   DiscourseResource = options => {
     return new Promise((resolve, reject) => {
@@ -29,8 +35,12 @@ export default class Discourse {
         mimeType: "multipart/form-data"
       };
 
-      if (method === "POST") {
-        (fetchOptions.body = createBody(body)), (fetchOptions.body.api_key = this._API_KEY);
+      if (method === "POST" || method === "DELETE") {
+        fetchOptions.body = createBody({
+          ...body,
+          api_key: this._API_KEY,
+          api_username: this._API_USERNAME
+        });
       }
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)
@@ -38,7 +48,19 @@ export default class Discourse {
           if (response.ok) {
             return resolve(response.json());
           } else {
-            return reject(new Error(response.statusText, response.status));
+            const { status, statusText } = response;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+              return response.json().then(json => {
+                return reject(
+                  new ApiError(status, statusText, "", json.errors)
+                );
+              });
+            } else {
+              return response.text().then(text => {
+                return reject(new ApiError(status, statusText, text));
+              });
+            }
           }
         })
         .catch(function(error) {

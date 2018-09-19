@@ -12,3 +12,13 @@ export function createBody() {
   // }
   return form;
 }
+export class ApiError extends Error {
+  constructor(status, statusText, error, erorrArray = []) {
+    super();
+    this.name = "ApiError";
+    this.status = status;
+    this.statusText = statusText;
+    this.message = `${status} - ${statusText || error}`;
+    this.error = error || erorrArray.join(", ");
+  }
+}
