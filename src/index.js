@@ -52,9 +52,7 @@ export default class Discourse {
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
               return response.json().then(json => {
-                return reject(
-                  new ApiError(status, statusText, "", json.errors)
-                );
+                return reject(new ApiError(status, statusText, "", json.errors));
               });
             } else {
               return response.text().then(text => {
