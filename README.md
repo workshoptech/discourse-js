@@ -2,6 +2,16 @@
 
 [![NPM Version](https://img.shields.io/npm/v/discourse-js.svg?style=flat-square)](https://www.npmjs.com/package/discourse-js)
 
+## Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [API](#api)
+  - [Topics](#topics)
+  - [Posts](#posts)
+- [Local Development](#local-development)
+- [License](#license)
+
 ## Installation
 
 ```bash
