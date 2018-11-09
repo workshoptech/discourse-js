@@ -4,11 +4,7 @@ export default function Posts(discourse) {
   this.create = ({ topic_id, raw }) => {
     return new Promise((resolve, reject) => {
       if (!topic_id)
-        return reject(
-          new Error(
-            "No topic_id defined. You must pass a topic to create function."
-          )
-        );
+        return reject(new Error("No topic_id defined. You must pass a topic to create function."));
 
       discourse
         .DiscourseResource({
@@ -28,16 +24,10 @@ export default function Posts(discourse) {
     return new Promise((resolve, reject) => {
       if (!api_username)
         return reject(
-          new Error(
-            "No api_username defined. You must pass a username to the reply function."
-          )
+          new Error("No api_username defined. You must pass a username to the reply function.")
         );
       if (!topic_id)
-        return reject(
-          new Error(
-            "No topic_id defined. You must pass a topic to reply function."
-          )
-        );
+        return reject(new Error("No topic_id defined. You must pass a topic to reply function."));
 
       const body = createBody({
         api_key: discourse._API_KEY,

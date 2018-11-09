@@ -1,12 +1,16 @@
 /** Discourse JS */
 import Posts from "./resources/Posts";
 import Topics from "./resources/Topics";
+import Messages from "./resources/Messages";
+import Groups from "./resources/Groups";
 
 import { createBody, ApiError } from "./utils";
 
 const resources = {
   Posts,
-  Topics
+  Topics,
+  Messages,
+  Groups
 };
 
 export default class Discourse {
