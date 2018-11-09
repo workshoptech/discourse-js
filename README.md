@@ -9,6 +9,7 @@
 - [API](#api)
   - [Topics](#topics)
   - [Posts](#posts)
+  - [Groups](#groups)
 - [Local Development](#local-development)
 - [License](#license)
 
@@ -87,6 +88,17 @@ Note: You can only `unlike` a post within 5 - 10 minutes after you have `liked` 
 
 See this post [here](https://meta.discourse.org/t/53722) and [here](https://meta.discourse.org/t/57141) for information around the undocumented time limit on _unliking_ a _liked_ post.
 
+### Groups
+
+#### Get Group Members
+
+```js
+discourse.groups
+  .getMembers({ group_name: "group-name" })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
+
 ## Local Development
 
 This is if you are developing the `discourse-js` API locally on your machine.
@@ -98,7 +110,7 @@ $ cd discourse-js
 $ pwd|pbcopy # Copies the current working directory /path/to/discourse-js/
 # cd into the directory you want to test locally.
 $ npm install /path/to/discourse-js/
-```
+````
 
 _Why not just use `npm link`?_:
 
