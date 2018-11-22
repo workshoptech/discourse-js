@@ -47,7 +47,7 @@ export default function Messages(discourse) {
           body: {
             topic_id,
             raw,
-            archetype: "private_message",
+            archetype: "private_message"
           }
         })
         .then(response => resolve(response))
