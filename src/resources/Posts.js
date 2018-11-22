@@ -1,22 +1,55 @@
 import { createBody } from "../utils";
 
 export default function Posts(discourse) {
-  this.create = ({ topic_id, raw }) => {
+  this.create = ({ topic_id, raw, imageUri } = {}) => {
     return new Promise((resolve, reject) => {
       if (!topic_id)
         return reject(new Error("No topic_id defined. You must pass a topic to create function."));
 
-      discourse
-        .DiscourseResource({
-          method: "POST",
-          path: "posts",
-          body: {
-            topic_id,
-            raw
-          }
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+      if (imageUri) {
+        discourse
+          .DiscourseResource({
+            method: "POST",
+            path: "uploads.json",
+            body: {
+              "files[]": {
+                uri: imageUri,
+                name: "photo.jpeg",
+                type: "image/jpeg"
+              },
+              type: "composer",
+              synchronous: true
+            }
+          })
+          .then(res => {
+            if (res.url) {
+              discourse
+                .DiscourseResource({
+                  method: "POST",
+                  path: "posts",
+                  body: {
+                    topic_id,
+                    raw: `![${res.width}x${res.height}](${res.short_url})\n${raw}`
+                  }
+                })
+                .then(response => resolve(response))
+                .catch(error => reject(error));
+            }
+          })
+          .catch(err => reject(err));
+      } else {
+        discourse
+          .DiscourseResource({
+            method: "POST",
+            path: "posts",
+            body: {
+              topic_id,
+              raw
+            }
+          })
+          .then(response => resolve(response))
+          .catch(error => reject(error));
+      }
     });
   };
 
