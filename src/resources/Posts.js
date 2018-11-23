@@ -1,19 +1,17 @@
 import { createBody } from "../utils";
 
 export default function Posts(discourse) {
-  this.create = ({ topic_id, raw, imageUri } = {}) => {
+  this.create = (inputs = {}) => {
     return new Promise((resolve, reject) => {
-      if (!topic_id)
-        return reject(new Error("No topic_id defined. You must pass a topic to create function."));
-
-      if (imageUri) {
+      // If an imageUri has been passed, upload the image first.
+      if (inputs.imageUri) {
         discourse
           .DiscourseResource({
             method: "POST",
             path: "uploads.json",
             body: {
               "files[]": {
-                uri: imageUri,
+                uri: inputs.imageUri,
                 name: "photo.jpeg",
                 type: "image/jpeg"
               },
@@ -21,16 +19,23 @@ export default function Posts(discourse) {
               synchronous: true
             }
           })
-          .then(res => {
-            if (res.url) {
+          .then(({ url, width, height, short_url }) => {
+            if (url) {
+              const body = {};
+              
+              // Remove the imageUri from the inputs as it's not used in the next request.
+              delete inputs.imageUri;
+
+              Object.keys(inputs).forEach(key => body[key] = inputs[key]);
+
+              // Prepend the raw message with the image.
+              body.raw = `![${width}x${height}](${short_url})\n${body.raw}`;
+  
               discourse
                 .DiscourseResource({
                   method: "POST",
                   path: "posts",
-                  body: {
-                    topic_id,
-                    raw: `![${res.width}x${res.height}](${res.short_url})\n${raw}`
-                  }
+                  body
                 })
                 .then(response => resolve(response))
                 .catch(error => reject(error));
@@ -38,14 +43,17 @@ export default function Posts(discourse) {
           })
           .catch(err => reject(err));
       } else {
+        const body = {
+          raw: inputs.raw
+        };
+
+        Object.keys(inputs).forEach(key => body[key] = inputs[key]);
+
         discourse
           .DiscourseResource({
             method: "POST",
             path: "posts",
-            body: {
-              topic_id,
-              raw
-            }
+            body
           })
           .then(response => resolve(response))
           .catch(error => reject(error));

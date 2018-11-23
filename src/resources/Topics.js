@@ -19,4 +19,8 @@ export default function Topics(discourse) {
         .catch(error => reject(error));
     });
   };
+
+  this.createTopic = (inputs) => {
+    return discourse.posts.create(inputs);
+  };
 }
