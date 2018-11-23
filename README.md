@@ -31,9 +31,10 @@ const discourse = new Discourse(apiKey, baseUrl);
 
 discourse.posts
   .create({
-    api_username: "karluser",
-    topic_id: 11,
-    raw: "Hello World"
+    api_username: "karl",
+    topic_id: 11, // optional (required for creating a new post on a topic.)
+    raw: "Hello World",
+    imageUri: imageUri // optional to create a post/topic with an image.
   })
   .then(res => console.log(res))
   .catch(err => console.log(err));
@@ -59,8 +60,10 @@ discourse.topics
 ```js
 discourse.posts
   .create({
-    topic_id: 11,
-    raw: "Hello World"
+    api_username: "karl",
+    topic_id: 11, // optional (required for creating a new post on a topic.)
+    raw: "Hello World",
+    imageUri: imageUri // optional to create a post/topic with an image.
   })
   .then(res => console.log(res))
   .catch(err => console.log(err));

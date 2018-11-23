@@ -16,6 +16,10 @@
     "babel-eslint": "^9.0.0",
     "eslint": "^5.6.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:workshoptech/discourse-js.git"
+  },
   "keywords": [
     "discourse",
     "discourse-js",
