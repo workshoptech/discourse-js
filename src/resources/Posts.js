@@ -43,17 +43,11 @@ export default function Posts(discourse) {
           })
           .catch(err => reject(err));
       } else {
-        const body = {
-          raw: inputs.raw
-        };
-
-        Object.keys(inputs).forEach(key => body[key] = inputs[key]);
-
         discourse
           .DiscourseResource({
             method: "POST",
             path: "posts",
-            body
+            body: inputs,
           })
           .then(response => resolve(response))
           .catch(error => reject(error));
