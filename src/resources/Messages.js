@@ -18,11 +18,13 @@ export default function Messages(discourse) {
       discourse
         .DiscourseResource({
           method: "GET",
-          path: `topics/private-messages-group/${discourse._API_USERNAME}/${group_name}.json?api_key=${
-            discourse._API_KEY
-          }&api_username=${discourse._API_USERNAME}`,
+          path: `topics/private-messages-group/${
+            discourse._API_USERNAME
+          }/${group_name}.json?api_key=${discourse._API_KEY}&api_username=${
+            discourse._API_USERNAME
+          }`,
           headers: {
-            "Accept": "application/json",
+            Accept: "application/json"
           }
         })
         .then(response => resolve(response))
@@ -64,7 +66,7 @@ export default function Messages(discourse) {
           body: {
             topic_id,
             raw,
-            archetype: "private_message",
+            archetype: "private_message"
           }
         })
         .then(response => resolve(response))
