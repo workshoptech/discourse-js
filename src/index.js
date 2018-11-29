@@ -3,6 +3,7 @@ import Posts from "./resources/Posts";
 import Topics from "./resources/Topics";
 import Messages from "./resources/Messages";
 import Groups from "./resources/Groups";
+import Categories from "./resources/Categories";
 
 import { createBody, ApiError } from "./utils";
 
@@ -10,7 +11,8 @@ const resources = {
   Posts,
   Topics,
   Messages,
-  Groups
+  Groups,
+  Categories
 };
 
 export default class Discourse {
@@ -32,10 +34,11 @@ export default class Discourse {
 
   DiscourseResource = options => {
     return new Promise((resolve, reject) => {
-      const { body, method, path } = options;
+      const { body, method, path, headers } = options;
 
       const fetchOptions = {
         method,
+        headers,
         mimeType: "multipart/form-data"
       };
 
