@@ -3,17 +3,24 @@ export function createBody() {
   const params = arguments[0];
   Object.keys(params).forEach(paramKey => {
     const paramValue = params[paramKey];
-    form.append(paramKey, paramValue);
+
+    if (paramValue instanceof Array) {
+      paramValue.forEach(param => {
+        form.append(`${paramKey}[]`, param);
+      });
+    } else {
+      form.append(paramKey, paramValue);
+    }
   });
   return form;
 }
 export class ApiError extends Error {
   constructor(status, statusText, error, erorrArray = []) {
     super();
-    this.name = "ApiError";
+    this.name = 'ApiError';
     this.status = status;
     this.statusText = statusText;
     this.message = `${status} - ${statusText || error}`;
-    this.error = error || erorrArray.join(", ");
+    this.error = error || erorrArray.join(', ');
   }
 }
