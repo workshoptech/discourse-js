@@ -4,6 +4,7 @@ import Topics from "./resources/Topics";
 import Messages from "./resources/Messages";
 import Groups from "./resources/Groups";
 import Categories from "./resources/Categories";
+import Notifications from "./resources/Notifications";
 
 import { createBody, ApiError } from "./utils";
 
@@ -12,7 +13,8 @@ const resources = {
   Topics,
   Messages,
   Groups,
-  Categories
+  Categories,
+  Notifications
 };
 
 export default class Discourse {
@@ -42,7 +44,7 @@ export default class Discourse {
         mimeType: "multipart/form-data"
       };
 
-      if (method === "POST" || method === "DELETE") {
+      if (method === "POST" || method === "DELETE" || method === "PATCH" || method === "PUT") {
         fetchOptions.body = createBody({
           ...body,
           api_key: this._API_KEY,
