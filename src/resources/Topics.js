@@ -1,3 +1,5 @@
+import { buildQueryString } from "../utils";
+
 export default function Topics(discourse) {
   this.getTopic = ({ id } = {}) => {
     return new Promise((resolve, reject) => {
@@ -9,6 +11,24 @@ export default function Topics(discourse) {
           path: `t/${id}.json?api_key=${discourse._API_KEY}&api_username=${
             discourse._API_USERNAME
           }`,
+          method: "GET"
+        })
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  };
+
+  this.getTopicsByUsername = ({ username, params }) => {
+    return new Promise((resolve, reject) => {
+      const queryParams = {
+        ...params,
+        api_key: discourse._API_KEY,
+        api_username: discourse._API_USERNAME,
+      };
+
+      discourse
+        .DiscourseResource({
+          path: buildQueryString(`/topics/created-by/${username}.json`, queryParams),
           method: "GET"
         })
         .then(response => resolve(response))
