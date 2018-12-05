@@ -11,6 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Karl Taylor <karl_taylor@me.com>",
+  "contributors": ["Dan Williams <dan@workshop.ws> (https://workshop.ws/)", "Josh Taylor <josh@workshop.ws> (https://workshop.ws/)"],
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^9.0.0",
