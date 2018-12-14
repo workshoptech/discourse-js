@@ -19,7 +19,9 @@ export default function Categories(discourse) {
   this.getSubcategory = ({ cat_id, subcat_id } = {}) => {
     return new Promise((resolve, reject) => {
       if (!cat_id || !subcat_id)
-        return reject(new Error("No id defined. You must pass an id to the getSubcategory function."));
+        return reject(
+          new Error("No id defined. You must pass an id to the getSubcategory function.")
+        );
 
       discourse
         .DiscourseResource({

@@ -1,4 +1,4 @@
-import { buildQueryString } from '../utils';
+import { buildQueryString } from "../utils";
 
 export default function Notifications(discourse) {
   this.get = (inputs = {}) => {
@@ -6,13 +6,13 @@ export default function Notifications(discourse) {
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
-        ...inputs,
+        ...inputs
       };
 
       discourse
         .DiscourseResource({
-          method: 'GET',
-          path: buildQueryString('notifications.json', params),
+          method: "GET",
+          path: buildQueryString("notifications.json", params)
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
@@ -24,9 +24,9 @@ export default function Notifications(discourse) {
       discourse
         .DiscourseResource({
           method: "PUT",
-          path: 'notifications/mark-read',
+          path: "notifications/mark-read",
           body: {
-            id,
+            id
           }
         })
         .then(response => resolve(response))

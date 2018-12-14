@@ -22,7 +22,7 @@ export default function Posts(discourse) {
           .then(({ url, width, height, short_url }) => {
             if (url) {
               const body = {};
-              
+
               // Remove the imageUri from the inputs as it's not used in the next request.
               delete inputs.imageUri;
 
@@ -30,7 +30,7 @@ export default function Posts(discourse) {
 
               // Prepend the raw message with the image.
               body.raw = `![${width}x${height}](${short_url})\n${body.raw}`;
-  
+
               discourse
                 .DiscourseResource({
                   method: "POST",
@@ -47,7 +47,7 @@ export default function Posts(discourse) {
           .DiscourseResource({
             method: "POST",
             path: "posts",
-            body: inputs,
+            body: inputs
           })
           .then(response => resolve(response))
           .catch(error => reject(error));
