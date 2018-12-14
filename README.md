@@ -7,9 +7,13 @@
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [API](#api)
-  - [Topics](#topics)
-  - [Posts](#posts)
+  - [Categories](#categories)
   - [Groups](#groups)
+  - [Messages](#messages)
+  - [Notifications](#notifications)
+  - [Posts](#posts)
+  - [Topics](#topics)
+  - [Users](#users)
 - [Local Development](#local-development)
 - [License](#license)
 
@@ -42,16 +46,36 @@ discourse.posts
 
 ## API
 
-### Topics
+### Categories
 
-#### Get a Topic
+Todo
+
+---
+
+### Groups
+
+#### Get Group Members
 
 ```js
-discourse.topics
-  .getTopic({ id })
-  .then(res => console.log(response)}
-  .catch(err => console.log(err))
+discourse.groups
+  .getMembers({ group_name: "group-name" })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
 ```
+
+---
+
+### Messages
+
+Todo
+
+---
+
+### Notifications
+
+Todo
+
+---
 
 ### Posts
 
@@ -91,16 +115,24 @@ Note: You can only `unlike` a post within 5 - 10 minutes after you have `liked` 
 
 See this post [here](https://meta.discourse.org/t/53722) and [here](https://meta.discourse.org/t/57141) for information around the undocumented time limit on _unliking_ a _liked_ post.
 
-### Groups
+---
 
-#### Get Group Members
+### Topics
+
+#### Get a Topic
 
 ```js
-discourse.groups
-  .getMembers({ group_name: "group-name" })
-  .then(res => console.log(res))
-  .catch(err => console.log(err));
+discourse.topics
+  .getTopic({ id })
+  .then(res => console.log(response)}
+  .catch(err => console.log(err))
 ```
+
+---
+
+### Users
+
+Todo
 
 ## Local Development
 

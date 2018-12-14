@@ -1,25 +1,25 @@
-/** Discourse JS */
+import Categories from "./resources/Categories";
+import Groups from "./resources/Groups";
+import Messages from "./resources/Messages";
+import Notifications from "./resources/Notifications";
 import Posts from "./resources/Posts";
 import Topics from "./resources/Topics";
-import Messages from "./resources/Messages";
-import Groups from "./resources/Groups";
-import Categories from "./resources/Categories";
-import Notifications from "./resources/Notifications";
+import Users from "./resources/Users";
 
 import { createBody, ApiError } from "./utils";
 
 const resources = {
+  Categories,
+  Groups,
+  Messages,
+  Notifications,
   Posts,
   Topics,
-  Messages,
-  Groups,
-  Categories,
-  Notifications
+  Users
 };
 
 export default class Discourse {
   constructor(apiKey, baseUrl) {
-    // Set our api key to the Discourse class.
     this._API_KEY = apiKey;
     this._BASE_URL = baseUrl;
 
