@@ -132,7 +132,14 @@ discourse.topics
 
 ### Users
 
-Todo
+#### Get a single User
+
+```js
+discourse.users
+  .getUser({ username })
+  .then(res => console.log(response)}
+  .catch(err => console.log(err))
+```
 
 ## Local Development
 
