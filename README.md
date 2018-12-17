@@ -115,6 +115,19 @@ Note: You can only `unlike` a post within 5 - 10 minutes after you have `liked` 
 
 See this post [here](https://meta.discourse.org/t/53722) and [here](https://meta.discourse.org/t/57141) for information around the undocumented time limit on _unliking_ a _liked_ post.
 
+#### Reply to a Post
+
+```js
+discourse.posts
+  .reply({
+    topic_id: 72,
+    raw: 'Hello World',
+    reply_to_post_number: 14
+  })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
+
 ---
 
 ### Topics

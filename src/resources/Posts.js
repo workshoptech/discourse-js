@@ -55,18 +55,12 @@ export default function Posts(discourse) {
     });
   };
 
-  this.reply = ({ api_username, topic_id, raw, reply_to_post_number }) => {
+  this.reply = ({ topic_id, raw, reply_to_post_number }) => {
     return new Promise((resolve, reject) => {
-      if (!api_username)
-        return reject(
-          new Error("No api_username defined. You must pass a username to the reply function.")
-        );
       if (!topic_id)
         return reject(new Error("No topic_id defined. You must pass a topic to reply function."));
 
       const body = createBody({
-        api_key: discourse._API_KEY,
-        api_username,
         topic_id,
         raw,
         reply_to_post_number,
