@@ -26,7 +26,7 @@ export default function Posts(discourse) {
               // Remove the imageUri from the inputs as it's not used in the next request.
               delete inputs.imageUri;
 
-              Object.keys(inputs).forEach(key => body[key] = inputs[key]);
+              Object.keys(inputs).forEach(key => (body[key] = inputs[key]));
 
               // Prepend the raw message with the image.
               body.raw = `![${width}x${height}](${short_url})\n${body.raw}`;
@@ -59,32 +59,20 @@ export default function Posts(discourse) {
     return new Promise((resolve, reject) => {
       if (!topic_id)
         return reject(new Error("No topic_id defined. You must pass a topic to reply function."));
-
-      const body = createBody({
-        topic_id,
-        raw,
-        reply_to_post_number,
-        archetype: "regular",
-        nested_post: true
-      });
-
-      return fetch(`${discourse._BASE_URL}/posts`, {
-        method: "POST",
-        mimeType: "multipart/form-data",
-        body
-      })
-        .then(response => {
-          if (response.ok) {
-            return resolve(response.json());
-          } else {
-            return reject(new Error(response.statusText, response.status));
+      discourse
+        .DiscourseResource({
+          method: "POST",
+          path: "posts",
+          body: {
+            topic_id,
+            raw,
+            reply_to_post_number,
+            archetype: "regular",
+            nested_post: true
           }
         })
-        .catch(function(error) {
-          if (error) {
-            return reject(new Error(error));
-          }
-        });
+        .then(response => resolve(response))
+        .catch(error => reject(error));
     });
   };
 
