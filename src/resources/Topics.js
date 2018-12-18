@@ -1,16 +1,17 @@
 import { buildQueryString } from "../utils";
 
 export default function Topics(discourse) {
-  this.getTopic = ({ id } = {}) => {
+  this.getTopic = ({ id, ...inputs } = {}) => {
     return new Promise((resolve, reject) => {
-      if (!id)
-        return reject(new Error("No id defined. You must pass an id to the getTopic function."));
+      const params = {
+        api_key: discourse._API_KEY,
+        api_username: discourse._API_USERNAME,
+        ...inputs
+      };
 
       discourse
         .DiscourseResource({
-          path: `t/${id}.json?api_key=${discourse._API_KEY}&api_username=${
-            discourse._API_USERNAME
-          }`,
+          path: buildQueryString(`t/${id}.json`, params),
           method: "GET"
         })
         .then(response => resolve(response))
