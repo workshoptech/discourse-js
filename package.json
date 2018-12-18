@@ -1,6 +1,6 @@
 {
   "name": "discourse-js",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A client-side javascript wrapper for the discourse API.",
   "main": "src/index.js",
   "homepage": "https://github.com/workshoptech/discourse-js",
