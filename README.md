@@ -141,6 +141,20 @@ discourse.topics
   .catch(err => console.log(err))
 ```
 
+Topics have a chunk size of 20, which mean you will only get 20 posts back in one get. This can cause weird problems with nested replies and long threads. You can override this by passing `print: true`. Note this sets the chunk size to 1000. See [API: Getting all posts in a topic](https://meta.discourse.org/t/api-getting-all-posts-in-a-topic/41018/10)
+
+```js
+discourse.topics
+  .getTopic({
+    id,
+    print: true
+  })
+  .then(res => console.log(response)}
+  .catch(err => console.log(err))
+```
+
+
+
 ---
 
 ### Users
