@@ -29,7 +29,7 @@ export default function Topics(discourse) {
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`/topics/created-by/${username}.json`, queryParams),
+          path: buildQueryString(`topics/created-by/${username}.json`, queryParams),
           method: "GET"
         })
         .then(response => resolve(response))
