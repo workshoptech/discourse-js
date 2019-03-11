@@ -54,11 +54,21 @@ export default class Discourse {
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)
         .then(response => {
+          const contentType = response.headers.get("content-type");
           if (response.ok) {
-            return resolve(response.json());
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+              return resolve(response.json());
+            } else {
+              /**
+               * If our response is OK but is not json
+               * just resolve with response.text().
+               * This happens when we DELETE a topic
+               * because nothing is returned from the request.
+               */
+              return resolve(response.text());
+            }
           } else {
             const { status, statusText } = response;
-            const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
               return response.json().then(json => {
                 return reject(new ApiError(status, statusText, "", json.errors));
