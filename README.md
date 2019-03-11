@@ -26,19 +26,19 @@ $ npm i discourse-js
 ## Quick Start
 
 ```js
-import Discourse from "discourse-js";
+import Discourse from 'discourse-js';
 
-const apiKey = "<api-key-from-discourse>";
-const baseUrl = "<your-discourse-url>" || "http://localhost:3000";
+const apiKey = '<api-key-from-discourse>';
+const baseUrl = '<your-discourse-url>' || 'http://localhost:3000';
 
 const discourse = new Discourse(apiKey, baseUrl);
 
 discourse.posts
   .create({
-    api_username: "karl",
+    api_username: 'karl',
     topic_id: 11, // optional (required for creating a new post on a topic.)
-    raw: "Hello World",
-    imageUri: imageUri // optional to create a post/topic with an image.
+    raw: 'Hello World',
+    imageUri: imageUri, // optional to create a post/topic with an image.
   })
   .then(res => console.log(res))
   .catch(err => console.log(err));
@@ -58,7 +58,7 @@ Todo
 
 ```js
 discourse.groups
-  .getMembers({ group_name: "group-name" })
+  .getMembers({ group_name: 'group-name' })
   .then(res => console.log(res))
   .catch(err => console.log(err));
 ```
@@ -84,10 +84,10 @@ Todo
 ```js
 discourse.posts
   .create({
-    api_username: "karl",
+    api_username: 'karl',
     topic_id: 11, // optional (required for creating a new post on a topic.)
-    raw: "Hello World",
-    imageUri: imageUri // optional to create a post/topic with an image.
+    raw: 'Hello World',
+    imageUri: imageUri, // optional to create a post/topic with an image.
   })
   .then(res => console.log(res))
   .catch(err => console.log(err));
@@ -122,7 +122,7 @@ discourse.posts
   .reply({
     topic_id: 72,
     raw: 'Hello World',
-    reply_to_post_number: 14
+    reply_to_post_number: 14,
   })
   .then(res => console.log(res))
   .catch(err => console.log(err));
@@ -153,7 +153,14 @@ discourse.topics
   .catch(err => console.log(err))
 ```
 
+#### Delete a Topic
 
+```js
+  discourse.topics
+    .deleteTopic({ id })
+    .then(res => console.log(response)} // Note: delete returns nothing.
+    .catch(err => console.log(err))
+```
 
 ---
 
@@ -179,7 +186,7 @@ $ cd discourse-js
 $ pwd|pbcopy # Copies the current working directory /path/to/discourse-js/
 # cd into the directory you want to test locally.
 $ npm install /path/to/discourse-js/
-````
+```
 
 _Why not just use `npm link`?_:
 
