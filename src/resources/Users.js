@@ -7,9 +7,9 @@ export default function Users(discourse) {
         .DiscourseResource({
           path: buildQueryString(`users/${username}.json`, {
             api_key: discourse._API_KEY,
-            api_username: discourse._API_USERNAME
+            api_username: discourse._API_USERNAME,
           }),
-          method: "GET"
+          method: "GET",
         })
         .then(response => resolve(response))
         .catch(error => reject(error));

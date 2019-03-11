@@ -6,7 +6,7 @@ export default function Groups(discourse) {
           method: "GET",
           path: `groups/${group_name}/members.json?api_key=${discourse._API_KEY}&api_username=${
             discourse._API_USERNAME
-          }`
+          }`,
         })
         .then(response => resolve(response))
         .catch(error => reject(error));

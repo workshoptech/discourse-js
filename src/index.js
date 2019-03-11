@@ -15,7 +15,7 @@ const resources = {
   Notifications,
   Posts,
   Topics,
-  Users
+  Users,
 };
 
 export default class Discourse {
@@ -41,14 +41,14 @@ export default class Discourse {
       const fetchOptions = {
         method,
         headers,
-        mimeType: "multipart/form-data"
+        mimeType: "multipart/form-data",
       };
 
       if (method === "POST" || method === "DELETE" || method === "PATCH" || method === "PUT") {
         fetchOptions.body = createBody({
           ...body,
           api_key: this._API_KEY,
-          api_username: this._API_USERNAME
+          api_username: this._API_USERNAME,
         });
       }
 
