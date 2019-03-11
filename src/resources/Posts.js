@@ -13,11 +13,11 @@ export default function Posts(discourse) {
               "files[]": {
                 uri: inputs.imageUri,
                 name: "photo.jpeg",
-                type: "image/jpeg"
+                type: "image/jpeg",
               },
               type: "composer",
-              synchronous: true
-            }
+              synchronous: true,
+            },
           })
           .then(({ url, width, height, short_url }) => {
             if (url) {
@@ -35,7 +35,7 @@ export default function Posts(discourse) {
                 .DiscourseResource({
                   method: "POST",
                   path: "posts",
-                  body
+                  body,
                 })
                 .then(response => resolve(response))
                 .catch(error => reject(error));
@@ -47,7 +47,7 @@ export default function Posts(discourse) {
           .DiscourseResource({
             method: "POST",
             path: "posts",
-            body: inputs
+            body: inputs,
           })
           .then(response => resolve(response))
           .catch(error => reject(error));
@@ -68,8 +68,8 @@ export default function Posts(discourse) {
             raw,
             reply_to_post_number,
             archetype: "regular",
-            nested_post: true
-          }
+            nested_post: true,
+          },
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
@@ -84,8 +84,8 @@ export default function Posts(discourse) {
           path: "post_actions",
           body: {
             id,
-            post_action_type_id: 2
-          }
+            post_action_type_id: 2,
+          },
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
@@ -98,8 +98,8 @@ export default function Posts(discourse) {
           method: "DELETE",
           path: `post_actions/${id}`,
           body: {
-            post_action_type_id: 2
-          }
+            post_action_type_id: 2,
+          },
         })
         .then(response => resolve(response))
         .catch(error => reject(error));

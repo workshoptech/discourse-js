@@ -6,13 +6,13 @@ export default function Topics(discourse) {
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
-        ...inputs
+        ...inputs,
       };
 
       discourse
         .DiscourseResource({
           path: buildQueryString(`t/${id}.json`, params),
-          method: "GET"
+          method: "GET",
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
@@ -48,7 +48,7 @@ export default function Topics(discourse) {
       discourse
         .DiscourseResource({
           path: buildQueryString(`topics/created-by/${username}.json`, queryParams),
-          method: "GET"
+          method: "GET",
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
