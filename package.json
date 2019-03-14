@@ -8,7 +8,8 @@
     "url": "https://github.com/workshoptech/discourse-js/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-docs": "node_modules/.bin/documentation build src/** -f html -o docs"
   },
   "author": "Karl Taylor <karl_taylor@me.com>",
   "contributors": [
@@ -18,6 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "documentation": "^9.3.1",
     "eslint": "^5.15.1"
   },
   "repository": {
