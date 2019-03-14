@@ -6,6 +6,17 @@ import { buildQueryString } from "../utils";
  * @property {number} notification_type The type of the notification
  * @property {boolean} read
  * @property {string} created_at
+ * @property {number} post_number
+ * @property {number} topic_id
+ * @property {string} fancy_title
+ * @property {string} slug
+ * @property {Object} data
+ * @property {string} data.topic_title
+ * @property {number} data.original_post_id
+ * @property {number} data.original_post_type
+ * @property {string} data.original_username
+ * @property {?number} data.revision_number
+ * @property {string} data.display_username
  * @memberof Notifications
  */
 
@@ -15,23 +26,6 @@ import { buildQueryString } from "../utils";
  * @property {number} seen_notification_id The ID of the last seen notification
  * @memberof Notifications
  */
-
-// id: 29115,
-// notification_type: 6,
-// read: true,
-// created_at: "2019-03-13T12:13:59.619Z",
-// post_number: 19,
-// topic_id: 11967,
-// fancy_title: "Chat between Dan Williams and Workshop",
-// slug: "chat-between-dan-williams-and-workshop",
-// data: {
-// topic_title: "Chat between Dan Williams and Workshop",
-// original_post_id: 17681,
-// original_post_type: 1,
-// original_username: "dan",
-// revision_number: null,
-// display_username: "dan"
-// }
 
 /**
  * Resource for handling interaction with existing user notifications
