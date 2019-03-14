@@ -1,5 +1,3 @@
-# Discourse-js
-
 [![NPM Version](https://img.shields.io/npm/v/discourse-js.svg?style=flat-square)](https://www.npmjs.com/package/discourse-js)
 
 ## Contents
