@@ -37,17 +37,17 @@ export default function Topics(discourse) {
     });
   };
 
-  this.getTopicsByUsername = ({ username, params }) => {
+  this.getTopicsByUsername = ({ username, ...inputs }) => {
     return new Promise((resolve, reject) => {
-      const queryParams = {
-        ...params,
+      const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
+        ...inputs
       };
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`topics/created-by/${username}.json`, queryParams),
+          path: buildQueryString(`topics/created-by/${username}.json`, params),
           method: "GET",
         })
         .then(response => resolve(response))
