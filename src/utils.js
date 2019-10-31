@@ -21,7 +21,7 @@ export function buildQueryString(uri, params) {
       const value = params[key];
 
       if (Array.isArray(value)) {
-        return value.map(sub => `${key}[]=${sub}`);
+        return value.map(sub => `${key}[]=${sub}`).join("&");
       }
 
       return `${key}=${params[key]}`;

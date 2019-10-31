@@ -1,7 +1,7 @@
 import { buildQueryString } from "../utils";
 
 export default function Topics(discourse) {
-  this.getTopic = ({ id, direction, ...inputs } = {}) => {
+  this.getTopic = ({ id, reverse, ...inputs } = {}) => {
     return new Promise((resolve, reject) => {
       const params = {
         api_key: discourse._API_KEY,
@@ -11,7 +11,7 @@ export default function Topics(discourse) {
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`t/${id}${direction === "reverse" ? "/last" : ""}.json`, params),
+          path: buildQueryString(`t/${id}${reverse ? "/last" : ""}.json`, params),
           method: "GET",
         })
         .then(response => resolve(response))
