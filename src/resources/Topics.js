@@ -1,7 +1,7 @@
 import { buildQueryString } from "../utils";
 
 export default function Topics(discourse) {
-  this.getTopic = ({ id, ...inputs } = {}) => {
+  this.getTopic = ({ id, direction, ...inputs } = {}) => {
     return new Promise((resolve, reject) => {
       const params = {
         api_key: discourse._API_KEY,
@@ -11,11 +11,31 @@ export default function Topics(discourse) {
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`t/${id}.json`, params),
+          path: buildQueryString(`t/${id}${direction === "reverse" ? "/last" : ""}.json`, params),
           method: "GET",
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
+    });
+  };
+
+  this.getTopicPosts = ({ id, posts, ...inputs } = {}) => {
+    return new Promise((resolve, reject) => {
+      
+      const params = {
+        api_key: discourse._API_KEY,
+        api_username: discourse._API_USERNAME,
+        posts,
+        ...inputs,
+      };
+
+      return discourse
+        .DiscourseResource({
+          path: buildQueryString(`t/${id}/posts.json`, params),
+          method: "GET",
+        })
+        .then(response => resolve(response))
+        .catch(err => reject(err));
     });
   };
 
@@ -42,7 +62,7 @@ export default function Topics(discourse) {
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
-        ...inputs
+        ...inputs,
       };
 
       discourse

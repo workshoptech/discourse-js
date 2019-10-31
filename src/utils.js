@@ -17,8 +17,17 @@ export function createBody() {
 
 export function buildQueryString(uri, params) {
   const queryString = Object.keys(params)
-    .map(key => key + "=" + params[key])
+    .map(key => {
+      const value = params[key];
+
+      if (Array.isArray(value)) {
+        return value.map(sub => `${key}[]=${sub}`);
+      }
+
+      return `${key}=${params[key]}`;
+    })
     .join("&");
+
   const separator = uri.indexOf("?") !== -1 ? "&" : "?";
   return `${uri}${separator}${queryString}`;
 }
