@@ -25,7 +25,7 @@ export default function Topics(discourse) {
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
-        posts,
+        post_ids: posts,
         ...inputs,
       };
 

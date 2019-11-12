@@ -3,7 +3,9 @@ import Groups from "./resources/Groups";
 import Messages from "./resources/Messages";
 import Notifications from "./resources/Notifications";
 import Posts from "./resources/Posts";
+import Preferences from "./resources/Preferences";
 import Topics from "./resources/Topics";
+import Uploads from "./resources/Uploads";
 import Users from "./resources/Users";
 
 import { createBody, ApiError } from "./utils";
@@ -14,7 +16,9 @@ const resources = {
   Messages,
   Notifications,
   Posts,
+  Preferences,
   Topics,
+  Uploads,
   Users,
 };
 
