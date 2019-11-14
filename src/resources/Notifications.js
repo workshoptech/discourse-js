@@ -25,9 +25,13 @@ export default function Notifications(discourse) {
         .DiscourseResource({
           method: "PUT",
           path: "notifications/mark-read",
-          body: {
-            id,
-          },
+          ...(id
+            ? {
+              body: {
+                id,
+              },
+            }
+            : {}),
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
