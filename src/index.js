@@ -4,6 +4,7 @@ import Messages from "./resources/Messages";
 import Notifications from "./resources/Notifications";
 import Posts from "./resources/Posts";
 import Preferences from "./resources/Preferences";
+import Tags from "./resources/Tags";
 import Topics from "./resources/Topics";
 import Uploads from "./resources/Uploads";
 import Users from "./resources/Users";
@@ -17,6 +18,7 @@ const resources = {
   Notifications,
   Posts,
   Preferences,
+  Tags,
   Topics,
   Uploads,
   Users,
