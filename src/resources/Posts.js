@@ -1,24 +1,17 @@
-import { createBody } from "../utils";
-
 export default function Posts(discourse) {
   this.create = (inputs = {}) => {
     return new Promise((resolve, reject) => {
       // If an imageUri has been passed, upload the image first.
       if (inputs.imageUri) {
-        discourse
-          .DiscourseResource({
-            method: "POST",
-            path: "uploads.json",
-            body: {
-              "files[]": {
-                uri: inputs.imageUri,
-                name: "photo.jpeg",
-                type: "image/jpeg",
-              },
-              type: "composer",
-              synchronous: true,
-            },
-          })
+        discourse.uploads.create({
+          "files[]": {
+            uri: inputs.imageUri,
+            name: "photo.jpeg",
+            type: "image/jpeg",
+          },
+          type: "composer",
+          synchronous: true,
+        })
           .then(({ url, width, height, short_url }) => {
             if (url) {
               const body = {};

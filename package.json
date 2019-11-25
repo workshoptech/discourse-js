@@ -1,6 +1,6 @@
 {
   "name": "discourse-js",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "A client-side javascript wrapper for the discourse API.",
   "main": "src/index.js",
   "homepage": "https://github.com/workshoptech/discourse-js",
@@ -17,8 +17,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.15.1"
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0"
   },
   "repository": {
     "type": "git",
