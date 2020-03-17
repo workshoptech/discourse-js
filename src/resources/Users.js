@@ -1,4 +1,4 @@
-import { buildQueryString } from "../utils";
+import { buildQueryString } from '../utils';
 
 export default function Users(discourse) {
   this.getUser = ({ username } = {}) => {
@@ -9,7 +9,7 @@ export default function Users(discourse) {
             api_key: discourse._API_KEY,
             api_username: discourse._API_USERNAME,
           }),
-          method: "GET",
+          method: 'GET',
         })
         .then(response => resolve(response))
         .catch(error => reject(error));

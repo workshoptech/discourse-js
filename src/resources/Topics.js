@@ -1,7 +1,7 @@
-import { buildQueryString } from "../utils";
+import { buildQueryString } from '../utils';
 
 export default function Topics(discourse) {
-  this.getTopic = ({ id, ...inputs } = {}) => {
+  this.getTopic = ({ id, reverse, ...inputs } = {}) => {
     return new Promise((resolve, reject) => {
       const params = {
         api_key: discourse._API_KEY,
@@ -11,11 +11,33 @@ export default function Topics(discourse) {
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`t/${id}.json`, params),
-          method: "GET",
+          path: buildQueryString(
+            `t/${id}${reverse ? '/last' : ''}.json`,
+            params,
+          ),
+          method: 'GET',
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
+    });
+  };
+
+  this.getTopicPosts = ({ id, posts, ...inputs } = {}) => {
+    return new Promise((resolve, reject) => {
+      const params = {
+        api_key: discourse._API_KEY,
+        api_username: discourse._API_USERNAME,
+        post_ids: posts,
+        ...inputs,
+      };
+
+      return discourse
+        .DiscourseResource({
+          path: buildQueryString(`t/${id}/posts.json`, params),
+          method: 'GET',
+        })
+        .then(response => resolve(response))
+        .catch(err => reject(err));
     });
   };
 
@@ -30,25 +52,25 @@ export default function Topics(discourse) {
       return discourse
         .DiscourseResource({
           path: buildQueryString(`t/${id}`, params),
-          method: "DELETE",
+          method: 'DELETE',
         })
         .then(response => resolve(response))
         .catch(err => reject(err));
     });
   };
 
-  this.getTopicsByUsername = ({ username, params }) => {
+  this.getTopicsByUsername = ({ username, ...inputs }) => {
     return new Promise((resolve, reject) => {
-      const queryParams = {
-        ...params,
+      const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
+        ...inputs,
       };
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(`topics/created-by/${username}.json`, queryParams),
-          method: "GET",
+          path: buildQueryString(`topics/created-by/${username}.json`, params),
+          method: 'GET',
         })
         .then(response => resolve(response))
         .catch(error => reject(error));

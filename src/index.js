@@ -1,12 +1,15 @@
-import Categories from "./resources/Categories";
-import Groups from "./resources/Groups";
-import Messages from "./resources/Messages";
-import Notifications from "./resources/Notifications";
-import Posts from "./resources/Posts";
-import Topics from "./resources/Topics";
-import Users from "./resources/Users";
+import Categories from './resources/Categories';
+import Groups from './resources/Groups';
+import Messages from './resources/Messages';
+import Notifications from './resources/Notifications';
+import Posts from './resources/Posts';
+import Preferences from './resources/Preferences';
+import Tags from './resources/Tags';
+import Topics from './resources/Topics';
+import Uploads from './resources/Uploads';
+import Users from './resources/Users';
 
-import { createBody, ApiError } from "./utils";
+import { createBody, ApiError } from './utils';
 
 const resources = {
   Categories,
@@ -14,7 +17,10 @@ const resources = {
   Messages,
   Notifications,
   Posts,
+  Preferences,
+  Tags,
   Topics,
+  Uploads,
   Users,
 };
 
@@ -41,10 +47,15 @@ export default class Discourse {
       const fetchOptions = {
         method,
         headers,
-        mimeType: "multipart/form-data",
+        mimeType: 'multipart/form-data',
       };
 
-      if (method === "POST" || method === "DELETE" || method === "PATCH" || method === "PUT") {
+      if (
+        method === 'POST' ||
+        method === 'DELETE' ||
+        method === 'PATCH' ||
+        method === 'PUT'
+      ) {
         fetchOptions.body = createBody({
           ...body,
           api_key: this._API_KEY,
@@ -54,9 +65,9 @@ export default class Discourse {
 
       return fetch(`${this._BASE_URL}/${path}`, fetchOptions)
         .then(response => {
-          const contentType = response.headers.get("content-type");
+          const contentType = response.headers.get('content-type');
           if (response.ok) {
-            if (contentType && contentType.indexOf("application/json") !== -1) {
+            if (contentType && contentType.indexOf('application/json') !== -1) {
               return resolve(response.json());
             } else {
               /**
@@ -69,9 +80,11 @@ export default class Discourse {
             }
           } else {
             const { status, statusText } = response;
-            if (contentType && contentType.indexOf("application/json") !== -1) {
+            if (contentType && contentType.indexOf('application/json') !== -1) {
               return response.json().then(json => {
-                return reject(new ApiError(status, statusText, "", json.errors));
+                return reject(
+                  new ApiError(status, statusText, '', json.errors),
+                );
               });
             } else {
               return response.text().then(text => {

@@ -1,5 +1,3 @@
-# Discourse-js
-
 [![NPM Version](https://img.shields.io/npm/v/discourse-js.svg?style=flat-square)](https://www.npmjs.com/package/discourse-js)
 
 ## Contents
@@ -137,7 +135,7 @@ discourse.posts
 ```js
 discourse.topics
   .getTopic({ id })
-  .then(res => console.log(response)}
+  .then(res => console.log(res)}
   .catch(err => console.log(err))
 ```
 
@@ -149,7 +147,7 @@ discourse.topics
     id,
     print: true
   })
-  .then(res => console.log(response)}
+  .then(res => console.log(res)}
   .catch(err => console.log(err))
 ```
 
@@ -158,7 +156,7 @@ discourse.topics
 ```js
   discourse.topics
     .deleteTopic({ id })
-    .then(res => console.log(response)} // Note: delete returns nothing.
+    .then(res => console.log(res)} // Note: delete returns nothing.
     .catch(err => console.log(err))
 ```
 
@@ -171,7 +169,7 @@ discourse.topics
 ```js
 discourse.users
   .getUser({ username })
-  .then(res => console.log(response)}
+  .then(res => console.log(res)}
   .catch(err => console.log(err))
 ```
 
