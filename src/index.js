@@ -70,12 +70,10 @@ export default class Discourse {
             if (contentType && contentType.indexOf('application/json') !== -1) {
               return resolve(response.json());
             } else {
-              /**
-               * If our response is OK but is not json
-               * just resolve with response.text().
-               * This happens when we DELETE a topic
-               * because nothing is returned from the request.
-               */
+              // If our response is OK but is not json
+              // just resolve with response.text().
+              // This happens when we DELETE a topic
+              // because nothing is returned from the request.
               return resolve(response.text());
             }
           } else {
