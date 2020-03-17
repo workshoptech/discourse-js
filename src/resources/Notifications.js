@@ -1,4 +1,4 @@
-import { buildQueryString } from "../utils";
+import { buildQueryString } from '../utils';
 
 /**
  * @typedef {Object} Notification
@@ -36,7 +36,7 @@ import { buildQueryString } from "../utils";
 export default function Notifications(discourse) {
   /**
    * Get a list of notifications for the authenticated user.
-   * 
+   *
    * @example
    * discourse.notifications.get({
    *   recent: true,
@@ -58,8 +58,8 @@ export default function Notifications(discourse) {
 
       discourse
         .DiscourseResource({
-          method: "GET",
-          path: buildQueryString("notifications.json", params),
+          method: 'GET',
+          path: buildQueryString('notifications.json', params),
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
@@ -68,17 +68,17 @@ export default function Notifications(discourse) {
 
   /**
    * Mark a single notification, or all notifications as read.
-   * 
+   *
    * If no notification ID is provided then all notifications
    * will be marked as read. If a notification ID is provided,
    * that specific notification will be marked as read.
-   * 
+   *
    * @example
    * discourse.notifications.markRead({
-    *   id: 1201,
-    * })
-    * .then(res => console.log(res))
-    * .catch(err => console.log(err));
+   *   id: 1201,
+   * })
+   * .then(res => console.log(res))
+   * .catch(err => console.log(err));
    * @param {Object} [body] Optional request body
    * @param {number} body.id ID of the notification to mark read
    * @returns {Promise<TBC>} The API response
@@ -87,8 +87,8 @@ export default function Notifications(discourse) {
     return new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: "PUT",
-          path: "notifications/mark-read",
+          method: 'PUT',
+          path: 'notifications/mark-read',
           ...(body ? body : {}),
         })
         .then(response => resolve(response))

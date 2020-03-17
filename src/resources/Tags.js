@@ -1,15 +1,8 @@
 import { buildQueryString } from '../utils';
 
-export default function Categories(discourse) {
-  this.getCategory = ({ cat_id, latest, ...inputs } = { latest: false }) => {
+export default function Tags(discourse) {
+  this.getTopic = ({ tag, ...inputs } = {}) => {
     return new Promise((resolve, reject) => {
-      if (!cat_id)
-        return reject(
-          new Error(
-            'No id defined. You must pass an id to the getCategory function.',
-          ),
-        );
-
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
@@ -18,10 +11,7 @@ export default function Categories(discourse) {
 
       discourse
         .DiscourseResource({
-          path: buildQueryString(
-            `c/${cat_id}${latest ? '/l/latest' : ''}.json`,
-            params,
-          ),
+          path: buildQueryString(`tags/${tag}.json`, params),
           method: 'GET',
         })
         .then(response => resolve(response))
@@ -29,17 +19,13 @@ export default function Categories(discourse) {
     });
   };
 
-  this.getSubcategory = (
-    { cat_id, subcat_id, latest, ...inputs } = { latest: false },
-  ) => {
+  this.getTopicsForCategory = ({
+    tag,
+    category,
+    subcategory,
+    ...inputs
+  } = {}) => {
     return new Promise((resolve, reject) => {
-      if (!cat_id || !subcat_id)
-        return reject(
-          new Error(
-            'No id defined. You must pass an id to the getSubcategory function.',
-          ),
-        );
-
       const params = {
         api_key: discourse._API_KEY,
         api_username: discourse._API_USERNAME,
@@ -49,7 +35,9 @@ export default function Categories(discourse) {
       discourse
         .DiscourseResource({
           path: buildQueryString(
-            `c/${cat_id}/${subcat_id}${latest ? '/l/latest' : ''}.json`,
+            `tags/c/${category}/${
+              subcategory ? `${subcategory}/` : ''
+            }${tag}.json`,
             params,
           ),
           method: 'GET',
