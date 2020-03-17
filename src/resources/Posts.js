@@ -84,11 +84,11 @@ export default function Posts(discourse) {
    * 6: flag - notify user
    * 7: flag - notify moderators
    */
-  this.postAction = (body = {}, id = null) =>
+  this.postAction = ({ method = 'POST', body = {}, id = null }) =>
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: 'POST',
+          method,
           path: id ? `post_actions/${id}` : 'post_actions',
           body,
         })
@@ -96,10 +96,12 @@ export default function Posts(discourse) {
         .catch(error => reject(error));
     });
 
-  this.like = ({ id }) => this.postAction({ id, post_action_type_id: 2 });
+  this.like = ({ id }) =>
+    this.postAction({ body: { id, post_action_type_id: 2 } });
 
-  this.unlike = ({ id }) => this.postAction({ post_action_type_id: 2 }, id);
+  this.unlike = ({ id }) =>
+    this.postAction({ method: 'DELETE', body: { post_action_type_id: 2 }, id });
 
   this.flag = ({ id, post_action_type_id, message, flag_topic }) =>
-    this.postAction({ id, post_action_type_id, message, flag_topic });
+    this.postAction({ body: { id, post_action_type_id, message, flag_topic } });
 }
