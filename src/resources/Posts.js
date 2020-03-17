@@ -3,15 +3,16 @@ export default function Posts(discourse) {
     return new Promise((resolve, reject) => {
       // If an imageUri has been passed, upload the image first.
       if (inputs.imageUri) {
-        discourse.uploads.create({
-          "files[]": {
-            uri: inputs.imageUri,
-            name: "photo.jpeg",
-            type: "image/jpeg",
-          },
-          type: "composer",
-          synchronous: true,
-        })
+        discourse.uploads
+          .create({
+            'files[]': {
+              uri: inputs.imageUri,
+              name: 'photo.jpeg',
+              type: 'image/jpeg',
+            },
+            type: 'composer',
+            synchronous: true,
+          })
           .then(({ url, width, height, short_url }) => {
             if (url) {
               const body = {};
@@ -26,8 +27,8 @@ export default function Posts(discourse) {
 
               discourse
                 .DiscourseResource({
-                  method: "POST",
-                  path: "posts",
+                  method: 'POST',
+                  path: 'posts',
                   body,
                 })
                 .then(response => resolve(response))
@@ -38,8 +39,8 @@ export default function Posts(discourse) {
       } else {
         discourse
           .DiscourseResource({
-            method: "POST",
-            path: "posts",
+            method: 'POST',
+            path: 'posts',
             body: inputs,
           })
           .then(response => resolve(response))
@@ -51,16 +52,20 @@ export default function Posts(discourse) {
   this.reply = ({ topic_id, raw, reply_to_post_number }) => {
     return new Promise((resolve, reject) => {
       if (!topic_id)
-        return reject(new Error("No topic_id defined. You must pass a topic to reply function."));
+        return reject(
+          new Error(
+            'No topic_id defined. You must pass a topic to reply function.',
+          ),
+        );
       discourse
         .DiscourseResource({
-          method: "POST",
-          path: "posts",
+          method: 'POST',
+          path: 'posts',
           body: {
             topic_id,
             raw,
             reply_to_post_number,
-            archetype: "regular",
+            archetype: 'regular',
             nested_post: true,
           },
         })
@@ -73,8 +78,8 @@ export default function Posts(discourse) {
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: "POST",
-          path: "post_actions",
+          method: 'POST',
+          path: 'post_actions',
           body: {
             id,
             post_action_type_id: 2,
@@ -88,7 +93,7 @@ export default function Posts(discourse) {
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: "DELETE",
+          method: 'DELETE',
           path: `post_actions/${id}`,
           body: {
             post_action_type_id: 2,

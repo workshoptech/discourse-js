@@ -21,24 +21,24 @@ export function buildQueryString(uri, params) {
       const value = params[key];
 
       if (Array.isArray(value)) {
-        return value.map(sub => `${key}[]=${sub}`).join("&");
+        return value.map(sub => `${key}[]=${sub}`).join('&');
       }
 
       return `${key}=${params[key]}`;
     })
-    .join("&");
+    .join('&');
 
-  const separator = uri.indexOf("?") !== -1 ? "&" : "?";
+  const separator = uri.indexOf('?') !== -1 ? '&' : '?';
   return `${uri}${separator}${queryString}`;
 }
 
 export class ApiError extends Error {
   constructor(status, statusText, error, errorArray = []) {
     super();
-    this.name = "ApiError";
+    this.name = 'ApiError';
     this.status = status;
     this.statusText = statusText;
     this.message = `${status} - ${statusText || error}`;
-    this.error = error || errorArray.join(", ");
+    this.error = error || errorArray.join(', ');
   }
 }

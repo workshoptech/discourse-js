@@ -3,16 +3,15 @@ export default function Preferences(discourse) {
     return new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: "PUT",
+          method: 'PUT',
           path: `u/${username}/preferences/avatar/pick`,
           body: {
             upload_id,
-            type: "uploaded",
+            type: 'uploaded',
           },
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
   };
-};
-  
+}

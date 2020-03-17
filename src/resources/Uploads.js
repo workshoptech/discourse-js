@@ -3,8 +3,8 @@ export default function Uploads(discourse) {
     return new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: "POST",
-          path: "uploads.json",
+          method: 'POST',
+          path: 'uploads.json',
           body,
         })
         .then(response => resolve(response))

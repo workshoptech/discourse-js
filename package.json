@@ -8,17 +8,25 @@
     "url": "https://github.com/workshoptech/discourse-js/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier-eslint --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
+    "format:write": "prettier-eslint --write --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\""
   },
-  "author": "Karl Taylor <karl_taylor@me.com>",
+  "author": "Workshop",
   "contributors": [
+    "Karl Taylor <karl_taylor@me.com>",
     "Dan Williams <dan@workshop.ws> (https://workshop.ws/)",
     "Josh Taylor <josh@workshop.ws> (https://workshop.ws/)"
   ],
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.6.0"
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "1.19.1",
+    "prettier-eslint": "^9.0.1",
+    "prettier-eslint-cli": "^5.0.0"
   },
   "repository": {
     "type": "git",
