@@ -74,32 +74,34 @@ export default function Posts(discourse) {
     });
   };
 
-  this.like = ({ id }) =>
+  /**
+   * post_action_type_id values
+   * 1: bookmark
+   * 2: like
+   * 3: flag - off topic
+   * 4: flag - inappropriate
+   * 8: flag - spam
+   * 6: flag - notify user
+   * 7: flag - notify moderators
+   */
+  this.postAction = ({ method = 'POST', body = {}, id = null }) =>
     new Promise((resolve, reject) => {
       discourse
         .DiscourseResource({
-          method: 'POST',
-          path: 'post_actions',
-          body: {
-            id,
-            post_action_type_id: 2,
-          },
+          method,
+          path: id ? `post_actions/${id}` : 'post_actions',
+          body,
         })
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
 
+  this.like = ({ id }) =>
+    this.postAction({ body: { id, post_action_type_id: 2 } });
+
   this.unlike = ({ id }) =>
-    new Promise((resolve, reject) => {
-      discourse
-        .DiscourseResource({
-          method: 'DELETE',
-          path: `post_actions/${id}`,
-          body: {
-            post_action_type_id: 2,
-          },
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
-    });
+    this.postAction({ method: 'DELETE', body: { post_action_type_id: 2 }, id });
+
+  this.flag = ({ id, post_action_type_id, message, flag_topic }) =>
+    this.postAction({ body: { id, post_action_type_id, message, flag_topic } });
 }
