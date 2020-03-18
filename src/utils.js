@@ -1,6 +1,6 @@
-export function createBody() {
+export const createBody = params => {
   const form = new FormData();
-  const params = arguments[0];
+
   Object.keys(params).forEach(paramKey => {
     const paramValue = params[paramKey];
 
@@ -13,9 +13,9 @@ export function createBody() {
     }
   });
   return form;
-}
+};
 
-export function buildQueryString(uri, params) {
+export const buildQueryString = (uri, params) => {
   const queryString = Object.keys(params)
     .map(key => {
       const value = params[key];
@@ -30,15 +30,17 @@ export function buildQueryString(uri, params) {
 
   const separator = uri.indexOf('?') !== -1 ? '&' : '?';
   return `${uri}${separator}${queryString}`;
-}
+};
 
 export class ApiError extends Error {
   constructor(status, statusText, error, errorArray = []) {
     super();
+    const errorMessage = error || errorArray.join(', ');
+
     this.name = 'ApiError';
     this.status = status;
     this.statusText = statusText;
-    this.message = `${status} - ${statusText || error}`;
-    this.error = error || errorArray.join(', ');
+    this.message = `${status} - ${statusText || errorMessage}`;
+    this.error = errorMessage;
   }
 }

@@ -1,83 +1,36 @@
 import { buildQueryString } from '../utils';
 
 export default function Topics(discourse) {
-  this.getTopic = ({ id, reverse, ...inputs } = {}) => {
-    return new Promise((resolve, reject) => {
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        ...inputs,
-      };
-
-      discourse
-        .DiscourseResource({
-          path: buildQueryString(
-            `t/${id}${reverse ? '/last' : ''}.json`,
-            params,
-          ),
-          method: 'GET',
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+  this.getTopic = async ({ id, reverse, ...inputs } = {}) => {
+    return discourse.get({
+      path: buildQueryString(`t/${id}${reverse ? '/last' : ''}.json`, inputs),
     });
   };
 
-  this.getTopicPosts = ({ id, posts, ...inputs } = {}) => {
-    return new Promise((resolve, reject) => {
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        post_ids: posts,
-        ...inputs,
-      };
+  this.getTopicPosts = async ({ id, posts, ...inputs } = {}) => {
+    const params = {
+      post_ids: posts,
+      ...inputs,
+    };
 
-      return discourse
-        .DiscourseResource({
-          path: buildQueryString(`t/${id}/posts.json`, params),
-          method: 'GET',
-        })
-        .then(response => resolve(response))
-        .catch(err => reject(err));
+    return discourse.get({
+      path: buildQueryString(`t/${id}/posts.json`, params),
     });
   };
 
-  this.deleteTopic = ({ id, ...inputs } = {}) => {
-    return new Promise((resolve, reject) => {
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        ...inputs,
-      };
-
-      return discourse
-        .DiscourseResource({
-          path: buildQueryString(`t/${id}`, params),
-          method: 'DELETE',
-        })
-        .then(response => resolve(response))
-        .catch(err => reject(err));
+  this.deleteTopic = async ({ id, ...inputs } = {}) => {
+    return discourse.delete({
+      path: buildQueryString(`t/${id}`, inputs),
     });
   };
 
-  this.getTopicsByUsername = ({ username, ...inputs }) => {
-    return new Promise((resolve, reject) => {
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        ...inputs,
-      };
-
-      discourse
-        .DiscourseResource({
-          path: buildQueryString(`topics/created-by/${username}.json`, params),
-          method: 'GET',
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+  this.getTopicsByUsername = async ({ username, ...inputs }) => {
+    return discourse.get({
+      path: buildQueryString(`topics/created-by/${username}.json`, inputs),
     });
   };
 
-  this.createTopic = inputs => {
+  this.createTopic = async inputs => {
     return discourse.posts.create(inputs);
   };
 }
