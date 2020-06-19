@@ -27,54 +27,73 @@ const resources = {
 };
 
 export default class Discourse {
-  constructor(apiKey, baseUrl) {
-    this._API_KEY = apiKey;
+  constructor(userApiKey, baseUrl, apiKey = null) {
     this._BASE_URL = baseUrl;
+    this._USER_API_Key = userApiKey;
+
+    // Admin User API
+    this._API_KEY = apiKey;
 
     for (let resource in resources) {
       this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
 
-  config = ({ apiKey, apiUsername, baseUrl } = {}) => {
-    this._API_KEY = apiKey;
+  config = (
+    { userApiKey, baseUrl, apiUsername, apiKey } = {
+      apiUsername: null,
+      apiKey: null,
+    },
+  ) => {
+    this._USER_API_KEY = userApiKey;
     this._BASE_URL = baseUrl;
+
+    // Admin User API
+    this._API_KEY = apiKey;
     this._API_USERNAME = apiUsername;
+
+    // If we are using the Admin API then we'll need to include
+    // the API key and username in each request either as part
+    // of our URL params or as part of our POST body
+    this.isUsingAdminAPI = this._API_KEY && this._API_USERNAME;
   };
 
   requestHeaders() {
     return {
       'User-Agent': `DiscourseJS ${VERSION}`,
+      ...(this._USER_API_KEY ? { 'User-Api-Key': this._USER_API_KEY } : {}),
     };
   }
+
+  createBody = body => {
+    return this.isUsingAdminAPI
+      ? createBody({
+          ...body,
+          api_key: this._API_KEY,
+          api_username: this._API_USERNAME,
+        })
+      : createBody(body);
+  };
 
   get = ({ path, headers } = {}) => {
     return this.request({
       method: 'GET',
       headers,
-      path: buildQueryString(path, {
-        api_key: this._API_KEY,
-        api_username: this._API_USERNAME,
-      }),
+      path: this.isUsingAdminAPI
+        ? buildQueryString(path, {
+            api_key: this._API_KEY,
+            api_username: this._API_USERNAME,
+          })
+        : path,
     });
   };
 
   post = ({ path, headers, body }) => {
-    console.log('body', {
-      ...body,
-      api_key: this._API_KEY,
-      api_username: this._API_USERNAME,
-    })
-
     return this.request({
       method: 'POST',
       headers,
       path,
-      body: createBody({
-        ...body,
-        api_key: this._API_KEY,
-        api_username: this._API_USERNAME,
-      }),
+      body: this.createBody(body),
     });
   };
 
@@ -83,11 +102,7 @@ export default class Discourse {
       method: 'PUT',
       headers,
       path,
-      body: createBody({
-        ...body,
-        api_key: this._API_KEY,
-        api_username: this._API_USERNAME,
-      }),
+      body: this.createBody(body),
     });
   }
 
@@ -96,11 +111,7 @@ export default class Discourse {
       method: 'DELETE',
       headers,
       path,
-      body: createBody({
-        ...body,
-        api_key: this._API_KEY,
-        api_username: this._API_USERNAME,
-      }),
+      body: this.createBody(body),
     });
   }
 
