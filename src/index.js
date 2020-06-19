@@ -64,7 +64,7 @@ export default class Discourse {
       ...body,
       api_key: this._API_KEY,
       api_username: this._API_USERNAME,
-    })
+    });
 
     return this.request({
       method: 'POST',
