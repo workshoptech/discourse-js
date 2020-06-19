@@ -1,6 +1,6 @@
 {
   "name": "discourse-js",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "A client-side javascript wrapper for the discourse API.",
   "main": "lib/index.js",
   "files": [
@@ -15,9 +15,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier-eslint --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
     "format:write": "prettier-eslint --write --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
-    "prepare" : "yarn run build",
+    "prepare": "yarn run build",
     "version": "npm run format:write && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags && yarn publish . --tag $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
   "author": "Workshop",
   "contributors": [
