@@ -1,50 +1,37 @@
-import { buildQueryString } from "../utils";
+import { buildQueryString } from '../utils';
 
 export default function Categories(discourse) {
-  this.getCategory = ({ cat_id, latest, ...inputs } = { latest: false }) => {
-    return new Promise((resolve, reject) => {
-      if (!cat_id)
-        return reject(new Error("No id defined. You must pass an id to the getCategory function."));
+  this.getCategory = async (
+    { cat_id, latest, ...inputs } = { latest: false },
+  ) => {
+    if (!cat_id) {
+      throw new Error(
+        'No id defined. You must pass an `cat_id` to the getCategory function.',
+      );
+    }
 
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        ...inputs,
-      };
-
-      discourse
-        .DiscourseResource({
-          path: buildQueryString(`c/${cat_id}${latest ? "/l/latest" : ""}.json`, params),
-          method: "GET",
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+    return discourse.get({
+      path: buildQueryString(
+        `c/${cat_id}${latest ? '/l/latest' : ''}.json`,
+        inputs,
+      ),
     });
   };
 
-  this.getSubcategory = ({ cat_id, subcat_id, latest, ...inputs } = { latest: false }) => {
-    return new Promise((resolve, reject) => {
-      if (!cat_id || !subcat_id)
-        return reject(
-          new Error("No id defined. You must pass an id to the getSubcategory function."),
-        );
+  this.getSubcategory = async (
+    { cat_id, subcat_id, latest, ...inputs } = { latest: false },
+  ) => {
+    if (!cat_id || !subcat_id) {
+      throw new Error(
+        'No id defined. You must pass an id to the getSubcategory function.',
+      );
+    }
 
-      const params = {
-        api_key: discourse._API_KEY,
-        api_username: discourse._API_USERNAME,
-        ...inputs,
-      };
-
-      discourse
-        .DiscourseResource({
-          path: buildQueryString(
-            `c/${cat_id}/${subcat_id}${latest ? "/l/latest" : ""}.json`,
-            params,
-          ),
-          method: "GET",
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+    return discourse.get({
+      path: buildQueryString(
+        `c/${cat_id}/${subcat_id}${latest ? '/l/latest' : ''}.json`,
+        inputs,
+      ),
     });
   };
 }
