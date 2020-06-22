@@ -28,7 +28,7 @@ export const buildQueryString = (uri, params) => {
     })
     .join('&');
 
-  const separator = uri.indexOf('?') !== -1 ? '&' : '?';
+  const separator = !!queryString ? (uri.indexOf('?') !== -1 ? '&' : '?') : '';
   return `${uri}${separator}${queryString}`;
 };
 
