@@ -213,6 +213,19 @@ _Read more about npm link and why we do this [here](https://medium.com/@the1mill
 
 You will also need a Discourse server running. This can be local or running in the cloud.
 
+## Publishing a new Version
+Bump the version of the package:
+
+```
+yarn version --patch/--minor/--major
+```
+
+Our preversion, version, and postversion will run, create a new tag in git and push it to our remote repository. Now we can publish again:
+
+```
+npm publish
+```
+
 ## License
 
 MIT
