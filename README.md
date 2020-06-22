@@ -26,14 +26,15 @@ $ npm i discourse-js
 ```js
 import Discourse from 'discourse-js';
 
-const apiKey = '<api-key-from-discourse>';
+const userApiKey = '<user-api-key-from-discourse>';
+const apiUsername = '<user-username-from-discourse>';
 const baseUrl = '<your-discourse-url>' || 'http://localhost:3000';
 
-const discourse = new Discourse(apiKey, baseUrl);
+const discourse = new Discourse();
+discourse.config({ userApiKey, apiUsername, baseUrl })
 
 discourse.posts
   .create({
-    api_username: 'karl',
     topic_id: 11, // optional (required for creating a new post on a topic.)
     raw: 'Hello World',
     imageUri: imageUri, // optional to create a post/topic with an image.
@@ -46,7 +47,23 @@ discourse.posts
 
 ### Categories
 
-Todo
+#### Get Category
+
+```js
+discourse.categories
+  .getCategory({ cat_id: 'category-id' })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
+
+#### Get Sub-Category
+
+```js
+discourse.getSubcategory
+  .getCategory({ cat_id: 'category-id', subcat_id: 'subcategory-id' })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
 
 ---
 
@@ -82,7 +99,6 @@ Todo
 ```js
 discourse.posts
   .create({
-    api_username: 'karl',
     topic_id: 11, // optional (required for creating a new post on a topic.)
     raw: 'Hello World',
     imageUri: imageUri, // optional to create a post/topic with an image.
