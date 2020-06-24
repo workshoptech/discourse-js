@@ -65,23 +65,18 @@ export default function Posts(discourse) {
    * 6: flag - notify user
    * 7: flag - notify moderators
    */
-  this.postAction = ({ method = 'POST', body = {}, id = null }) =>
-    new Promise((resolve, reject) => {
-      discourse
-        .DiscourseResource({
-          method,
-          path: id ? `post_actions/${id}` : 'post_actions',
-          body,
-        })
-        .then(response => resolve(response))
-        .catch(error => reject(error));
+  this.postAction = async ({ method = 'post', body = {}, id = null }) => {
+    return discourse[method]({
+      path: id ? `post_actions/${id}` : 'post_actions',
+      body,
     });
+  };
 
   this.like = ({ id }) =>
     this.postAction({ body: { id, post_action_type_id: 2 } });
 
   this.unlike = ({ id }) =>
-    this.postAction({ method: 'DELETE', body: { post_action_type_id: 2 }, id });
+    this.postAction({ method: 'delete', body: { post_action_type_id: 2 }, id });
 
   this.flag = ({ id, post_action_type_id, message, flag_topic }) =>
     this.postAction({ body: { id, post_action_type_id, message, flag_topic } });
