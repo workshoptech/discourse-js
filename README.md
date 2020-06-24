@@ -220,11 +220,7 @@ Bump the version of the package:
 yarn version --patch/--minor/--major
 ```
 
-Our preversion, version, and postversion will run, create a new tag in git and push it to our remote repository. Now we can publish again:
-
-```
-npm publish
-```
+Our preversion, version, and postversion will run, create a new tag in git and push it to our remote repository. The updated package will then be published on npm.
 
 ## License
 
