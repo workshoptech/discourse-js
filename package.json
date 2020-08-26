@@ -2,16 +2,18 @@
   "name": "discourse-js",
   "version": "2.0.1",
   "description": "A client-side javascript wrapper for the discourse API.",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "module": "src/index.js",
   "files": [
-    "lib"
+    "dist",
+    "src"
   ],
   "homepage": "https://github.com/workshoptech/discourse-js",
   "bugs": {
     "url": "https://github.com/workshoptech/discourse-js/issues"
   },
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "babel src --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier-eslint --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
     "format:write": "prettier-eslint --write --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
