@@ -2,8 +2,9 @@
   "name": "discourse-js",
   "version": "2.0.2",
   "description": "A client-side javascript wrapper for the discourse API.",
-  "main": "dist/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
   "files": [
     "dist",
     "src"
@@ -13,7 +14,7 @@
     "url": "https://github.com/workshoptech/discourse-js/issues"
   },
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier-eslint --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
     "format:write": "prettier-eslint --write --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
@@ -31,15 +32,16 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "1.19.1",
     "prettier-eslint": "^9.0.1",
-    "prettier-eslint-cli": "^5.0.0"
+    "prettier-eslint-cli": "^5.0.0",
+    "rollup": "^2.26.5"
   },
   "repository": {
     "type": "git",
