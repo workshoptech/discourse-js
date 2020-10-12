@@ -1,13 +1,21 @@
 import { buildQueryString } from '../utils';
 
 export default function Topics(discourse) {
-  this.getTopic = async ({ id, reverse, ...inputs } = {}) => {
+  this.getTopic = async ({
+    id,
+    reverse,
+    ...inputs
+  }: { id?: number, reverse?: string } = {}) => {
     return discourse.get({
       path: buildQueryString(`t/${id}${reverse ? '/last' : ''}.json`, inputs),
     });
   };
 
-  this.getTopicPosts = async ({ id, posts, ...inputs } = {}) => {
+  this.getTopicPosts = async ({
+    id,
+    posts,
+    ...inputs
+  }: { id?: number, posts?: any } = {}) => {
     const params = {
       post_ids: posts,
       ...inputs,
@@ -18,7 +26,7 @@ export default function Topics(discourse) {
     });
   };
 
-  this.deleteTopic = async ({ id, ...inputs } = {}) => {
+  this.deleteTopic = async ({ id, ...inputs }: { id?: number } = {}) => {
     return discourse.delete({
       path: buildQueryString(`t/${id}`, inputs),
     });

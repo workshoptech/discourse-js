@@ -27,9 +27,19 @@ const resources = {
 };
 
 export default class Discourse {
-  constructor(userApiKey, baseUrl, apiKey = null) {
+  _BASE_URL: string;
+  _USER_API_KEY: string;
+  _API_KEY: string | null;
+  _API_USERNAME: string | null;
+  isUsingAdminAPI: string;
+
+  constructor(
+    userApiKey: string,
+    baseUrl: string,
+    apiKey: string | null = null,
+  ) {
     this._BASE_URL = baseUrl;
-    this._USER_API_Key = userApiKey;
+    this._USER_API_KEY = userApiKey;
 
     // Admin User API
     this._API_KEY = apiKey;
@@ -40,7 +50,17 @@ export default class Discourse {
   }
 
   config = (
-    { userApiKey, baseUrl, apiUsername, apiKey } = {
+    {
+      userApiKey,
+      baseUrl,
+      apiUsername,
+      apiKey,
+    }: {
+      userApiKey?: string | null,
+      baseUrl?: string | null,
+      apiKey: string | null,
+      apiUsername: string | null,
+    } = {
       apiUsername: null,
       apiKey: null,
     },
@@ -75,7 +95,10 @@ export default class Discourse {
       : createBody(body);
   };
 
-  get = ({ path, headers } = {}) => {
+  get = ({
+    path,
+    headers,
+  }: { path?: string, headers?: { [key: string]: string } } = {}) => {
     return this.request({
       method: 'GET',
       headers,

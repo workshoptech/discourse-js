@@ -2,7 +2,9 @@ import { buildQueryString } from '../utils';
 
 export default function Categories(discourse) {
   this.getCategory = async (
-    { cat_id, latest, ...inputs } = { latest: false },
+    { cat_id, latest, ...inputs }: { cat_id?: number, latest: boolean } = {
+      latest: false,
+    },
   ) => {
     if (!cat_id) {
       throw new Error(
@@ -19,7 +21,14 @@ export default function Categories(discourse) {
   };
 
   this.getSubcategory = async (
-    { cat_id, subcat_id, latest, ...inputs } = { latest: false },
+    {
+      cat_id,
+      subcat_id,
+      latest,
+      ...inputs
+    }: { cat_id?: number, subcat_id?: number, latest: boolean } = {
+      latest: false,
+    },
   ) => {
     if (!cat_id || !subcat_id) {
       throw new Error(

@@ -33,6 +33,10 @@ export const buildQueryString = (uri, params) => {
 };
 
 export class ApiError extends Error {
+  status: string;
+  statusText: string;
+  error: string;
+
   constructor(status, statusText, error, errorArray = []) {
     super();
     const errorMessage = error || errorArray.join(', ');

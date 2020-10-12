@@ -6,7 +6,7 @@ import pkg from './package.json';
 export default [
   // browser-friendly UMD build
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: {
       name: 'DiscourseJS',
       file: pkg.browser,
@@ -22,7 +22,7 @@ export default [
   // an array for the `output` option, where we can specify
   // `file` and `format` for each target)
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     external: [...Object.keys(pkg.dependencies || {})],
     output: [
       { file: pkg.main, format: 'cjs' },

@@ -13,7 +13,7 @@ export default function Posts(discourse) {
       });
 
       if (url) {
-        const body = {};
+        const body: { [key: string]: string } = {};
 
         // Remove the imageUri from the inputs as it's not used in the next request.
         delete inputs.imageUri;
