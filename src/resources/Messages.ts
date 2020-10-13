@@ -1,11 +1,21 @@
-export default function Messages(discourse) {
+import { DiscourseInterface } from '../index';
+
+export interface IMessages {
+  get(): Promise<unknown>;
+  getGroupMessages(params: { group_name: string }): Promise<unknown>;
+  getSentMessages(): Promise<unknown>;
+  getAllMessages(): Promise<unknown>;
+  send(params: { topic_id: number, raw: string }): Promise<unknown>;
+}
+
+export default function Messages(discourse: DiscourseInterface) {
   this.get = async () => {
     return discourse.get({
       path: `topics/private-messages/${discourse._API_USERNAME}.json`,
     });
   };
 
-  this.getGroupMessages = async ({ group_name }) => {
+  this.getGroupMessages = async ({ group_name }: { group_name: string }) => {
     return discourse.get({
       path: `topics/private-messages-group/${discourse._API_USERNAME}/${group_name}.json`,
       headers: {
@@ -27,7 +37,7 @@ export default function Messages(discourse) {
     return Promise.all([getMessages, getSentMessages]);
   };
 
-  this.send = async ({ topic_id, raw }) => {
+  this.send = async ({ topic_id, raw }: { topic_id: number, raw: string }) => {
     return discourse.post({
       path: 'posts',
       body: {

@@ -1,4 +1,28 @@
-export default function Posts(discourse) {
+import { DiscourseInterface } from '../index';
+
+export interface IPosts {
+  create(inputs: any): Promise<unknown>;
+  reply(params: {
+    topic_id: number,
+    raw: any,
+    reply_to_post_number: any,
+  }): Promise<unknown>;
+  postAction(params: {
+    method: string,
+    body: Object,
+    id: number | null,
+  }): Promise<unknown>;
+  like(params: { id: number | null }): Promise<unknown>;
+  unlike(params: { id: number | null }): Promise<unknown>;
+  flag(params: {
+    id: number | null,
+    post_action_type_id: number,
+    message: string,
+    flag_topic: any,
+  }): Promise<unknown>;
+}
+
+export default function Posts(discourse: DiscourseInterface) {
   this.create = async (inputs = {}) => {
     // If an imageUri has been passed, upload the image first.
     if (inputs.imageUri) {

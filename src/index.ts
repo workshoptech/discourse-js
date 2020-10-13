@@ -1,13 +1,13 @@
-import Categories from './resources/Categories';
-import Groups from './resources/Groups';
-import Messages from './resources/Messages';
-import Notifications from './resources/Notifications';
-import Posts from './resources/Posts';
-import Preferences from './resources/Preferences';
-import Tags from './resources/Tags';
-import Topics from './resources/Topics';
-import Uploads from './resources/Uploads';
-import Users from './resources/Users';
+import Categories, { ICategories } from './resources/Categories';
+import Groups, { IGroups } from './resources/Groups';
+import Messages, { IMessages } from './resources/Messages';
+import Notifications, { INotifications } from './resources/Notifications';
+import Posts, { IPosts } from './resources/Posts';
+import Preferences, { IPreferences } from './resources/Preferences';
+import Tags, { ITags } from './resources/Tags';
+import Topics, { ITopics } from './resources/Topics';
+import Uploads, { IUploads } from './resources/Uploads';
+import Users, { IUsers } from './resources/Users';
 
 import { buildQueryString, createBody, ApiError } from './utils';
 
@@ -26,7 +26,43 @@ const resources = {
   Users,
 };
 
-export default class Discourse {
+interface RequestOptions {
+  path?: string;
+  headers?: { [key: string]: string };
+  body?: Object;
+  method?: string;
+}
+
+interface ConfigInterface {
+  apiKey: string | null;
+  apiUsername: string | null;
+  userApiKey?: string | null;
+  baseUrl?: string | null;
+}
+
+export interface DiscourseInterface {
+  _API_USERNAME: string | null;
+  config(options: ConfigInterface): void;
+  requestHeaders(): Object;
+  createBody(body: Object): Object;
+  get<T>(options: RequestOptions): Promise<T>;
+  post<T>(options: RequestOptions): Promise<T>;
+  put<T>(options: RequestOptions): Promise<T>;
+  delete<T>(options: RequestOptions): Promise<T>;
+  request<T>(options?: { [key: string]: any }): Promise<T>;
+  categories?: ICategories;
+  groups?: IGroups;
+  messages?: IMessages;
+  notifications?: INotifications;
+  posts?: IPosts;
+  preferences?: IPreferences;
+  tags?: ITags;
+  topics?: ITopics;
+  uploads?: IUploads;
+  users?: IUsers;
+}
+
+export default class Discourse implements DiscourseInterface {
   _BASE_URL: string;
   _USER_API_KEY: string;
   _API_KEY: string | null;
@@ -50,17 +86,7 @@ export default class Discourse {
   }
 
   config = (
-    {
-      userApiKey,
-      baseUrl,
-      apiUsername,
-      apiKey,
-    }: {
-      userApiKey?: string | null,
-      baseUrl?: string | null,
-      apiKey: string | null,
-      apiUsername: string | null,
-    } = {
+    { userApiKey, baseUrl, apiUsername, apiKey }: ConfigInterface = {
       apiUsername: null,
       apiKey: null,
     },
@@ -85,7 +111,7 @@ export default class Discourse {
     };
   }
 
-  createBody = body => {
+  createBody = (body: Object): Object => {
     return this.isUsingAdminAPI
       ? createBody({
           ...body,
@@ -95,10 +121,7 @@ export default class Discourse {
       : createBody(body);
   };
 
-  get = ({
-    path,
-    headers,
-  }: { path?: string, headers?: { [key: string]: string } } = {}) => {
+  get = <T>({ path, headers }: RequestOptions = {}): Promise<T> => {
     return this.request({
       method: 'GET',
       headers,
@@ -111,7 +134,7 @@ export default class Discourse {
     });
   };
 
-  post = ({ path, headers, body }) => {
+  post = <T>({ path, headers, body }: RequestOptions): Promise<T> => {
     return this.request({
       method: 'POST',
       headers,
@@ -120,7 +143,7 @@ export default class Discourse {
     });
   };
 
-  put({ path, headers, body }) {
+  put<T>({ path, headers, body }: RequestOptions): Promise<T> {
     return this.request({
       method: 'PUT',
       headers,
@@ -129,7 +152,7 @@ export default class Discourse {
     });
   }
 
-  delete({ path, headers, body }) {
+  delete<T>({ path, headers, body }: RequestOptions): Promise<T> {
     return this.request({
       method: 'DELETE',
       headers,
@@ -138,7 +161,7 @@ export default class Discourse {
     });
   }
 
-  request = options => {
+  request = <T>(options: { [key: string]: any }): Promise<T> => {
     const { body, method, path, headers } = options;
 
     const fetchOptions = {

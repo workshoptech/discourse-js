@@ -1,6 +1,9 @@
-import { buildQueryString } from '../utils';
+import { DiscourseInterface } from '../index';
 
-export default function Users(discourse) {
+export interface IUsers {
+  getUser(params: { username?: string }): Promise<unknown>;
+}
+export default function Users(discourse: DiscourseInterface) {
   this.getUser = async ({ username }: { username?: string } = {}) => {
     return discourse
       .get({

@@ -1,11 +1,28 @@
 import { buildQueryString } from '../utils';
+import { DiscourseInterface } from '../index';
 
-export default function Topics(discourse) {
+interface TopicParams {
+  id?: number;
+  reverse?: string;
+  inputs?: Object;
+  posts?: any;
+  username?: string;
+}
+
+export interface ITopics {
+  getTopic(params: TopicParams): Promise<unknown>;
+  getTopicPosts(params: TopicParams): Promise<unknown>;
+  deleteTopic(params: TopicParams): Promise<unknown>;
+  getTopicsByUsername(params: TopicParams): Promise<unknown>;
+  createTopic(params: TopicParams): Promise<unknown>;
+}
+
+export default function Topics(discourse: DiscourseInterface) {
   this.getTopic = async ({
     id,
     reverse,
     ...inputs
-  }: { id?: number, reverse?: string } = {}) => {
+  }: { id?: number, reverse?: string, inputs?: Object } = {}) => {
     return discourse.get({
       path: buildQueryString(`t/${id}${reverse ? '/last' : ''}.json`, inputs),
     });
@@ -15,7 +32,7 @@ export default function Topics(discourse) {
     id,
     posts,
     ...inputs
-  }: { id?: number, posts?: any } = {}) => {
+  }: { id?: number, posts?: any, inputs?: Object } = {}) => {
     const params = {
       post_ids: posts,
       ...inputs,
@@ -32,7 +49,12 @@ export default function Topics(discourse) {
     });
   };
 
-  this.getTopicsByUsername = async ({ username, ...inputs }) => {
+  this.getTopicsByUsername = async ({
+    username,
+    ...inputs
+  }: {
+    username?: string,
+  }) => {
     return discourse.get({
       path: buildQueryString(`topics/created-by/${username}.json`, inputs),
     });
