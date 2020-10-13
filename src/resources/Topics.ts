@@ -1,6 +1,6 @@
 import { buildQueryString } from '../utils';
 import { DiscourseInterface } from '../index';
-import { GetTopicData, GetTopicsData } from '../types/Topics';
+import { GetTopicData, GetTopicsData, TopicByUserName } from '../types/Topics';
 import { PostsData } from '../types/Posts';
 
 interface TopicParams {
@@ -15,7 +15,7 @@ export interface ITopics {
   getTopic(params: TopicParams): Promise<GetTopicsData>;
   getTopicPosts(params: TopicParams): Promise<GetTopicData>;
   deleteTopic(params: TopicParams): Promise<string>;
-  getTopicsByUsername(params: TopicParams): Promise<unknown>;
+  getTopicsByUsername(params: TopicParams): Promise<TopicByUserName>;
   createTopic(params: TopicParams): Promise<PostsData>;
 }
 

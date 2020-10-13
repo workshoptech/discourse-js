@@ -13,8 +13,8 @@ export interface IPosts {
     body: Object,
     id: number | null,
   }): Promise<PostsData>;
-  like(params: { id: number | null }): Promise<string>;
-  unlike(params: { id: number | null }): Promise<string>;
+  like(params: { id: number | null }): Promise<PostsData>;
+  unlike(params: { id: number | null }): Promise<PostsData>;
   flag(params: {
     id: number | null,
     post_action_type_id: number,

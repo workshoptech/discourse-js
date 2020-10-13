@@ -1,5 +1,6 @@
 import { buildQueryString } from '../utils';
 import { DiscourseInterface } from '../index';
+import { TagsListData } from '../types/Tags';
 
 interface TopicParams {
   tag?: string;
@@ -9,8 +10,8 @@ interface TopicParams {
 }
 
 export interface ITags {
-  getTopic(params: TopicParams): Promise<unknown>;
-  getTopicsForCategory(params: TopicParams): Promise<unknown>;
+  getTopic(params: TopicParams): Promise<TagsListData>;
+  getTopicsForCategory(params: TopicParams): Promise<TagsListData>;
 }
 export default function Tags(discourse: DiscourseInterface) {
   this.getTopic = async ({ tag, ...inputs }: { tag?: string } = {}) => {

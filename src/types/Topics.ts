@@ -1,4 +1,5 @@
 import { PostsData } from './Posts';
+import { DiscourseUser } from './Users';
 
 // ToDo clean up
 
@@ -294,7 +295,7 @@ export type DiscourseTopicSummaryType = {
     user_id: number,
     primary_group_id: {},
   }>,
-  participants: Array<{
+  participants?: Array<{
     extras: string,
     description: string,
     user_id: number,
@@ -310,4 +311,17 @@ export type DiscourseTopicList = {
   per_page: number,
   more_topics_url: string, // If more than 1 page
   topics: Array<DiscourseTopicSummaryType>,
+};
+
+export type TopicByUserName = {
+  users: DiscourseUser[],
+  primary_groups: [],
+  topic_list: {
+    can_create_topic: true,
+    draft: null,
+    draft_key: 'new_topic',
+    draft_sequence: 1,
+    per_page: 30,
+    topics: DiscourseTopicSummaryType[],
+  },
 };
