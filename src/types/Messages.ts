@@ -1,0 +1,58 @@
+export interface MessagesData {
+  topic_list: {
+    can_create_topic: boolean,
+    draft: null,
+    draft_key: string,
+    draft_sequence: number,
+    per_page: number,
+    topics: [
+      {
+        id: number,
+        title: string,
+        fancy_title: string,
+        slug: string,
+        posts_count: number,
+        reply_count: number,
+        highest_post_number: number,
+        image_url: {},
+        created_at: string,
+        last_posted_at: string,
+        bumped: boolean,
+        bumped_at: string,
+        unseen: boolean,
+        last_read_post_number: number,
+        unread: number,
+        new_posts: number,
+        pinned: boolean,
+        unpinned: {},
+        visible: boolean,
+        closed: boolean,
+        archived: boolean,
+        notification_level: number,
+        bookmarked: boolean,
+        liked: boolean,
+        views: number,
+        like_count: number,
+        has_summary: boolean,
+        archetype: string,
+        last_poster_username: string,
+        category_id: {},
+        pinned_globally: boolean,
+        posters: [
+          {
+            extras: string,
+            description: string,
+            user_id: number,
+          },
+        ],
+        participants: [
+          {
+            extras: {},
+            description: {},
+            user_id: number,
+          },
+        ],
+      },
+    ],
+  };
+}

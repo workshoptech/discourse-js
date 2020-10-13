@@ -1,20 +1,22 @@
 import { buildQueryString } from '../utils';
 import { DiscourseInterface } from '../index';
+import { GetTopicData, GetTopicsData } from '../types/Topics';
+import { PostsData } from '../types/Posts';
 
 interface TopicParams {
   id?: number;
-  reverse?: string;
+  reverse?: boolean;
   inputs?: Object;
   posts?: any;
   username?: string;
 }
 
 export interface ITopics {
-  getTopic(params: TopicParams): Promise<unknown>;
-  getTopicPosts(params: TopicParams): Promise<unknown>;
-  deleteTopic(params: TopicParams): Promise<unknown>;
+  getTopic(params: TopicParams): Promise<GetTopicsData>;
+  getTopicPosts(params: TopicParams): Promise<GetTopicData>;
+  deleteTopic(params: TopicParams): Promise<string>;
   getTopicsByUsername(params: TopicParams): Promise<unknown>;
-  createTopic(params: TopicParams): Promise<unknown>;
+  createTopic(params: TopicParams): Promise<PostsData>;
 }
 
 export default function Topics(discourse: DiscourseInterface) {
@@ -22,7 +24,7 @@ export default function Topics(discourse: DiscourseInterface) {
     id,
     reverse,
     ...inputs
-  }: { id?: number, reverse?: string, inputs?: Object } = {}) => {
+  }: { id?: number, reverse?: boolean, inputs?: Object } = {}) => {
     return discourse.get({
       path: buildQueryString(`t/${id}${reverse ? '/last' : ''}.json`, inputs),
     });

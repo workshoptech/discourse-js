@@ -1,19 +1,20 @@
 import { DiscourseInterface } from '../index';
+import { PostsData } from '../types/Posts';
 
 export interface IPosts {
-  create(inputs: any): Promise<unknown>;
+  create(inputs: any): Promise<PostsData>;
   reply(params: {
     topic_id: number,
     raw: any,
     reply_to_post_number: any,
-  }): Promise<unknown>;
+  }): Promise<PostsData>;
   postAction(params: {
     method: string,
     body: Object,
     id: number | null,
   }): Promise<unknown>;
-  like(params: { id: number | null }): Promise<unknown>;
-  unlike(params: { id: number | null }): Promise<unknown>;
+  like(params: { id: number | null }): Promise<string>;
+  unlike(params: { id: number | null }): Promise<string>;
   flag(params: {
     id: number | null,
     post_action_type_id: number,

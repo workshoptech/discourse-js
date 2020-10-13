@@ -55,3 +55,10 @@ export interface GetUsersData {
     card_badge: {},
   };
 }
+
+export type DiscourseUser = {
+  id: number,
+  username: string,
+  name: string,
+  avatar_template: string,
+};

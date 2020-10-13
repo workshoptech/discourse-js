@@ -1,9 +1,10 @@
 import { DiscourseInterface } from '../index';
+import { MessagesData } from '../types/Messages';
 
 export interface IMessages {
-  get(): Promise<unknown>;
+  get(): Promise<MessagesData>;
   getGroupMessages(params: { group_name: string }): Promise<unknown>;
-  getSentMessages(): Promise<unknown>;
+  getSentMessages(): Promise<MessagesData>;
   getAllMessages(): Promise<unknown>;
   send(params: { topic_id: number, raw: string }): Promise<unknown>;
 }
