@@ -12,7 +12,7 @@ export interface IPosts {
     method: string,
     body: Object,
     id: number | null,
-  }): Promise<unknown>;
+  }): Promise<PostsData>;
   like(params: { id: number | null }): Promise<string>;
   unlike(params: { id: number | null }): Promise<string>;
   flag(params: {
@@ -20,7 +20,7 @@ export interface IPosts {
     post_action_type_id: number,
     message: string,
     flag_topic: any,
-  }): Promise<unknown>;
+  }): Promise<PostsData>;
 }
 
 export default function Posts(discourse: DiscourseInterface) {

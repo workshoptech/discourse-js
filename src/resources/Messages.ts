@@ -1,12 +1,13 @@
 import { DiscourseInterface } from '../index';
 import { MessagesData } from '../types/Messages';
+import { PostsData } from '../types/Posts';
 
 export interface IMessages {
   get(): Promise<MessagesData>;
   getGroupMessages(params: { group_name: string }): Promise<unknown>;
   getSentMessages(): Promise<MessagesData>;
-  getAllMessages(): Promise<unknown>;
-  send(params: { topic_id: number, raw: string }): Promise<unknown>;
+  getAllMessages(): Promise<MessagesData[]>;
+  send(params: { topic_id: number, raw: string }): Promise<PostsData>;
 }
 
 export default function Messages(discourse: DiscourseInterface) {

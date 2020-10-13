@@ -1,5 +1,6 @@
 import { buildQueryString } from '../utils';
 import { DiscourseInterface } from '../index';
+import { CategoriesData } from '../types/Categories';
 
 interface CategoryParams {
   cat_id?: number;
@@ -8,8 +9,8 @@ interface CategoryParams {
 }
 
 export interface ICategories {
-  getCategory(params: CategoryParams): Promise<unknown>;
-  getSubcategory(params: CategoryParams): Promise<unknown>;
+  getCategory(params: CategoryParams): Promise<CategoriesData>;
+  getSubcategory(params: CategoryParams): Promise<CategoriesData>;
 }
 
 export default function Categories(discourse: DiscourseInterface) {
