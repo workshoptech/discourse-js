@@ -43,6 +43,7 @@ interface ConfigInterface {
   apiUsername: string | null;
   userApiKey?: string | null;
   baseUrl?: string | null;
+  camelCase?: boolean;
 }
 
 export interface DiscourseInterface {
@@ -73,11 +74,13 @@ export default class Discourse implements DiscourseInterface {
   _API_KEY: string | null;
   _API_USERNAME: string | null;
   isUsingAdminAPI: string;
+  camelCase: boolean;
 
   constructor(
     userApiKey: string,
     baseUrl: string,
     apiKey: string | null = null,
+    camelCase: boolean = false,
   ) {
     this._BASE_URL = baseUrl;
     this._USER_API_KEY = userApiKey;
@@ -85,15 +88,19 @@ export default class Discourse implements DiscourseInterface {
     // Admin User API
     this._API_KEY = apiKey;
 
+    // Return camelCase data from DiscourseJS
+    this.camelCase = camelCase;
+
     for (let resource in resources) {
       this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
 
   config = (
-    { userApiKey, baseUrl, apiUsername, apiKey }: ConfigInterface = {
+    { userApiKey, baseUrl, apiUsername, apiKey, camelCase }: ConfigInterface = {
       apiUsername: null,
       apiKey: null,
+      camelCase: false,
     },
   ) => {
     this._USER_API_KEY = userApiKey;
@@ -102,6 +109,9 @@ export default class Discourse implements DiscourseInterface {
     // Admin User API
     this._API_KEY = apiKey;
     this._API_USERNAME = apiUsername;
+
+    // Return camelCase data from DiscourseJS
+    this.camelCase = camelCase;
 
     // If we are using the Admin API then we'll need to include
     // the API key and username in each request either as part
@@ -184,7 +194,9 @@ export default class Discourse implements DiscourseInterface {
         const contentType = response.headers.get('content-type');
         if (response.ok) {
           if (contentType && contentType.indexOf('application/json') !== -1) {
-            return camelizeKeys(response.json());
+            return this.camelCase
+              ? camelizeKeys(response.json())
+              : response.json();
           } else {
             /**
              * If our response is OK but is not json
