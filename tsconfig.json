@@ -4,8 +4,7 @@
     "target": "es5",
     "sourceMap": true,
     "outDir": "./built",
-    "allowJs": true,
-    "variable-name": [true, "allow-leading-underscore"]
+    "allowJs": true
   },
   "exclude": [
     "node_modules"
