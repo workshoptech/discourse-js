@@ -3,7 +3,7 @@ export interface GetNotificationsData {
     {
       id: number,
       notification_type: number,
-      read: true,
+      read: boolean,
       created_at: string,
       post_number: number,
       topic_id: number,

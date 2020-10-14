@@ -2,21 +2,21 @@ import { DiscourseInterface } from '../index';
 import { PostsData } from '../types/Posts';
 
 export interface IPosts {
-  create(inputs: any): Promise<PostsData>;
+  create(inputs: { [key: string]: any }): Promise<PostsData>;
   reply(params: {
     topic_id: number,
-    raw: any,
-    reply_to_post_number: any,
+    raw: string,
+    reply_to_post_number: number,
   }): Promise<PostsData>;
   postAction(params: {
     method: string,
     body: Object,
     id: number | null,
   }): Promise<PostsData>;
-  like(params: { id: number | null }): Promise<PostsData>;
-  unlike(params: { id: number | null }): Promise<PostsData>;
+  like(params: { id: number }): Promise<PostsData>;
+  unlike(params: { id: number }): Promise<PostsData>;
   flag(params: {
-    id: number | null,
+    id: number,
     post_action_type_id: number,
     message: string,
     flag_topic: any,
@@ -24,7 +24,7 @@ export interface IPosts {
 }
 
 export default function Posts(discourse: DiscourseInterface) {
-  this.create = async (inputs = {}) => {
+  this.create = async (inputs: { [key: string]: any } = {}) => {
     // If an imageUri has been passed, upload the image first.
     if (inputs.imageUri) {
       const { url, width, height, short_url } = await discourse.uploads.create({
@@ -61,7 +61,15 @@ export default function Posts(discourse: DiscourseInterface) {
     }
   };
 
-  this.reply = async ({ topic_id, raw, reply_to_post_number }) => {
+  this.reply = async ({
+    topic_id,
+    raw,
+    reply_to_post_number,
+  }: {
+    topic_id: number,
+    raw: string,
+    reply_to_post_number: number,
+  }) => {
     if (!topic_id) {
       throw new Error(
         'No topic_id defined. You must pass a topic to reply function.',
@@ -90,19 +98,37 @@ export default function Posts(discourse: DiscourseInterface) {
    * 6: flag - notify user
    * 7: flag - notify moderators
    */
-  this.postAction = async ({ method = 'post', body = {}, id = null }) => {
+  this.postAction = async ({
+    method = 'post',
+    body = {},
+    id = null,
+  }: {
+    method: string,
+    body: Object,
+    id: number | null,
+  }) => {
     return discourse[method]({
       path: id ? `post_actions/${id}` : 'post_actions',
       body,
     });
   };
 
-  this.like = ({ id }) =>
+  this.like = ({ id }: { id: number }) =>
     this.postAction({ body: { id, post_action_type_id: 2 } });
 
-  this.unlike = ({ id }) =>
+  this.unlike = ({ id }: { id: number }) =>
     this.postAction({ method: 'delete', body: { post_action_type_id: 2 }, id });
 
-  this.flag = ({ id, post_action_type_id, message, flag_topic }) =>
+  this.flag = ({
+    id,
+    post_action_type_id,
+    message,
+    flag_topic,
+  }: {
+    id: number,
+    post_action_type_id: number,
+    message: string,
+    flag_topic: any,
+  }) =>
     this.postAction({ body: { id, post_action_type_id, message, flag_topic } });
 }
