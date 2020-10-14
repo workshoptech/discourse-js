@@ -27,7 +27,15 @@ export default function Posts(discourse: DiscourseInterface) {
   this.create = async (inputs: { [key: string]: any } = {}) => {
     // If an imageUri has been passed, upload the image first.
     if (inputs.imageUri) {
-      const { url, width, height, shortUrl } = await discourse.uploads.create({
+      // ToDo Fix the Snake Camel dichotomy
+      const {
+        url,
+        width,
+        height,
+        shortUrl,
+        // @ts-ignore
+        short_url,
+      } = await discourse.uploads.create({
         'files[]': {
           uri: inputs.imageUri,
           name: 'photo.jpeg',
@@ -46,7 +54,9 @@ export default function Posts(discourse: DiscourseInterface) {
         Object.keys(inputs).forEach(key => (body[key] = inputs[key]));
 
         // Prepend the raw message with the image.
-        body.raw = `![${width}x${height}](${shortUrl})\n${body.raw}`;
+        body.raw = `![${width}x${height}](${shortUrl || short_url})\n${
+          body.raw
+        }`;
 
         return discourse.post({
           path: 'posts',
