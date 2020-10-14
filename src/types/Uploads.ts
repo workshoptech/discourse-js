@@ -1,15 +1,15 @@
 export interface UploadsData {
   id: number;
-  user_id: number;
-  original_filename: string;
+  userId: number;
+  originalFilename: string;
   filesize: number;
   width: number;
   height: number;
   url: string;
-  short_url?: string;
-  created_at: string;
-  updated_at: string;
+  shortUrl?: string;
+  createdAt: string;
+  updatedAt: string;
   sha1: string;
   origin: null;
-  retain_hours: null;
+  retainHours: null;
 }

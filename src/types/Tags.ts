@@ -1,22 +1,22 @@
 export interface TagsGroupData {
-  tag_groups: [
+  tagGroups: [
     {
       id: number,
       name: string,
-      tag_names: string[],
-      parent_tag_name: string,
-      one_per_topic: boolean,
+      tagNames: string[],
+      parentTagName: string,
+      onePerTopic: boolean,
     },
   ];
 }
 
 export interface TagsListData {
-  topic_list: {
-    can_create_topic: boolean,
+  topicList: {
+    canCreateTopic: boolean,
     draft: null,
-    draft_key: string,
-    draft_sequence: number,
-    per_page: number,
+    draftKey: string,
+    draftSequence: number,
+    perPage: number,
     tags: TagData[],
     topics: [],
   };
@@ -25,6 +25,6 @@ export interface TagsListData {
 export interface TagData {
   id: number;
   name: string;
-  topic_count: number;
+  topicCount: number;
   staff: boolean;
 }

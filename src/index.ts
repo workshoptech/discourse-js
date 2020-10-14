@@ -10,6 +10,7 @@ import Uploads, { IUploads } from './resources/Uploads';
 import Users, { IUsers } from './resources/Users';
 
 import { buildQueryString, createBody, ApiError } from './utils';
+import { decamelizeKeys, camelizeKeys } from 'humps';
 
 const VERSION = require('../package.json').version;
 
@@ -33,6 +34,10 @@ interface RequestOptions {
   method?: string;
 }
 
+interface GenObject {
+  [key: string]: any;
+}
+
 interface ConfigInterface {
   apiKey: string | null;
   apiUsername: string | null;
@@ -45,11 +50,11 @@ export interface DiscourseInterface {
   config(options: ConfigInterface): void;
   requestHeaders(): Object;
   createBody(body: Object): Object;
-  get<T>(options: RequestOptions): Promise<T>;
-  post<T>(options: RequestOptions): Promise<T>;
-  put<T>(options: RequestOptions): Promise<T>;
-  delete<T>(options: RequestOptions): Promise<T>;
-  request<T>(options?: { [key: string]: any }): Promise<T>;
+  get(options: RequestOptions): Promise<any>;
+  post(options: RequestOptions): Promise<any>;
+  put(options: RequestOptions): Promise<any>;
+  delete(options: RequestOptions): Promise<any>;
+  request(options?: { [key: string]: any }): Promise<any>;
   categories?: ICategories;
   groups?: IGroups;
   messages?: IMessages;
@@ -121,7 +126,7 @@ export default class Discourse implements DiscourseInterface {
       : createBody(body);
   };
 
-  get = <T>({ path, headers }: RequestOptions = {}): Promise<T> => {
+  get = ({ path, headers }: RequestOptions = {}): Promise<any> => {
     return this.request({
       method: 'GET',
       headers,
@@ -134,7 +139,7 @@ export default class Discourse implements DiscourseInterface {
     });
   };
 
-  post = <T>({ path, headers, body }: RequestOptions): Promise<T> => {
+  post = ({ path, headers, body }: RequestOptions): Promise<any> => {
     return this.request({
       method: 'POST',
       headers,
@@ -143,7 +148,7 @@ export default class Discourse implements DiscourseInterface {
     });
   };
 
-  put<T>({ path, headers, body }: RequestOptions): Promise<T> {
+  put({ path, headers, body }: RequestOptions): Promise<any> {
     return this.request({
       method: 'PUT',
       headers,
@@ -152,7 +157,7 @@ export default class Discourse implements DiscourseInterface {
     });
   }
 
-  delete<T>({ path, headers, body }: RequestOptions): Promise<T> {
+  delete({ path, headers, body }: RequestOptions): Promise<any> {
     return this.request({
       method: 'DELETE',
       headers,
@@ -161,7 +166,7 @@ export default class Discourse implements DiscourseInterface {
     });
   }
 
-  request = <T>(options: { [key: string]: any }): Promise<T> => {
+  request = (options: GenObject): Promise<any> => {
     const { body, method, path, headers } = options;
 
     const fetchOptions = {
@@ -179,7 +184,7 @@ export default class Discourse implements DiscourseInterface {
         const contentType = response.headers.get('content-type');
         if (response.ok) {
           if (contentType && contentType.indexOf('application/json') !== -1) {
-            return response.json();
+            return camelizeKeys(response.json());
           } else {
             /**
              * If our response is OK but is not json

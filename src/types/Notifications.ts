@@ -2,26 +2,26 @@ export interface GetNotificationsData {
   notifications: [
     {
       id: number,
-      notification_type: number,
+      notificationType: number,
       read: boolean,
-      created_at: string,
-      post_number: number,
-      topic_id: number,
-      fancy_title: string,
+      createdAt: string,
+      postNumber: number,
+      topicId: number,
+      fancyTitle: string,
       slug: string,
       data: {
-        topic_title: string,
-        original_post_id: number,
-        original_post_type: number,
-        original_username: string,
-        revision_number: {},
-        display_username: string,
+        topicTitle: string,
+        originalPostId: number,
+        originalPostType: number,
+        originalUsername: string,
+        revisionNumber: {},
+        displayUsername: string,
       },
     },
   ];
-  total_rows_notifications: number;
-  seen_notification_id: number;
-  load_more_notifications: string;
+  totalRowsNotifications: number;
+  seenNotificationId: number;
+  loadMoreNotifications: string;
 }
 
 export interface MarkReadData {

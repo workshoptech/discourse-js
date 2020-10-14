@@ -4,79 +4,79 @@ import { DiscourseUser } from './Users';
 // ToDo clean up
 
 export interface GetTopicsData {
-  post_stream: {
+  postStream: {
     posts: PostsData[],
     stream: [{}],
   };
-  timeline_lookup: [
+  timelineLookup: [
     {
       number: [{}],
     },
   ];
   id: number;
   title: string;
-  fancy_title: string;
-  posts_count: number;
-  created_at: string;
+  fancyTitle: string;
+  postsCount: number;
+  createdAt: string;
   views: number;
-  reply_count: number;
-  participant_count: number;
-  like_count: number;
-  last_posted_at: {};
+  replyCount: number;
+  participantCount: number;
+  likeCount: number;
+  lastPostedAt: {};
   visible: boolean;
   closed: boolean;
   archived: boolean;
-  has_summary: boolean;
+  hasSummary: boolean;
   archetype: string;
   slug: string;
-  category_id: number;
-  word_count: {};
-  deleted_at: {};
-  user_id: number;
+  categoryId: number;
+  wordCount: {};
+  deletedAt: {};
+  userId: number;
   draft: {};
-  draft_key: string;
-  draft_sequence: {};
+  draftKey: string;
+  draftSequence: {};
   unpinned: {};
-  pinned_globally: boolean;
+  pinnedGlobally: boolean;
   pinned: boolean;
-  pinned_at: string;
-  pinned_until: {};
+  pinnedAt: string;
+  pinnedUntil: {};
   details: {
-    auto_close_at: {},
-    auto_close_hours: {},
-    auto_close_based_on_last_post: boolean,
-    created_by: {
+    autoCloseAt: {},
+    autoCloseHours: {},
+    autoCloseBasedOnLastPost: boolean,
+    createdBy: {
       id: number,
       username: string,
-      avatar_template: string,
+      avatarTemplate: string,
     },
-    last_poster: {
+    lastPoster: {
       id: number,
       username: string,
-      avatar_template: string,
+      avatarTemplate: string,
     },
     participants: [
       {
         id: number,
         username: string,
-        avatar_template: string,
-        post_count: number,
+        avatarTemplate: string,
+        postCount: number,
       },
     ],
-    suggested_topics: [
+    suggestedTopics: [
       {
         id: number,
         title: string,
-        fancy_title: string,
+        fancyTitle: string,
         slug: string,
-        posts_count: number,
-        reply_count: number,
-        highest_post_number: number,
-        image_url: string,
-        created_at: string,
-        last_posted_at: string,
+        postsCount: number,
+        replyCount: number,
+        highestPostNumber: number,
+        imageUrl: string,
+        createdAt: string,
+        lastPostedAt: string,
         bumped: boolean,
-        bumped_at: string,
+        bumpedAt: string,
         unseen: boolean,
         pinned: boolean,
         unpinned: {},
@@ -87,9 +87,9 @@ export interface GetTopicsData {
         bookmarked: {},
         liked: {},
         archetype: string,
-        like_count: number,
+        likeCount: number,
         views: number,
-        category_id: number,
+        categoryId: number,
         posters: [
           {
             extras: string,
@@ -97,56 +97,56 @@ export interface GetTopicsData {
             user: {
               id: number,
               username: string,
-              avatar_template: string,
+              avatarTemplate: string,
             },
           },
         ],
       },
     ],
-    notification_level: number,
-    can_flag_topic: boolean,
+    notificationLevel: number,
+    canFlagTopic: boolean,
   };
-  highest_post_number: number;
-  deleted_by: {};
-  actions_summary: [
+  highestPostNumber: number;
+  deletedBy: {};
+  actionsSummary: [
     {
       id: number,
       count: number,
       hidden: boolean,
-      can_act: boolean,
+      canAct: boolean,
     },
   ];
-  chunk_size: number;
+  chunkSize: number;
   bookmarked: {};
 }
 
 export interface GetTopicData {
-  post_stream: {
+  postStream: {
     posts: PostsData[],
   };
   id: number;
 }
 
 export type DiscourseTopic = {
-  post_stream: {
+  postStream: {
     posts: Array<PostsData>,
     stream: Array<number>,
   },
-  timeline_lookup: Array<number>,
+  timelineLookup: Array<number>,
   tags: Array<string>,
-  suggested_topics: Array<{
+  suggestedTopics: Array<{
     id: number,
     title: string,
-    fancy_title: string,
+    fancyTitle: string,
     slug: string,
-    posts_count: number,
-    reply_count: number,
-    highest_post_number: number,
-    image_url: string,
-    created_at: string,
-    last_posted_at: string,
+    postsCount: number,
+    replyCount: number,
+    highestPostNumber: number,
+    imageUrl: string,
+    createdAt: string,
+    lastPostedAt: string,
     bumped: boolean,
-    bumped_at: string,
+    bumpedAt: string,
     unseen: boolean,
     pinned: boolean,
     unpinned: boolean,
@@ -156,10 +156,10 @@ export type DiscourseTopic = {
     bookmarked: boolean,
     liked: boolean,
     archetype: string | 'regular',
-    like_count: number,
+    likeCount: number,
     views: number,
-    category_id: number,
-    featured_link: string,
+    categoryId: number,
+    featuredLink: string,
     posters: Array<{
       extras: string,
       description: string,
@@ -167,110 +167,110 @@ export type DiscourseTopic = {
         id: number,
         username: string,
         name: string,
-        avatar_template: string,
+        avatarTemplate: string,
       },
     }>,
   }>,
   id: number,
   title: string,
-  fancy_title: string,
-  posts_count: number,
-  created_at: string,
+  fancyTitle: string,
+  postsCount: number,
+  createdAt: string,
   views: number,
-  reply_count: number,
-  like_count: number,
-  last_posted_at: string,
+  replyCount: number,
+  likeCount: number,
+  lastPostedAt: string,
   visible: boolean,
   closed: boolean,
   archived: boolean,
-  has_summary: boolean,
+  hasSummary: boolean,
   archetype: string | 'regular',
   slug: string,
-  category_id: number,
-  word_count: number,
-  deleted_at: string,
-  pending_posts_count: number,
-  user_id: number,
-  featured_link: string,
-  pinned_globally: boolean,
-  pinned_at: string,
-  pinned_until: string,
+  categoryId: number,
+  wordCount: number,
+  deletedAt: string,
+  pendingPostsCount: number,
+  userId: number,
+  featuredLink: string,
+  pinnedGlobally: boolean,
+  pinnedAt: string,
+  pinnedUntil: string,
   draft: boolean,
-  draft_key: string,
-  draft_sequence: number,
+  draftKey: string,
+  draftSequence: number,
   posted: boolean,
   unpinned: {},
   pinned: boolean,
   details: {
-    created_by: {
+    createdBy: {
       id: number,
       username: string,
       name: string,
-      avatar_template: string,
+      avatarTemplate: string,
     },
-    last_poster: {
+    lastPoster: {
       id: number,
       username: string,
       name: string,
-      avatar_template: string,
+      avatarTemplate: string,
     },
     participants: Array<{
       id: number,
       username: string,
       name: string,
-      avatar_template: string,
-      post_count: number,
-      primary_group_name: string,
-      primary_group_flair_url: string,
-      primary_group_flair_color: string,
-      primary_group_flair_bg_color: string,
+      avatarTemplate: string,
+      postCount: number,
+      primaryGroupName: string,
+      primaryGroupFlairUrl: string,
+      primaryGroupFlairColor: string,
+      primaryGroupFlairBgColor: string,
     }>,
-    notification_level: number,
-    notifications_reason_id: number,
-    can_move_posts: boolean,
-    can_edit: boolean,
-    can_delete: boolean,
-    can_remove_allowed_users: boolean,
-    can_remove_self_id: number,
-    can_invite_to: boolean,
-    can_create_post: boolean,
-    can_reply_as_new_topic: boolean,
-    can_flag_topic: boolean,
-    can_convert_topic: boolean,
+    notificationLevel: number,
+    notificationsReasonId: number,
+    canMovePosts: boolean,
+    canEdit: boolean,
+    canDelete: boolean,
+    canRemoveAllowedUsers: boolean,
+    canRemoveSelfId: number,
+    canInviteTo: boolean,
+    canCreatePost: boolean,
+    canReplyAsNewTopic: boolean,
+    canFlagTopic: boolean,
+    canConvertTopic: boolean,
   },
-  current_post_number: number,
-  highest_post_number: number,
-  last_read_post_number: number,
-  last_read_post_id: number,
-  deleted_by: null,
-  has_deleted: boolean,
-  actions_summary: Array<{
+  currentPostNumber: number,
+  highestPostNumber: number,
+  lastReadPostNumber: number,
+  lastReadPostId: number,
+  deletedBy: null,
+  hasDeleted: boolean,
+  actionsSummary: Array<{
     id: number,
     count: number,
     hidden: boolean,
-    can_act: boolean,
+    canAct: boolean,
   }>,
-  chunk_size: number,
+  chunkSize: number,
   bookmarked: boolean,
-  topic_timer: string,
-  private_topic_timer: string,
-  message_bus_last_id: number,
-  participant_count: number,
+  topicTimer: string,
+  privateTopicTimer: string,
+  messageBusLastId: number,
+  participantCount: number,
 };
 
 export type DiscourseTopicSummaryType = {
   id: number,
   title: string,
-  fancy_title: string,
+  fancyTitle: string,
   slug: string,
-  posts_count: number,
-  reply_count: number,
-  highest_post_number: number,
-  image_url: string,
-  created_at: string,
-  last_posted_at: string,
+  postsCount: number,
+  replyCount: number,
+  highestPostNumber: number,
+  imageUrl: string,
+  createdAt: string,
+  lastPostedAt: string,
   bumped: boolean,
-  bumped_at: string,
+  bumpedAt: string,
   unseen: boolean,
   pinned: boolean,
   unpinned: boolean,
@@ -282,46 +282,46 @@ export type DiscourseTopicSummaryType = {
   liked: boolean,
   tags: Array<any>,
   views: number,
-  like_count: number,
-  has_summary: boolean,
+  likeCount: number,
+  hasSummary: boolean,
   archetype: string,
-  last_poster_username: string,
-  category_id: number,
-  pinned_globally: boolean,
-  featured_link: string,
+  lastPosterUsername: string,
+  categoryId: number,
+  pinnedGlobally: boolean,
+  featuredLink: string,
   posters: Array<{
     extras: string,
     description: string,
-    user_id: number,
-    primary_group_id: {},
+    userId: number,
+    primaryGroupId: {},
   }>,
   participants?: Array<{
     extras: string,
     description: string,
-    user_id: number,
-    primary_group_id: {},
+    userId: number,
+    primaryGroupId: {},
   }>,
 };
 
 export type DiscourseTopicList = {
-  can_create_topic: boolean,
+  canCreateTopic: boolean,
   draft: {},
-  draft_key: string,
-  draft_sequence: number,
-  per_page: number,
-  more_topics_url: string, // If more than 1 page
+  draftKey: string,
+  draftSequence: number,
+  perPage: number,
+  moreTopicsUrl: string, // If more than 1 page
   topics: Array<DiscourseTopicSummaryType>,
 };
 
 export type TopicByUserName = {
   users: DiscourseUser[],
-  primary_groups: [],
-  topic_list: {
-    can_create_topic: true,
+  primaryGroups: [],
+  topicList: {
+    canCreateTopic: true,
     draft: null,
-    draft_key: 'new_topic',
-    draft_sequence: 1,
-    per_page: 30,
+    draftKey: 'newTopic',
+    draftSequence: 1,
+    perPage: 30,
     topics: DiscourseTopicSummaryType[],
   },
 };

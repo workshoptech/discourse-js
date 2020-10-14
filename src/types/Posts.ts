@@ -2,52 +2,52 @@ export interface PostsData {
   id: number;
   name: string;
   username: string;
-  avatar_template: string;
-  created_at: string;
+  avatarTemplate: string;
+  createdAt: string;
   cooked: string;
-  post_number: number;
-  post_type: number;
-  updated_at: string;
-  reply_count: number;
-  reply_to_post_number: {};
-  quote_count: number;
-  avg_time: {};
-  incoming_link_count: number;
+  postNumber: number;
+  postType: number;
+  updatedAt: string;
+  replyCount: number;
+  replyToPostNumber: {};
+  quoteCount: number;
+  avgTime: {};
+  incomingLinkCount: number;
   reads: number;
   score: number;
   yours: boolean;
-  topic_id: number;
-  topic_slug: string;
-  display_username: string;
-  primary_group_name: {};
-  primary_group_flair_url: {};
-  primary_group_flair_bg_color: {};
-  primary_group_flair_color: {};
+  topicId: number;
+  topicSlug: string;
+  displayUsername: string;
+  primaryGroupName: {};
+  primaryGroupFlairUrl: {};
+  primaryGroupFlairBgColor: {};
+  primaryGroupFlairColor: {};
   version: number;
-  can_edit: boolean;
-  can_delete: boolean;
-  can_recover: boolean;
-  can_wiki: boolean;
+  canEdit: boolean;
+  canDelete: boolean;
+  canRecover: boolean;
+  canWiki: boolean;
   read: boolean;
-  user_title: {};
-  actions_summary: [
+  userTitle: {};
+  actionsSummary: [
     {
       id: number,
       hidden: boolean,
-      can_act: boolean,
+      canAct: boolean,
     },
   ];
   moderator: boolean;
   admin: boolean;
   staff: boolean;
-  user_id: number;
+  userId: number;
   hidden: boolean;
-  hidden_reason_id: {};
-  trust_level: number;
-  deleted_at: {};
-  user_deleted: boolean;
-  edit_reason: {};
-  can_view_edit_history: boolean;
+  hiddenReasonId: {};
+  trustLevel: number;
+  deletedAt: {};
+  userDeleted: boolean;
+  editReason: {};
+  canViewEditHistory: boolean;
   wiki: boolean;
   polls?: {
     poll: {
@@ -64,7 +64,7 @@ export interface PostsData {
       type: string,
     },
   };
-  polls_votes?: {
+  pollsVotes?: {
     poll: [string],
   };
 }
