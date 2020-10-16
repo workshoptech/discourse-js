@@ -81,7 +81,6 @@ export default class Discourse {
     
     let resource: keyof typeof resources;
     for (resource in resources) {
-      const blabla = new resources[resource](this)
       this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
