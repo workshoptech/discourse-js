@@ -25,7 +25,7 @@ const resources = {
   Topics,
   Uploads,
   Users,
-};
+} as const;
 
 interface RequestOptions {
   path?: string;
@@ -46,16 +46,13 @@ interface ConfigInterface {
   camelCase?: boolean;
 }
 
-export interface DiscourseInterface {
+export default class Discourse {
+  _BASE_URL: string;
+  _USER_API_KEY: string;
+  _API_KEY: string | null;
   _API_USERNAME: string | null;
-  config(options: ConfigInterface): void;
-  requestHeaders(): Object;
-  createBody(body: Object): Object;
-  get(options: RequestOptions): Promise<any>;
-  post(options: RequestOptions): Promise<any>;
-  put(options: RequestOptions): Promise<any>;
-  delete(options: RequestOptions): Promise<any>;
-  request(options?: { [key: string]: any }): Promise<any>;
+  isUsingAdminAPI: string;
+  camelCase: boolean;
   categories?: ICategories;
   groups?: IGroups;
   messages?: IMessages;
@@ -66,15 +63,6 @@ export interface DiscourseInterface {
   topics?: ITopics;
   uploads?: IUploads;
   users?: IUsers;
-}
-
-export default class Discourse implements DiscourseInterface {
-  _BASE_URL: string;
-  _USER_API_KEY: string;
-  _API_KEY: string | null;
-  _API_USERNAME: string | null;
-  isUsingAdminAPI: string;
-  camelCase: boolean;
 
   constructor(
     userApiKey: string,
@@ -90,8 +78,10 @@ export default class Discourse implements DiscourseInterface {
 
     // Return camelCase data from DiscourseJS
     this.camelCase = camelCase;
-
-    for (let resource in resources) {
+    
+    let resource: keyof typeof resources;
+    for (resource in resources) {
+      const blabla = new resources[resource](this)
       this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
@@ -204,7 +194,7 @@ export default class Discourse implements DiscourseInterface {
              * This happens when we DELETE a topic
              * because nothing is returned from the request.
              */
-            return response.text();
+            return response.text()
           }
         } else {
           const { status, statusText } = response;
@@ -225,3 +215,7 @@ export default class Discourse implements DiscourseInterface {
       });
   };
 }
+
+export interface DiscourseInterface extends Discourse {}
+
+
