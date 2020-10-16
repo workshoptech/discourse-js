@@ -56,6 +56,66 @@ export interface GetUsersData {
   };
 }
 
+export interface GetUserSummaryData {
+  topics: {
+    id: number,
+    title: string,
+    fancy_title: string,
+    slug: string,
+    posts_count: number,
+    reply_count: number,
+    highest_post_number: number,
+    image_url: string | null,
+    created_at: string,
+    last_posted_at: string,
+    bumped: boolean,
+    bumped_at: string,
+    archetype: string,
+    unseen: boolean,
+    pinned: boolean,
+    unpinned: null,
+    excerpt: string,
+    visible: boolean,
+    closed: boolean,
+    archived: boolean,
+    bookmarked: boolean,
+    liked: boolean,
+    category_id: number,
+    like_count: number,
+  }[];
+  userSummary: {
+    likesGiven: number,
+    likesReceived: number,
+    topicsEntered: number,
+    postsReadCount: number,
+    daysVisited: number,
+    topicCount: number,
+    postCount: number,
+    timeRead: number,
+    recentTimeRead: number,
+    bookmarkCount: number,
+    canSeeSummaryStats: true,
+    topicIds: number[],
+    replies: [],
+    links: [],
+    mostLikedByUsers: [],
+    mostLikedUsers: [],
+    mostRepliedToUsers: [],
+    badges: [],
+    topCategories: {
+      topicCount: number,
+      postCount: number,
+      id: number,
+      name: string,
+      color: string,
+      textColor: string,
+      slug: string,
+      readRestricted: boolean,
+      parentCategoryId: number,
+    }[],
+  };
+}
+
 export type DiscourseUser = {
   id: number,
   username: string,
