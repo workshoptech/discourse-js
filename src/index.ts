@@ -34,8 +34,8 @@ interface RequestOptions {
   method?: string;
 }
 
-interface GenObject {
-  [key: string]: any;
+interface FinalRequestOptions extends RequestOptions {
+  body?: BodyInit;
 }
 
 interface ConfigInterface {
@@ -115,7 +115,7 @@ export default class Discourse {
     };
   }
 
-  createBody = (body: Object): Object => {
+  createBody = (body: Object) => {
     return this.isUsingAdminAPI
       ? createBody({
           ...body,
@@ -165,7 +165,7 @@ export default class Discourse {
     });
   }
 
-  request = (options: GenObject): Promise<any> => {
+  request = (options: FinalRequestOptions): Promise<any> => {
     const { body, method, path, headers } = options;
 
     const fetchOptions = {
@@ -214,7 +214,3 @@ export default class Discourse {
       });
   };
 }
-
-export interface DiscourseInterface extends Discourse {}
-
-

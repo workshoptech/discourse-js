@@ -1,4 +1,4 @@
-import { DiscourseInterface } from '../index';
+import Discourse from '../index';
 
 export interface IPreferences {
   pickAvatar(params: {
@@ -7,7 +7,7 @@ export interface IPreferences {
   }): Promise<unknown>;
 }
 
-export default function Preferences(discourse: DiscourseInterface) {
+export default function Preferences(discourse: Discourse) {
   this.pickAvatar = async ({
     username,
     upload_id,

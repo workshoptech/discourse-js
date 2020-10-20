@@ -1,5 +1,5 @@
+import Discourse from '../index';
 import { buildQueryString } from '../utils';
-import { DiscourseInterface } from '../index';
 import { CategoriesData } from '../types/Categories';
 
 interface CategoryParams {
@@ -13,7 +13,7 @@ export interface ICategories {
   getSubcategory(params: CategoryParams): Promise<CategoriesData>;
 }
 
-export default function Categories(discourse: DiscourseInterface) {
+export default function Categories(discourse: Discourse) {
   this.getCategory = async (
     { cat_id, latest, ...inputs }: CategoryParams = {
       latest: false,

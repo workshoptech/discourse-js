@@ -1,4 +1,4 @@
-export const createBody = (params: object) => {
+export const createBody = (params: Object) => {
   const form = new FormData();
 
   Object.keys(params).forEach(paramKey => {
@@ -15,7 +15,7 @@ export const createBody = (params: object) => {
   return form;
 };
 
-export const buildQueryString = (uri: string, params: object) => {
+export const buildQueryString = (uri: string, params: Object) => {
   const queryString = Object.keys(params)
     .map(key => {
       const value = params[key];

@@ -1,4 +1,4 @@
-import { DiscourseInterface } from '../index';
+import Discourse from '../index';
 import { MessagesData } from '../types/Messages';
 import { PostsData } from '../types/Posts';
 
@@ -10,7 +10,7 @@ export interface IMessages {
   send(params: { topic_id: number, raw: string }): Promise<PostsData>;
 }
 
-export default function Messages(discourse: DiscourseInterface) {
+export default function Messages(discourse: Discourse) {
   this.get = async () => {
     return discourse.get({
       path: `topics/private-messages/${discourse._API_USERNAME}.json`,

@@ -1,4 +1,4 @@
-import { DiscourseInterface } from '../index';
+import Discourse from '../index';
 import { PostsData } from '../types/Posts';
 
 export interface IPosts {
@@ -23,7 +23,7 @@ export interface IPosts {
   }): Promise<PostsData>;
 }
 
-export default function Posts(discourse: DiscourseInterface) {
+export default function Posts(discourse: Discourse) {
   this.create = async (inputs: { [key: string]: any } = {}) => {
     // If an imageUri has been passed, upload the image first.
     if (inputs.imageUri) {

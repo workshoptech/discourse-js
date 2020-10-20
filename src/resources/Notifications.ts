@@ -1,5 +1,5 @@
+import Discourse from '../index';
 import { buildQueryString } from '../utils';
-import { DiscourseInterface } from '../index';
 import { GetNotificationsData, MarkReadData } from '../types/Notifications';
 
 export interface INotifications {
@@ -7,7 +7,7 @@ export interface INotifications {
   markRead(params: { id: number }): Promise<MarkReadData>;
 }
 
-export default function Notifications(discourse: DiscourseInterface) {
+export default function Notifications(discourse: Discourse) {
   this.get = async (inputs: Object = {}) => {
     return discourse.get({
       method: 'GET',

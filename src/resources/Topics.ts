@@ -1,5 +1,5 @@
+import Discourse from '../index';
 import { buildQueryString } from '../utils';
-import { DiscourseInterface } from '../index';
 import { GetTopicData, GetTopicsData, TopicByUserName } from '../types/Topics';
 import { PostsData } from '../types/Posts';
 
@@ -19,7 +19,7 @@ export interface ITopics {
   createTopic(params: TopicParams): Promise<PostsData>;
 }
 
-export default function Topics(discourse: DiscourseInterface) {
+export default function Topics(discourse: Discourse) {
   this.getTopic = async ({
     id,
     reverse,
