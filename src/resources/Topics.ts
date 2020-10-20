@@ -7,6 +7,7 @@ interface TopicParams {
   id?: number;
   reverse?: boolean;
   inputs?: Object;
+  // TODO: Add strict type
   posts?: any;
   username?: string;
 }

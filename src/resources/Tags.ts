@@ -6,6 +6,7 @@ interface TopicParams {
   tag?: string;
   category?: number;
   subcategory?: number;
+  // TODO: Add strict type
   inputs?: any;
 }
 

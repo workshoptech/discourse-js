@@ -2,6 +2,7 @@ import Discourse from '../index';
 import { PostsData } from '../types/Posts';
 
 export interface IPosts {
+  // TODO: Add strict type
   create(inputs: { [key: string]: any }): Promise<PostsData>;
   reply(params: {
     topic_id: number,
@@ -19,6 +20,7 @@ export interface IPosts {
     id: number,
     post_action_type_id: number,
     message: string,
+    // TODO: Add strict type
     flag_topic: any,
   }): Promise<PostsData>;
 }

@@ -280,6 +280,7 @@ export type DiscourseTopicSummaryType = {
   archived: boolean,
   bookmarked: boolean,
   liked: boolean,
+  // TODO: Add strict type
   tags: Array<any>,
   views: number,
   likeCount: number,
