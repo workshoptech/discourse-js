@@ -8,7 +8,7 @@ interface Tag {
   staff: boolean;
 }
 
-type TopicBase = {
+export interface TopicBase {
   id: number,
   title: string,
   fancyTitle: string,
@@ -19,21 +19,26 @@ type TopicBase = {
   imageUrl: string | null,
   createdAt: string,
   lastPostedAt: string,
+  bumped?: boolean;
+  bumpedAt?: string;
+  unseen?: boolean;
   pinned: boolean,
   unpinned: boolean | null,
+  excerpt?: string;
   visible: boolean,
   closed: boolean,
   archived: boolean,
   bookmarked: boolean,
+  liked?: boolean;
   tags?: Tag[],
-  views: number,
+  views?: number,
   likeCount: number,
-  hasSummary: boolean,
+  hasSummary?: boolean,
   archetype: 'regular' | 'private_message' | 'banner',
   lastPosterUsername?: string, // Only present on private messages
   categoryId: number | null,
-  pinnedGlobally: boolean,
-  featuredLink: string,
+  pinnedGlobally?: boolean,
+  featuredLink?: string,
 };
 
 export interface TopicSummary extends TopicBase {

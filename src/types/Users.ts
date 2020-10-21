@@ -1,4 +1,5 @@
 import { Group } from './Groups';
+import { TopicBase } from './Topics';
 
 interface UserBadge {
   id: number;
@@ -168,4 +169,47 @@ export interface UserProfile {
   users: UserBase[];
   user: User;
   userOption: UserOption;
+}
+
+export interface UserProfileSummary {
+  topics: TopicBase[];
+  badges: Badge[];
+  badgeTypes: BadgeType[];
+  users: UserBase[];
+  userSummary: {
+    likesGiven: number,
+    likesReceived: number,
+    topicsEntered: number,
+    postsReadCount: number,
+    daysVisited: number,
+    topicCount: number,
+    postCount: number,
+    timeRead: number,
+    recentTimeRead: number,
+    bookmarkCount: number,
+    canSeeSummaryStats: true,
+    topicIds: number[],
+    replies: Array<{
+      postNumber: number,
+      likeCount: number,
+      createdAt: string,
+      topicId: number,
+    }>,
+    links: [],
+    mostLikedByUsers: UserBase[],
+    mostLikedUsers: UserBase[],
+    mostRepliedToUsers: UserBase[],
+    badges: UserBadge[],
+    topCategories: {
+      topicCount: number,
+      postCount: number,
+      id: number,
+      name: string,
+      color: string,
+      textColor: string,
+      slug: string,
+      readRestricted: boolean,
+      parentCategoryId: number,
+    }[],
+  };
 }
