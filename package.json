@@ -29,6 +29,20 @@
     "Josh Taylor <josh@workshop.ws> (https://workshop.ws/)"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:workshoptech/discourse-js.git"
+  },
+  "keywords": [
+    "discourse",
+    "discourse-js",
+    "discoursejs",
+    "javascript"
+  ],
+  "dependencies": {
+    "@types/humps": "^2.0.0",
+    "humps": "^2.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
@@ -49,19 +63,5 @@
     "rollup": "^2.26.5",
     "rollup-plugin-typescript2": "^0.27.3",
     "typescript": "^4.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com:workshoptech/discourse-js.git"
-  },
-  "keywords": [
-    "discourse",
-    "discourse-js",
-    "discoursejs",
-    "javascript"
-  ],
-  "dependencies": {
-    "@types/humps": "^2.0.0",
-    "humps": "^2.0.1"
   }
 }

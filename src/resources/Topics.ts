@@ -9,10 +9,9 @@ import {
 } from '../types/Topics';
 import { Post } from '../types/Posts';
 
-interface TopicParams {
+type TopicParams = {
   id?: number;
   reverse?: boolean;
-  inputs?: Object;
   // TODO: Add strict type
   posts?: any;
   username?: string;
@@ -21,7 +20,7 @@ interface TopicParams {
   // By Category
   category?: number;
   subcategory?: number;
-}
+};
 
 export interface ITopics {
   getTopic(params: TopicParams): Promise<Topic>;
@@ -35,22 +34,17 @@ export interface ITopics {
   createTopic(params: TopicParams): Promise<Post>;
 }
 
-export default function Topics(discourse: Discourse) {
-  this.getTopic = async ({
-    id,
-    reverse,
-    ...inputs
-  }: { id?: number, reverse?: boolean, inputs?: Object } = {}) => {
+export default function Topics(discourse: Discourse): void {
+  this.getTopic = async ({ id, reverse, ...inputs }: TopicParams = {}) => {
     return discourse.get({
-      path: buildQueryString(`t/${id}${reverse ? '/last' : ''}.json`, inputs),
+      path: buildQueryString(
+        `t/${id}${reverse ? '/last' : ''}.json`,
+        inputs as TopicParams,
+      ),
     });
   };
 
-  this.getTopicPosts = async ({
-    id,
-    posts,
-    ...inputs
-  }: { id?: number, posts?: any, inputs?: Object } = {}) => {
+  this.getTopicPosts = async ({ id, posts, ...inputs }: TopicParams = {}) => {
     const params = {
       post_ids: posts,
       ...inputs,
@@ -61,20 +55,18 @@ export default function Topics(discourse: Discourse) {
     });
   };
 
-  this.getTopicsByUsername = async ({
-    username,
-    ...inputs
-  }: {
-    username?: string,
-  }) => {
+  this.getTopicsByUsername = async ({ username, ...inputs }: TopicParams) => {
     return discourse.get({
-      path: buildQueryString(`topics/created-by/${username}.json`, inputs),
+      path: buildQueryString(
+        `topics/created-by/${username}.json`,
+        inputs as TopicParams,
+      ),
     });
   };
 
-  this.getTopicsByTag = async ({ tag, ...inputs }: { tag?: string } = {}) => {
+  this.getTopicsByTag = async ({ tag, ...inputs }: TopicParams = {}) => {
     return discourse.get({
-      path: buildQueryString(`tags/${tag}.json`, inputs),
+      path: buildQueryString(`tags/${tag}.json`, inputs as TopicParams),
     });
   };
 
@@ -83,18 +75,18 @@ export default function Topics(discourse: Discourse) {
     category,
     subcategory,
     ...inputs
-  }: { tag?: string, category?: number, subcategory?: number } = {}) => {
+  }: TopicParams = {}) => {
     return discourse.get({
       path: buildQueryString(
         `tags/c/${category}/${subcategory ? `${subcategory}/` : ''}${tag}.json`,
-        inputs,
+        inputs as TopicParams,
       ),
     });
   };
 
   this.deleteTopic = async ({ id, ...inputs }: { id?: number } = {}) => {
     return discourse.delete({
-      path: buildQueryString(`t/${id}`, inputs),
+      path: buildQueryString(`t/${id}`, inputs as TopicParams),
     });
   };
 
