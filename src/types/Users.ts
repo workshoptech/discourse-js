@@ -102,53 +102,6 @@ export interface UserSummary extends UserBase {
 }
 
 export interface User extends UserSummary {
-  lastPostedAt: string;
-  lastSeenAt: string;
-  createdAt: string;
-  websiteName: {};
-  canEdit: true;
-  canEditUsername: true;
-  canEditEmail: true;
-  canEditName: true;
-  canSendPrivateMessages: true;
-  canSendPrivateMessageToUser: true;
-  trustLevel: number;
-  moderator: true;
-  admin: true;
-  title: {};
-  uploadedAvatarId: {};
-  badgeCount: number;
-  customFields: {};
-  pendingCount: number;
-  profileViewCount: number;
-  invitedBy: {};
-  groups: [
-    {
-      id: number,
-      automatic: true,
-      name: string,
-      userCount: number,
-      aliasLevel: number,
-      visible: true,
-      automaticMembershipEmailDomains: {},
-      automaticMembershipRetroactive: true,
-      primaryGroup: true,
-      title: {},
-      grantTrustLevel: {},
-      notificationLevel: {},
-      hasMessages: true,
-      isMember: true,
-      mentionable: true,
-      flairUrl: {},
-      flairBgColor: {},
-      flairColor: {},
-    },
-  ];
-  featuredUserBadgeIds: [{}];
-  cardBadge: {};
-}
-
-export interface UserDetail extends UserSummary {
   email: string;
   lastPostedAt: string;
   lastSeenAt: string;
@@ -170,12 +123,12 @@ export interface UserDetail extends UserSummary {
   primaryGroupId: null;
   featured_topic: null;
   staged: boolean;
-  canEdit: true;
+  canEdit: boolean;
   canEditUsername: boolean;
   canEditEmail: boolean;
   canEditName: boolean;
   uploadedAvatarId: number;
-  hasTitleBadges: true;
+  hasTitleBadges: boolean;
   pendingCount: number;
   profileViewCount: number;
   secondFactorEnabled: boolean;
