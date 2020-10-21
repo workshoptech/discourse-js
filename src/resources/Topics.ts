@@ -1,7 +1,13 @@
 import Discourse from '../index';
 import { buildQueryString } from '../utils';
-import { GetTopicData, GetTopicsData, TopicByUserName } from '../types/Topics';
-import { PostsData } from '../types/Posts';
+import {
+  Topic,
+  TopicPosts,
+  TopicByUserName,
+  TopicByTag,
+  TopicByCategoryAndTag,
+} from '../types/Topics';
+import { Post } from '../types/Posts';
 
 interface TopicParams {
   id?: number;
@@ -10,14 +16,23 @@ interface TopicParams {
   // TODO: Add strict type
   posts?: any;
   username?: string;
+  // By Tag
+  tag?: string;
+  // By Category
+  category?: number;
+  subcategory?: number;
 }
 
 export interface ITopics {
-  getTopic(params: TopicParams): Promise<GetTopicsData>;
-  getTopicPosts(params: TopicParams): Promise<GetTopicData>;
-  deleteTopic(params: TopicParams): Promise<string>;
+  getTopic(params: TopicParams): Promise<Topic>;
+  getTopicPosts(params: TopicParams): Promise<TopicPosts>;
   getTopicsByUsername(params: TopicParams): Promise<TopicByUserName>;
-  createTopic(params: TopicParams): Promise<PostsData>;
+  getTopicsByTag(params: TopicParams): Promise<TopicByTag>;
+  getTopicsByCategoryAndTag(
+    params: TopicParams,
+  ): Promise<TopicByCategoryAndTag>;
+  deleteTopic(params: TopicParams): Promise<string>;
+  createTopic(params: TopicParams): Promise<Post>;
 }
 
 export default function Topics(discourse: Discourse) {
@@ -46,12 +61,6 @@ export default function Topics(discourse: Discourse) {
     });
   };
 
-  this.deleteTopic = async ({ id, ...inputs }: { id?: number } = {}) => {
-    return discourse.delete({
-      path: buildQueryString(`t/${id}`, inputs),
-    });
-  };
-
   this.getTopicsByUsername = async ({
     username,
     ...inputs
@@ -60,6 +69,32 @@ export default function Topics(discourse: Discourse) {
   }) => {
     return discourse.get({
       path: buildQueryString(`topics/created-by/${username}.json`, inputs),
+    });
+  };
+
+  this.getTopicsByTag = async ({ tag, ...inputs }: { tag?: string } = {}) => {
+    return discourse.get({
+      path: buildQueryString(`tags/${tag}.json`, inputs),
+    });
+  };
+
+  this.getTopicsByCategoryAndTag = async ({
+    tag,
+    category,
+    subcategory,
+    ...inputs
+  }: { tag?: string, category?: number, subcategory?: number } = {}) => {
+    return discourse.get({
+      path: buildQueryString(
+        `tags/c/${category}/${subcategory ? `${subcategory}/` : ''}${tag}.json`,
+        inputs,
+      ),
+    });
+  };
+
+  this.deleteTopic = async ({ id, ...inputs }: { id?: number } = {}) => {
+    return discourse.delete({
+      path: buildQueryString(`t/${id}`, inputs),
     });
   };
 

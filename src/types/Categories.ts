@@ -1,8 +1,8 @@
-import { DiscourseUser } from './Users';
-import { DiscourseTopicList } from './Topics';
+import { UserBase } from './Users';
+import { TopicList } from './Topics';
 
-export type CategoriesData = {
-  users: Array<DiscourseUser>,
+export type Category = {
+  users: Array<UserBase>,
   primaryGroups: Array<string>,
-  topicList: DiscourseTopicList,
+  topicList: TopicList,
 };

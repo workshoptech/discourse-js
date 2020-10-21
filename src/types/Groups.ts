@@ -1,4 +1,4 @@
-export interface GetGroupsData {
+export interface GroupMemberList {
   members: [
     {
       id: number,
@@ -13,38 +13,44 @@ export interface GetGroupsData {
     offset: number,
   };
 }
-export type GroupMember = {
-  id: number,
-  username: string,
-  name: string,
-  avatarTemplate: string,
-  title: string,
-  lastPostedAt: string,
-  lastSeenAt: string,
-};
-export type DiscourseGroup = {
-  id: number,
-  automatic: boolean,
-  name: string,
-  userCount: number,
-  mentionableLevel: number,
-  messageableLevel: number,
-  visibilityLevel: number,
-  automaticMembershipEmailDomains: string,
-  automaticMembershipRetroactive: boolean,
-  primaryGroup: boolean,
-  title: string,
-  grantTrustLevel: {},
-  hasMessages: boolean,
-  flairUrl: string,
-  flairBgColor: string,
-  flairColor: string,
-  bioCooked: {},
-  publicAdmission: boolean,
-  publicExit: boolean,
-  allowMembershipRequests: boolean,
-  fullName: string,
-  defaultNotificationLevel: number,
-  membershipRequestTemplate: string,
-  isGroupUser: boolean,
-};
+
+export interface GroupMember {
+  id: number;
+  username: string;
+  name: string;
+  avatarTemplate: string;
+  title: string;
+  lastPostedAt: string;
+  lastSeenAt: string;
+}
+
+export interface Group {
+  id: number;
+  automatic: boolean;
+  name: string;
+  displayName: string;
+  userCount: number;
+  mentionableLevel: number;
+  messageableLevel: number;
+  visibilityLevel: number;
+  primaryGroup: boolean;
+  title: string | null;
+  grantTrustLevel: null;
+  incomingEmail: null;
+  hasMessages: boolean;
+  flairUrl: string | null;
+  flairBgColor: string | null;
+  flairColor: string | null;
+  bioRaw: string | null;
+  bioCooked: string | null;
+  bioExcerpt: string | null;
+  publicAdmission: boolean;
+  publicExit: boolean;
+  allowMembershipRequests: boolean;
+  fullName: string | null;
+  defaultNotificationLevel: number;
+  membershipRequestTemplate: null;
+  membersVisibilityLevel: number;
+  canSeeMembers: boolean;
+  publishReadState: boolean;
+}

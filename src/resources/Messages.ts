@@ -1,13 +1,13 @@
 import Discourse from '../index';
-import { MessagesData } from '../types/Messages';
-import { PostsData } from '../types/Posts';
+import { PrivateMessageList } from '../types/Messages';
+import { Post } from '../types/Posts';
 
 export interface IMessages {
-  get(): Promise<MessagesData>;
-  getGroupMessages(params: { group_name: string }): Promise<unknown>;
-  getSentMessages(): Promise<MessagesData>;
-  getAllMessages(): Promise<MessagesData[]>;
-  send(params: { topic_id: number, raw: string }): Promise<PostsData>;
+  get(): Promise<PrivateMessageList>;
+  getGroupMessages(params: { group_name: string }): Promise<PrivateMessageList>;
+  getSentMessages(): Promise<PrivateMessageList>;
+  getAllMessages(): Promise<PrivateMessageList[]>;
+  send(params: { topic_id: number, raw: string }): Promise<Post>;
 }
 
 export default function Messages(discourse: Discourse) {

@@ -1,8 +1,8 @@
 import Discourse from '../index';
-import { GetUsersData } from '../types/Users';
+import { UserProfile } from '../types/Users';
 
 export interface IUsers {
-  getUser(params: { username?: string }): Promise<GetUsersData>;
+  getUser(params: { username?: string }): Promise<UserProfile>;
 }
 export default function Users(discourse: Discourse) {
   this.getUser = async ({ username }: { username?: string } = {}) => {

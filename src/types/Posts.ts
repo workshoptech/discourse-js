@@ -1,4 +1,17 @@
-export interface PostsData {
+export enum PostActions {
+  Bookmark = 1,
+  Like,
+  OffTopic,
+  Inappropriate,
+  _, // Not used
+  NotifyUser,
+  NotifyModerators,
+  Spam
+}
+
+export type PostActionType = 1 | 2 | 3 | 4 | 6 | 7 | 8;
+
+export interface Post {
   id: number;
   name: string;
   username: string;
@@ -9,55 +22,62 @@ export interface PostsData {
   postType: number;
   updatedAt: string;
   replyCount: number;
-  replyToPostNumber: {};
+  replyToPostNumber: number | null;
   quoteCount: number;
-  avgTime: {};
+  avgTime?: number;
   incomingLinkCount: number;
   reads: number;
+  readersCount: number;
   score: number;
   yours: boolean;
   topicId: number;
   topicSlug: string;
   displayUsername: string;
-  primaryGroupName: {};
-  primaryGroupFlairUrl: {};
-  primaryGroupFlairBgColor: {};
-  primaryGroupFlairColor: {};
+  primaryGroupName: string | null;
+  primaryGroupFlairUrl: string | null;
+  primaryGroupFlairColor: string | null;
+  primaryGroupFlairBgColor: string | null;
   version: number;
   canEdit: boolean;
   canDelete: boolean;
   canRecover: boolean;
   canWiki: boolean;
   read: boolean;
-  userTitle: {};
-  actionsSummary: [
+  userTitle: string | null;
+  actionsSummary: Array<
     {
       id: number,
-      hidden: boolean,
       canAct: boolean,
-    },
-  ];
+      hidden?: boolean,
+      acted?: boolean,
+      canUndo?: boolean,
+      count?: number
+    }
+  >;
   moderator: boolean;
   admin: boolean;
   staff: boolean;
   userId: number;
   hidden: boolean;
-  hiddenReasonId: {};
+  hiddenReasonId?: number | string;
   trustLevel: number;
-  deletedAt: {};
+  deletedAt: string | null;
   userDeleted: boolean;
-  editReason: {};
+  editReason: string | null;
   canViewEditHistory: boolean;
   wiki: boolean;
+  reviewableId?: number,
+  reviewableScoreCount?: number,
+  reviewableScorePendingCount?: number
   polls?: {
     poll: {
-      options: [
+      options: Array<
         {
           id: string,
           html: string,
           votes: number,
-        },
-      ],
+        }
+      >,
       voters: number,
       status: string,
       name: string,

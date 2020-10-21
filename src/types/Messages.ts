@@ -1,58 +1,16 @@
-export interface MessagesData {
-  topicList: {
-    canCreateTopic: boolean,
-    draft: null,
-    draftKey: string,
-    draftSequence: number,
-    perPage: number,
-    topics: [
-      {
-        id: number,
-        title: string,
-        fancyTitle: string,
-        slug: string,
-        postsCount: number,
-        replyCount: number,
-        highestPostNumber: number,
-        imageUrl: {},
-        createdAt: string,
-        lastPostedAt: string,
-        bumped: boolean,
-        bumpedAt: string,
-        unseen: boolean,
-        lastReadPostNumber: number,
-        unread: number,
-        newPosts: number,
-        pinned: boolean,
-        unpinned: {},
-        visible: boolean,
-        closed: boolean,
-        archived: boolean,
-        notificationLevel: number,
-        bookmarked: boolean,
-        liked: boolean,
-        views: number,
-        likeCount: number,
-        hasSummary: boolean,
-        archetype: string,
-        lastPosterUsername: string,
-        categoryId: {},
-        pinnedGlobally: boolean,
-        posters: [
-          {
-            extras: string,
-            description: string,
-            userId: number,
-          },
-        ],
-        participants: [
-          {
-            extras: {},
-            description: {},
-            userId: number,
-          },
-        ],
-      },
-    ],
-  };
+import { TopicSummary, TopicList } from './Topics';
+import { UserBase } from './Users';
+
+interface PrivateMessageTopic extends TopicSummary {
+  archetype: 'private_message';
+}
+
+interface PrivateMessageTopicList extends TopicList {
+  topics: PrivateMessageTopic[];
+}
+
+export interface PrivateMessageList {
+  users: UserBase[];
+  primaryGroups: string[];
+  topicList: PrivateMessageTopicList;
 }

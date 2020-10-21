@@ -1,8 +1,8 @@
 import Discourse from '../index';
-import { GetGroupsData } from '../types/Groups';
+import { GroupMemberList } from '../types/Groups';
 
 export interface IGroups {
-  getMembers(params: { group_name: string }): Promise<GetGroupsData>;
+  getMembers(params: { group_name: string }): Promise<GroupMemberList>;
 }
 
 export default function Groups(discourse: Discourse) {

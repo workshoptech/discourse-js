@@ -4,7 +4,6 @@ import Messages, { IMessages } from './resources/Messages';
 import Notifications, { INotifications } from './resources/Notifications';
 import Posts, { IPosts } from './resources/Posts';
 import Preferences, { IPreferences } from './resources/Preferences';
-import Tags, { ITags } from './resources/Tags';
 import Topics, { ITopics } from './resources/Topics';
 import Uploads, { IUploads } from './resources/Uploads';
 import Users, { IUsers } from './resources/Users';
@@ -21,7 +20,6 @@ const resources = {
   Notifications,
   Posts,
   Preferences,
-  Tags,
   Topics,
   Uploads,
   Users,
@@ -59,7 +57,6 @@ export default class Discourse {
   notifications?: INotifications;
   posts?: IPosts;
   preferences?: IPreferences;
-  tags?: ITags;
   topics?: ITopics;
   uploads?: IUploads;
   users?: IUsers;

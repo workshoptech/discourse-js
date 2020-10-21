@@ -4,7 +4,7 @@ export interface IPreferences {
   pickAvatar(params: {
     username?: string,
     upload_id?: number,
-  }): Promise<unknown>;
+  }): Promise<null>;
 }
 
 export default function Preferences(discourse: Discourse) {

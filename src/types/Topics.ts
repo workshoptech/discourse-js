@@ -1,328 +1,135 @@
-import { PostsData } from './Posts';
-import { DiscourseUser } from './Users';
+import { Post } from './Posts';
+import { UserBase, UserSummary } from './Users';
 
-// ToDo clean up
-
-export interface GetTopicsData {
-  postStream: {
-    posts: PostsData[],
-    stream: [{}],
-  };
-  timelineLookup: [
-    {
-      number: [{}],
-    },
-  ];
+interface Tag {
   id: number;
-  title: string;
-  fancyTitle: string;
-  postsCount: number;
-  createdAt: string;
-  views: number;
-  replyCount: number;
-  participantCount: number;
-  likeCount: number;
-  lastPostedAt: {};
-  visible: boolean;
-  closed: boolean;
-  archived: boolean;
-  hasSummary: boolean;
-  archetype: string;
-  slug: string;
-  categoryId: number;
-  wordCount: {};
-  deletedAt: {};
-  userId: number;
-  draft: {};
-  draftKey: string;
-  draftSequence: {};
-  unpinned: {};
-  pinnedGlobally: boolean;
-  pinned: boolean;
-  pinnedAt: string;
-  pinnedUntil: {};
-  details: {
-    autoCloseAt: {},
-    autoCloseHours: {},
-    autoCloseBasedOnLastPost: boolean,
-    createdBy: {
-      id: number,
-      username: string,
-      avatarTemplate: string,
-    },
-    lastPoster: {
-      id: number,
-      username: string,
-      avatarTemplate: string,
-    },
-    participants: [
-      {
-        id: number,
-        username: string,
-        avatarTemplate: string,
-        postCount: number,
-      },
-    ],
-    suggestedTopics: [
-      {
-        id: number,
-        title: string,
-        fancyTitle: string,
-        slug: string,
-        postsCount: number,
-        replyCount: number,
-        highestPostNumber: number,
-        imageUrl: string,
-        createdAt: string,
-        lastPostedAt: string,
-        bumped: boolean,
-        bumpedAt: string,
-        unseen: boolean,
-        pinned: boolean,
-        unpinned: {},
-        excerpt: string,
-        visible: boolean,
-        closed: boolean,
-        archived: boolean,
-        bookmarked: {},
-        liked: {},
-        archetype: string,
-        likeCount: number,
-        views: number,
-        categoryId: number,
-        posters: [
-          {
-            extras: string,
-            description: string,
-            user: {
-              id: number,
-              username: string,
-              avatarTemplate: string,
-            },
-          },
-        ],
-      },
-    ],
-    notificationLevel: number,
-    canFlagTopic: boolean,
-  };
-  highestPostNumber: number;
-  deletedBy: {};
-  actionsSummary: [
-    {
-      id: number,
-      count: number,
-      hidden: boolean,
-      canAct: boolean,
-    },
-  ];
-  chunkSize: number;
-  bookmarked: {};
+  name: string;
+  topicCount: number;
+  staff: boolean;
 }
 
-export interface GetTopicData {
-  postStream: {
-    posts: PostsData[],
-  };
-  id: number;
-}
-
-export type DiscourseTopic = {
-  postStream: {
-    posts: Array<PostsData>,
-    stream: Array<number>,
-  },
-  timelineLookup: Array<number>,
-  tags: Array<string>,
-  suggestedTopics: Array<{
-    id: number,
-    title: string,
-    fancyTitle: string,
-    slug: string,
-    postsCount: number,
-    replyCount: number,
-    highestPostNumber: number,
-    imageUrl: string,
-    createdAt: string,
-    lastPostedAt: string,
-    bumped: boolean,
-    bumpedAt: string,
-    unseen: boolean,
-    pinned: boolean,
-    unpinned: boolean,
-    visible: boolean,
-    closed: boolean,
-    archived: boolean,
-    bookmarked: boolean,
-    liked: boolean,
-    archetype: string | 'regular',
-    likeCount: number,
-    views: number,
-    categoryId: number,
-    featuredLink: string,
-    posters: Array<{
-      extras: string,
-      description: string,
-      user: {
-        id: number,
-        username: string,
-        name: string,
-        avatarTemplate: string,
-      },
-    }>,
-  }>,
+type TopicBase = {
   id: number,
   title: string,
   fancyTitle: string,
+  slug: string,
   postsCount: number,
-  createdAt: string,
-  views: number,
   replyCount: number,
-  likeCount: number,
+  highestPostNumber: number,
+  imageUrl: string | null,
+  createdAt: string,
   lastPostedAt: string,
+  pinned: boolean,
+  unpinned: boolean | null,
   visible: boolean,
   closed: boolean,
   archived: boolean,
+  bookmarked: boolean,
+  tags?: Tag[],
+  views: number,
+  likeCount: number,
   hasSummary: boolean,
-  archetype: string | 'regular',
-  slug: string,
-  categoryId: number,
-  wordCount: number,
-  deletedAt: string,
-  pendingPostsCount: number,
-  userId: number,
-  featuredLink: string,
+  archetype: 'regular' | 'private_message' | 'banner',
+  lastPosterUsername?: string, // Only present on private messages
+  categoryId: number | null,
   pinnedGlobally: boolean,
-  pinnedAt: string,
-  pinnedUntil: string,
-  draft: boolean,
-  draftKey: string,
-  draftSequence: number,
-  posted: boolean,
-  unpinned: {},
-  pinned: boolean,
-  details: {
-    createdBy: {
-      id: number,
-      username: string,
-      name: string,
-      avatarTemplate: string,
-    },
-    lastPoster: {
-      id: number,
-      username: string,
-      name: string,
-      avatarTemplate: string,
-    },
-    participants: Array<{
-      id: number,
-      username: string,
-      name: string,
-      avatarTemplate: string,
-      postCount: number,
-      primaryGroupName: string,
-      primaryGroupFlairUrl: string,
-      primaryGroupFlairColor: string,
-      primaryGroupFlairBgColor: string,
-    }>,
-    notificationLevel: number,
-    notificationsReasonId: number,
-    canMovePosts: boolean,
-    canEdit: boolean,
-    canDelete: boolean,
-    canRemoveAllowedUsers: boolean,
-    canRemoveSelfId: number,
-    canInviteTo: boolean,
-    canCreatePost: boolean,
-    canReplyAsNewTopic: boolean,
-    canFlagTopic: boolean,
-    canConvertTopic: boolean,
-  },
-  currentPostNumber: number,
-  highestPostNumber: number,
-  lastReadPostNumber: number,
-  lastReadPostId: number,
-  deletedBy: null,
-  hasDeleted: boolean,
+  featuredLink: string,
+};
+
+export interface TopicSummary extends TopicBase {
+  excerpt: string;
+  bumped: boolean;
+  bumpedAt: string;
+  unseen: boolean;
+  liked: boolean;
+  posters: Array<{
+    extras: string | null,
+    description: string,
+    userId: number,
+    primaryGroupId: number | null,
+  }>;
+  participants?: Array<{
+    extras: string | null,
+    description: string | null,
+    userId: number,
+    primaryGroupId: number | null,
+  }>;
+}
+
+export interface Topic extends TopicBase {
+  postStream: {
+    posts: Post[],
+    stream: number[],
+  };
+  timelineLookup: Array<number[]>;
+  suggestedTopics?: TopicSummary[];
+  wordCount: number;
+  deletedAt: string | null;
+  userId: number;
+  pinnedAt: string | null;
+  pinnedUntil: string | null;
+  draft: string | null;
+  draftKey: string;
+  draftSequence: number;
+  posted: boolean;
+  currentPostNumber: number;
+  lastReadPostNumber: number;
+  lastReadPostId: number;
+  deletedBy: null;
+  hasDeleted: boolean;
   actionsSummary: Array<{
     id: number,
     count: number,
     hidden: boolean,
     canAct: boolean,
-  }>,
-  chunkSize: number,
-  bookmarked: boolean,
-  topicTimer: string,
-  privateTopicTimer: string,
-  messageBusLastId: number,
-  participantCount: number,
-};
+  }>;
+  chunkSize: number;
+  topicTimer: string;
+  privateTopicTimer: string;
+  messageBusLastId: number;
+  participantCount: number;
+  showReadIndicator: boolean;
+  details: {
+    notificationLevel: number,
+    notificationsReasonId: number | null,
+    canMovePosts: boolean,
+    canEdit: boolean,
+    canDelete: boolean,
+    canRemoveAllowedUsers: boolean,
+    canCreatePost: boolean,
+    canReplyAsNewTopic: boolean,
+    canFlagTopic: boolean,
+    canConvertTopic: boolean,
+    canReviewTopic: boolean,
+    canRemoveSelfId: number,
+    participants: UserSummary[],
+    createdBy: UserBase,
+    lastPoster: UserBase,
+  };
+}
 
-export type DiscourseTopicSummaryType = {
-  id: number,
-  title: string,
-  fancyTitle: string,
-  slug: string,
-  postsCount: number,
-  replyCount: number,
-  highestPostNumber: number,
-  imageUrl: string,
-  createdAt: string,
-  lastPostedAt: string,
-  bumped: boolean,
-  bumpedAt: string,
-  unseen: boolean,
-  pinned: boolean,
-  unpinned: boolean,
-  excerpt: string,
-  visible: boolean,
-  closed: boolean,
-  archived: boolean,
-  bookmarked: boolean,
-  liked: boolean,
-  // TODO: Add strict type
-  tags: Array<any>,
-  views: number,
-  likeCount: number,
-  hasSummary: boolean,
-  archetype: string,
-  lastPosterUsername: string,
-  categoryId: number,
-  pinnedGlobally: boolean,
-  featuredLink: string,
-  posters: Array<{
-    extras: string,
-    description: string,
-    userId: number,
-    primaryGroupId: {},
-  }>,
-  participants?: Array<{
-    extras: string,
-    description: string,
-    userId: number,
-    primaryGroupId: {},
-  }>,
-};
+export interface TopicPosts {
+  id: number;
+  postStream: {
+    posts: Post[],
+  };
+}
 
-export type DiscourseTopicList = {
-  canCreateTopic: boolean,
-  draft: {},
-  draftKey: string,
-  draftSequence: number,
-  perPage: number,
-  moreTopicsUrl: string, // If more than 1 page
-  topics: Array<DiscourseTopicSummaryType>,
-};
+export interface TopicList {
+  canCreateTopic: boolean;
+  moreTopicsUrl?: string | null;
+  draft: string | null;
+  draftKey: string; // 'new_topic' - what others exist?
+  draftSequence: number;
+  perPage: number;
+  topics: TopicSummary[];
+}
 
-export type TopicByUserName = {
-  users: DiscourseUser[],
-  primaryGroups: [],
-  topicList: {
-    canCreateTopic: true,
-    draft: null,
-    draftKey: 'newTopic',
-    draftSequence: 1,
-    perPage: 30,
-    topics: DiscourseTopicSummaryType[],
-  },
-};
+export interface TopicByUserName {
+  users: UserBase[];
+  primaryGroups: [];
+  topicList: TopicList;
+}
+
+export interface TopicByTag extends TopicByUserName {}
+export interface TopicByCategoryAndTag extends TopicByUserName {}

@@ -1,32 +1,42 @@
 import Discourse from '../index';
-import { PostsData } from '../types/Posts';
+import { Post, PostActions, PostActionType } from '../types/Posts';
+
+interface CreatePostBody {
+  // TODO: Add strict type
+  [key: string]: any
+}
+
+interface PostActionBody {
+  id?: number;
+  message?: string;
+  flag_topc?: boolean;
+  post_action_type_id: PostActionType;
+}
 
 export interface IPosts {
-  // TODO: Add strict type
-  create(inputs: { [key: string]: any }): Promise<PostsData>;
+  create(inputs: CreatePostBody): Promise<Post>;
   reply(params: {
     topic_id: number,
     raw: string,
     reply_to_post_number: number,
-  }): Promise<PostsData>;
+  }): Promise<Post>;
   postAction(params: {
     method: string,
-    body: Object,
+    body: PostActionBody,
     id: number | null,
-  }): Promise<PostsData>;
-  like(params: { id: number }): Promise<PostsData>;
-  unlike(params: { id: number }): Promise<PostsData>;
+  }): Promise<Post>;
+  like(params: { id: number }): Promise<Post>;
+  unlike(params: { id: number }): Promise<Post>;
   flag(params: {
     id: number,
     post_action_type_id: number,
     message: string,
-    // TODO: Add strict type
-    flag_topic: any,
-  }): Promise<PostsData>;
+    flag_topic: boolean,
+  }): Promise<Post>;
 }
 
 export default function Posts(discourse: Discourse) {
-  this.create = async (inputs: { [key: string]: any } = {}) => {
+  this.create = async (inputs: Partial<CreatePostBody> = {}) => {
     // If an imageUri has been passed, upload the image first.
     if (inputs.imageUri) {
       // ToDo Fix the Snake Camel dichotomy
@@ -112,11 +122,11 @@ export default function Posts(discourse: Discourse) {
    */
   this.postAction = async ({
     method = 'post',
-    body = {},
+    body,
     id = null,
   }: {
     method: string,
-    body: Object,
+    body: PostActionBody,
     id: number | null,
   }) => {
     return discourse[method]({
@@ -126,10 +136,14 @@ export default function Posts(discourse: Discourse) {
   };
 
   this.like = ({ id }: { id: number }) =>
-    this.postAction({ body: { id, post_action_type_id: 2 } });
+    this.postAction({ body: { id, post_action_type_id: PostActions.Like } });
 
   this.unlike = ({ id }: { id: number }) =>
-    this.postAction({ method: 'delete', body: { post_action_type_id: 2 }, id });
+    this.postAction({
+      method: 'delete',
+      body: { post_action_type_id: PostActions.Like },
+      id,
+    });
 
   this.flag = ({
     id,
@@ -138,9 +152,9 @@ export default function Posts(discourse: Discourse) {
     flag_topic,
   }: {
     id: number,
-    post_action_type_id: number,
+    post_action_type_id: PostActionType,
     message: string,
-    flag_topic: any,
+    flag_topic: boolean,
   }) =>
     this.postAction({ body: { id, post_action_type_id, message, flag_topic } });
 }
