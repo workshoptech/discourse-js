@@ -1,15 +1,15 @@
-import Categories from './resources/Categories';
-import Groups from './resources/Groups';
-import Messages from './resources/Messages';
-import Notifications from './resources/Notifications';
-import Posts from './resources/Posts';
-import Preferences from './resources/Preferences';
-import Tags from './resources/Tags';
-import Topics from './resources/Topics';
-import Uploads from './resources/Uploads';
-import Users from './resources/Users';
+import Categories, { ICategories } from './resources/Categories';
+import Groups, { IGroups } from './resources/Groups';
+import Messages, { IMessages } from './resources/Messages';
+import Notifications, { INotifications } from './resources/Notifications';
+import Posts, { IPosts } from './resources/Posts';
+import Preferences, { IPreferences } from './resources/Preferences';
+import Topics, { ITopics } from './resources/Topics';
+import Uploads, { IUploads } from './resources/Uploads';
+import Users, { IUsers } from './resources/Users';
 
 import { buildQueryString, createBody, ApiError } from './utils';
+import { decamelizeKeys, camelizeKeys } from 'humps';
 
 const VERSION = require('../package.json').version;
 
@@ -20,29 +20,73 @@ const resources = {
   Notifications,
   Posts,
   Preferences,
-  Tags,
   Topics,
   Uploads,
   Users,
-};
+} as const;
+
+interface RequestOptions {
+  path?: string;
+  headers?: { [key: string]: string };
+  body?: Object;
+  method?: string;
+}
+
+interface FinalRequestOptions extends RequestOptions {
+  body?: BodyInit;
+}
+
+interface ConfigInterface {
+  apiKey: string | null;
+  apiUsername: string | null;
+  userApiKey?: string | null;
+  baseUrl?: string | null;
+  camelCase?: boolean;
+}
 
 export default class Discourse {
-  constructor(userApiKey, baseUrl, apiKey = null) {
+  _BASE_URL: string;
+  _USER_API_KEY: string;
+  _API_KEY: string | null;
+  _API_USERNAME: string | null;
+  isUsingAdminAPI: string;
+  camelCase: boolean;
+  categories?: ICategories;
+  groups?: IGroups;
+  messages?: IMessages;
+  notifications?: INotifications;
+  posts?: IPosts;
+  preferences?: IPreferences;
+  topics?: ITopics;
+  uploads?: IUploads;
+  users?: IUsers;
+
+  constructor(
+    userApiKey: string,
+    baseUrl: string,
+    apiKey: string | null = null,
+    camelCase: boolean = false,
+  ) {
     this._BASE_URL = baseUrl;
-    this._USER_API_Key = userApiKey;
+    this._USER_API_KEY = userApiKey;
 
     // Admin User API
     this._API_KEY = apiKey;
 
-    for (let resource in resources) {
+    // Return camelCase data from DiscourseJS
+    this.camelCase = camelCase;
+    
+    let resource: keyof typeof resources;
+    for (resource in resources) {
       this[resource.toLowerCase()] = new resources[resource](this);
     }
   }
 
   config = (
-    { userApiKey, baseUrl, apiUsername, apiKey } = {
+    { userApiKey, baseUrl, apiUsername, apiKey, camelCase }: ConfigInterface = {
       apiUsername: null,
       apiKey: null,
+      camelCase: false,
     },
   ) => {
     this._USER_API_KEY = userApiKey;
@@ -51,6 +95,9 @@ export default class Discourse {
     // Admin User API
     this._API_KEY = apiKey;
     this._API_USERNAME = apiUsername;
+
+    // Return camelCase data from DiscourseJS
+    this.camelCase = camelCase;
 
     // If we are using the Admin API then we'll need to include
     // the API key and username in each request either as part
@@ -65,7 +112,7 @@ export default class Discourse {
     };
   }
 
-  createBody = body => {
+  createBody = (body: Object) => {
     return this.isUsingAdminAPI
       ? createBody({
           ...body,
@@ -75,7 +122,7 @@ export default class Discourse {
       : createBody(body);
   };
 
-  get = ({ path, headers } = {}) => {
+  get = ({ path, headers }: RequestOptions = {}): Promise<any> => {
     return this.request({
       method: 'GET',
       headers,
@@ -88,7 +135,7 @@ export default class Discourse {
     });
   };
 
-  post = ({ path, headers, body }) => {
+  post = ({ path, headers, body }: RequestOptions): Promise<any> => {
     return this.request({
       method: 'POST',
       headers,
@@ -97,7 +144,7 @@ export default class Discourse {
     });
   };
 
-  put({ path, headers, body }) {
+  put({ path, headers, body }: RequestOptions): Promise<any> {
     return this.request({
       method: 'PUT',
       headers,
@@ -106,7 +153,7 @@ export default class Discourse {
     });
   }
 
-  delete({ path, headers, body }) {
+  delete({ path, headers, body }: RequestOptions): Promise<any> {
     return this.request({
       method: 'DELETE',
       headers,
@@ -115,7 +162,7 @@ export default class Discourse {
     });
   }
 
-  request = options => {
+  request = (options: FinalRequestOptions): Promise<any> => {
     const { body, method, path, headers } = options;
 
     const fetchOptions = {
@@ -133,7 +180,9 @@ export default class Discourse {
         const contentType = response.headers.get('content-type');
         if (response.ok) {
           if (contentType && contentType.indexOf('application/json') !== -1) {
-            return response.json();
+            return this.camelCase
+              ? camelizeKeys(response.json())
+              : response.json();
           } else {
             /**
              * If our response is OK but is not json
@@ -141,7 +190,7 @@ export default class Discourse {
              * This happens when we DELETE a topic
              * because nothing is returned from the request.
              */
-            return response.text();
+            return response.text()
           }
         } else {
           const { status, statusText } = response;

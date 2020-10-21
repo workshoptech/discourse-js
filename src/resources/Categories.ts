@@ -1,8 +1,23 @@
+import Discourse from '../index';
 import { buildQueryString } from '../utils';
+import { Category } from '../types/Categories';
 
-export default function Categories(discourse) {
+interface CategoryParams {
+  cat_id?: number;
+  subcat_id?: number;
+  latest: boolean;
+}
+
+export interface ICategories {
+  getCategory(params: CategoryParams): Promise<Category>;
+  getSubcategory(params: CategoryParams): Promise<Category>;
+}
+
+export default function Categories(discourse: Discourse) {
   this.getCategory = async (
-    { cat_id, latest, ...inputs } = { latest: false },
+    { cat_id, latest, ...inputs }: CategoryParams = {
+      latest: false,
+    },
   ) => {
     if (!cat_id) {
       throw new Error(
@@ -19,7 +34,9 @@ export default function Categories(discourse) {
   };
 
   this.getSubcategory = async (
-    { cat_id, subcat_id, latest, ...inputs } = { latest: false },
+    { cat_id, subcat_id, latest, ...inputs }: CategoryParams = {
+      latest: false,
+    },
   ) => {
     if (!cat_id || !subcat_id) {
       throw new Error(

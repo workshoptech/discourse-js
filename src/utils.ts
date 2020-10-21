@@ -1,4 +1,4 @@
-export const createBody = params => {
+export const createBody = (params: Object) => {
   const form = new FormData();
 
   Object.keys(params).forEach(paramKey => {
@@ -15,7 +15,7 @@ export const createBody = params => {
   return form;
 };
 
-export const buildQueryString = (uri, params) => {
+export const buildQueryString = (uri: string, params: Object) => {
   const queryString = Object.keys(params)
     .map(key => {
       const value = params[key];
@@ -33,7 +33,16 @@ export const buildQueryString = (uri, params) => {
 };
 
 export class ApiError extends Error {
-  constructor(status, statusText, error, errorArray = []) {
+  status: number;
+  statusText: string;
+  error: string;
+
+  constructor(
+    status: number,
+    statusText: string,
+    error: string,
+    errorArray = [],
+  ) {
     super();
     const errorMessage = error || errorArray.join(', ');
 
