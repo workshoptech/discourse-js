@@ -11,6 +11,9 @@ import Users, { IUsers } from './resources/Users';
 import { buildQueryString, createBody, ApiError } from './utils';
 import { decamelizeKeys, camelizeKeys } from 'humps';
 
+export * from './types/index';
+export * from './utils';
+
 const VERSION = require('../package.json').version;
 
 const resources = {
