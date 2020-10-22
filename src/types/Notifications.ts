@@ -1,5 +1,5 @@
 enum NotificationType {
-  mentioned= 1,
+  mentioned = 1,
   replied,
   quoted,
   edited,
@@ -33,17 +33,19 @@ interface GroupNotification {
   id: number;
   userId: number;
   // TODO: Build this out
-  notificationType: NotificationType.groupMentioned | NotificationType.groupMessageSummary;
+  notificationType:
+    | NotificationType.groupMentioned
+    | NotificationType.groupMessageSummary;
   read: boolean;
   created_at: string;
   postNumber: string | null;
   topicId: string | null;
   slug: string | null;
   data: {
-    groupId: number,
-    groupName: string,
-    inboxCount: number,
-    username: string,
+    groupId: number;
+    groupName: string;
+    inboxCount: number;
+    username: string;
   };
 }
 
@@ -58,12 +60,12 @@ interface TopicNotification {
   fancyTitle: string;
   slug: string;
   data: {
-    topicTitle: string,
-    originalPostId: number,
-    originalPostType: number,
-    originalUsername: string,
-    revisionNumber: number | string,
-    displayUsername: string,
+    topicTitle: string;
+    originalPostId: number;
+    originalPostType: number;
+    originalUsername: string;
+    revisionNumber: number | string;
+    displayUsername: string;
   };
 }
 

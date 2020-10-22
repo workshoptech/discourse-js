@@ -177,39 +177,39 @@ export interface UserProfileSummary {
   badgeTypes: BadgeType[];
   users: UserBase[];
   userSummary: {
-    likesGiven: number,
-    likesReceived: number,
-    topicsEntered: number,
-    postsReadCount: number,
-    daysVisited: number,
-    topicCount: number,
-    postCount: number,
-    timeRead: number,
-    recentTimeRead: number,
-    bookmarkCount: number,
-    canSeeSummaryStats: true,
-    topicIds: number[],
+    likesGiven: number;
+    likesReceived: number;
+    topicsEntered: number;
+    postsReadCount: number;
+    daysVisited: number;
+    topicCount: number;
+    postCount: number;
+    timeRead: number;
+    recentTimeRead: number;
+    bookmarkCount: number;
+    canSeeSummaryStats: true;
+    topicIds: number[];
     replies: Array<{
-      postNumber: number,
-      likeCount: number,
-      createdAt: string,
-      topicId: number,
-    }>,
-    links: [],
-    mostLikedByUsers: UserBase[],
-    mostLikedUsers: UserBase[],
-    mostRepliedToUsers: UserBase[],
-    badges: UserBadge[],
+      postNumber: number;
+      likeCount: number;
+      createdAt: string;
+      topicId: number;
+    }>;
+    links: [];
+    mostLikedByUsers: UserBase[];
+    mostLikedUsers: UserBase[];
+    mostRepliedToUsers: UserBase[];
+    badges: UserBadge[];
     topCategories: {
-      topicCount: number,
-      postCount: number,
-      id: number,
-      name: string,
-      color: string,
-      textColor: string,
-      slug: string,
-      readRestricted: boolean,
-      parentCategoryId: number,
-    }[],
+      topicCount: number;
+      postCount: number;
+      id: number;
+      name: string;
+      color: string;
+      textColor: string;
+      slug: string;
+      readRestricted: boolean;
+      parentCategoryId: number;
+    }[];
   };
 }

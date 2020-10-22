@@ -170,7 +170,7 @@ export default class Discourse {
         const contentType = response.headers.get('content-type');
         if (response.ok) {
           if (contentType && contentType.indexOf('application/json') !== -1) {
-            return camelizeKeys(response.json());
+            return response.json().then(camelizeKeys);
           } else {
             /**
              * If our response is OK but is not json

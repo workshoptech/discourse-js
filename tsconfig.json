@@ -3,11 +3,13 @@
     "module": "ES2015",
     "target": "es5",
     "sourceMap": true,
-    "outDir": "./built",
-    "allowJs": true
+    "outDir": "./dist",
+    "allowJs": true,
+    "declaration": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
   ],
   "include": ["./src/**/*"]
 }

@@ -1,16 +1,16 @@
 export interface GroupMemberList {
   members: [
     {
-      id: number,
-      username: string,
-      avatarTemplate: string,
+      id: number;
+      username: string;
+      avatarTemplate: string;
     },
   ];
   owners: [{}];
   meta: {
-    total: number,
-    limit: number,
-    offset: number,
+    total: number;
+    limit: number;
+    offset: number;
   };
 }
 
