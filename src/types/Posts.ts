@@ -6,7 +6,7 @@ export enum PostActions {
   _, // Not used
   NotifyUser,
   NotifyModerators,
-  Spam
+  Spam,
 }
 
 export type PostActionType = 1 | 2 | 3 | 4 | 6 | 7 | 8;
@@ -44,16 +44,14 @@ export interface Post {
   canWiki: boolean;
   read: boolean;
   userTitle: string | null;
-  actionsSummary: Array<
-    {
-      id: number,
-      canAct: boolean,
-      hidden?: boolean,
-      acted?: boolean,
-      canUndo?: boolean,
-      count?: number
-    }
-  >;
+  actionsSummary: Array<{
+    id: number;
+    canAct: boolean;
+    hidden?: boolean;
+    acted?: boolean;
+    canUndo?: boolean;
+    count?: number;
+  }>;
   moderator: boolean;
   admin: boolean;
   staff: boolean;
@@ -66,25 +64,23 @@ export interface Post {
   editReason: string | null;
   canViewEditHistory: boolean;
   wiki: boolean;
-  reviewableId?: number,
-  reviewableScoreCount?: number,
-  reviewableScorePendingCount?: number
+  reviewableId?: number;
+  reviewableScoreCount?: number;
+  reviewableScorePendingCount?: number;
   polls?: {
     poll: {
-      options: Array<
-        {
-          id: string,
-          html: string,
-          votes: number,
-        }
-      >,
-      voters: number,
-      status: string,
-      name: string,
-      type: string,
-    },
+      options: Array<{
+        id: string;
+        html: string;
+        votes: number;
+      }>;
+      voters: number;
+      status: string;
+      name: string;
+      type: string;
+    };
   };
   pollsVotes?: {
-    poll: [string],
+    poll: [string];
   };
 }

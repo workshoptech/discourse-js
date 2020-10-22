@@ -9,37 +9,37 @@ interface Tag {
 }
 
 export interface TopicBase {
-  id: number,
-  title: string,
-  fancyTitle: string,
-  slug: string,
-  postsCount: number,
-  replyCount: number,
-  highestPostNumber: number,
-  imageUrl: string | null,
-  createdAt: string,
-  lastPostedAt: string,
+  id: number;
+  title: string;
+  fancyTitle: string;
+  slug: string;
+  postsCount: number;
+  replyCount: number;
+  highestPostNumber: number;
+  imageUrl: string | null;
+  createdAt: string;
+  lastPostedAt: string;
   bumped?: boolean;
   bumpedAt?: string;
   unseen?: boolean;
-  pinned: boolean,
-  unpinned: boolean | null,
+  pinned: boolean;
+  unpinned: boolean | null;
   excerpt?: string;
-  visible: boolean,
-  closed: boolean,
-  archived: boolean,
-  bookmarked: boolean,
+  visible: boolean;
+  closed: boolean;
+  archived: boolean;
+  bookmarked: boolean;
   liked?: boolean;
-  tags?: Tag[],
-  views?: number,
-  likeCount: number,
-  hasSummary?: boolean,
-  archetype: 'regular' | 'private_message' | 'banner',
-  lastPosterUsername?: string, // Only present on private messages
-  categoryId: number | null,
-  pinnedGlobally?: boolean,
-  featuredLink?: string,
-};
+  tags?: Tag[];
+  views?: number;
+  likeCount: number;
+  hasSummary?: boolean;
+  archetype: 'regular' | 'private_message' | 'banner';
+  lastPosterUsername?: string; // Only present on private messages
+  categoryId: number | null;
+  pinnedGlobally?: boolean;
+  featuredLink?: string;
+}
 
 export interface TopicSummary extends TopicBase {
   excerpt: string;
@@ -48,23 +48,23 @@ export interface TopicSummary extends TopicBase {
   unseen: boolean;
   liked: boolean;
   posters: Array<{
-    extras: string | null,
-    description: string,
-    userId: number,
-    primaryGroupId: number | null,
+    extras: string | null;
+    description: string;
+    userId: number;
+    primaryGroupId: number | null;
   }>;
   participants?: Array<{
-    extras: string | null,
-    description: string | null,
-    userId: number,
-    primaryGroupId: number | null,
+    extras: string | null;
+    description: string | null;
+    userId: number;
+    primaryGroupId: number | null;
   }>;
 }
 
 export interface Topic extends TopicBase {
   postStream: {
-    posts: Post[],
-    stream: number[],
+    posts: Post[];
+    stream: number[];
   };
   timelineLookup: Array<number[]>;
   suggestedTopics?: TopicSummary[];
@@ -83,10 +83,10 @@ export interface Topic extends TopicBase {
   deletedBy: null;
   hasDeleted: boolean;
   actionsSummary: Array<{
-    id: number,
-    count: number,
-    hidden: boolean,
-    canAct: boolean,
+    id: number;
+    count: number;
+    hidden: boolean;
+    canAct: boolean;
   }>;
   chunkSize: number;
   topicTimer: string;
@@ -95,28 +95,28 @@ export interface Topic extends TopicBase {
   participantCount: number;
   showReadIndicator: boolean;
   details: {
-    notificationLevel: number,
-    notificationsReasonId: number | null,
-    canMovePosts: boolean,
-    canEdit: boolean,
-    canDelete: boolean,
-    canRemoveAllowedUsers: boolean,
-    canCreatePost: boolean,
-    canReplyAsNewTopic: boolean,
-    canFlagTopic: boolean,
-    canConvertTopic: boolean,
-    canReviewTopic: boolean,
-    canRemoveSelfId: number,
-    participants: UserSummary[],
-    createdBy: UserBase,
-    lastPoster: UserBase,
+    notificationLevel: number;
+    notificationsReasonId: number | null;
+    canMovePosts: boolean;
+    canEdit: boolean;
+    canDelete: boolean;
+    canRemoveAllowedUsers: boolean;
+    canCreatePost: boolean;
+    canReplyAsNewTopic: boolean;
+    canFlagTopic: boolean;
+    canConvertTopic: boolean;
+    canReviewTopic: boolean;
+    canRemoveSelfId: number;
+    participants: UserSummary[];
+    createdBy: UserBase;
+    lastPoster: UserBase;
   };
 }
 
 export interface TopicPosts {
   id: number;
   postStream: {
-    posts: Post[],
+    posts: Post[];
   };
 }
 
