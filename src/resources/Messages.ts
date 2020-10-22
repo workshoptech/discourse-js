@@ -7,10 +7,10 @@ export interface IMessages {
   getGroupMessages(params: { group_name: string }): Promise<PrivateMessageList>;
   getSentMessages(): Promise<PrivateMessageList>;
   getAllMessages(): Promise<PrivateMessageList[]>;
-  send(params: { topic_id: number, raw: string }): Promise<Post>;
+  send(params: { topic_id: number; raw: string }): Promise<Post>;
 }
 
-export default function Messages(discourse: Discourse) {
+export default function Messages(discourse: Discourse): void {
   this.get = async () => {
     return discourse.get({
       path: `topics/private-messages/${discourse._API_USERNAME}.json`,
@@ -39,7 +39,7 @@ export default function Messages(discourse: Discourse) {
     return Promise.all([getMessages, getSentMessages]);
   };
 
-  this.send = async ({ topic_id, raw }: { topic_id: number, raw: string }) => {
+  this.send = async ({ topic_id, raw }: { topic_id: number; raw: string }) => {
     return discourse.post({
       path: 'posts',
       body: {

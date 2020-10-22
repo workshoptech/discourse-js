@@ -1,6 +1,6 @@
 {
   "name": "discourse-js",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "description": "A client-side javascript wrapper for the discourse API.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -19,7 +19,7 @@
     "format": "prettier-eslint --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
     "format:write": "prettier-eslint --write --eslint-config-path \".eslintrc.json\" --config \".prettierrc.js\" $PWD/\"src/**/*.js\"",
     "prepare": "yarn run build",
-    "version": "yarn run format:write && git add -A src",
+    "version": "git add -A src",
     "postversion": "git push && git push --tags && yarn publish . --tag $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
   "author": "Workshop",
@@ -29,6 +29,20 @@
     "Josh Taylor <josh@workshop.ws> (https://workshop.ws/)"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:workshoptech/discourse-js.git"
+  },
+  "keywords": [
+    "discourse",
+    "discourse-js",
+    "discoursejs",
+    "javascript"
+  ],
+  "dependencies": {
+    "@types/humps": "^2.0.0",
+    "humps": "^2.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
@@ -49,19 +63,5 @@
     "rollup": "^2.26.5",
     "rollup-plugin-typescript2": "^0.27.3",
     "typescript": "^4.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com:workshoptech/discourse-js.git"
-  },
-  "keywords": [
-    "discourse",
-    "discourse-js",
-    "discoursejs",
-    "javascript"
-  ],
-  "dependencies": {
-    "@types/humps": "^2.0.0",
-    "humps": "^2.0.1"
   }
 }

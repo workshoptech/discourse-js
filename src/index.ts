@@ -27,21 +27,20 @@ const resources = {
 
 interface RequestOptions {
   path?: string;
-  headers?: { [key: string]: string };
-  body?: Object;
+  headers?: Record<string, string>;
+  body?: Record<string, any>;
   method?: string;
 }
 
-interface FinalRequestOptions extends RequestOptions {
+type FinalRequestOptions = Omit<RequestOptions, 'body'> & {
   body?: BodyInit;
-}
+};
 
 interface ConfigInterface {
   apiKey: string | null;
   apiUsername: string | null;
   userApiKey?: string | null;
   baseUrl?: string | null;
-  camelCase?: boolean;
 }
 
 export default class Discourse {
@@ -50,7 +49,6 @@ export default class Discourse {
   _API_KEY: string | null;
   _API_USERNAME: string | null;
   isUsingAdminAPI: string;
-  camelCase: boolean;
   categories?: ICategories;
   groups?: IGroups;
   messages?: IMessages;
@@ -65,7 +63,6 @@ export default class Discourse {
     userApiKey: string,
     baseUrl: string,
     apiKey: string | null = null,
-    camelCase: boolean = false,
   ) {
     this._BASE_URL = baseUrl;
     this._USER_API_KEY = userApiKey;
@@ -73,9 +70,6 @@ export default class Discourse {
     // Admin User API
     this._API_KEY = apiKey;
 
-    // Return camelCase data from DiscourseJS
-    this.camelCase = camelCase;
-    
     let resource: keyof typeof resources;
     for (resource in resources) {
       this[resource.toLowerCase()] = new resources[resource](this);
@@ -83,12 +77,11 @@ export default class Discourse {
   }
 
   config = (
-    { userApiKey, baseUrl, apiUsername, apiKey, camelCase }: ConfigInterface = {
+    { userApiKey, baseUrl, apiUsername, apiKey }: ConfigInterface = {
       apiUsername: null,
       apiKey: null,
-      camelCase: false,
     },
-  ) => {
+  ): void => {
     this._USER_API_KEY = userApiKey;
     this._BASE_URL = baseUrl;
 
@@ -96,23 +89,20 @@ export default class Discourse {
     this._API_KEY = apiKey;
     this._API_USERNAME = apiUsername;
 
-    // Return camelCase data from DiscourseJS
-    this.camelCase = camelCase;
-
     // If we are using the Admin API then we'll need to include
     // the API key and username in each request either as part
     // of our URL params or as part of our POST body
     this.isUsingAdminAPI = this._API_KEY && this._API_USERNAME;
   };
 
-  requestHeaders() {
+  requestHeaders(): Record<string, string> {
     return {
       'User-Agent': `DiscourseJS ${VERSION}`,
       ...(this._USER_API_KEY ? { 'User-Api-Key': this._USER_API_KEY } : {}),
     };
   }
 
-  createBody = (body: Object) => {
+  createBody = (body: Record<string, string | number | Blob>): FormData => {
     return this.isUsingAdminAPI
       ? createBody({
           ...body,
@@ -180,9 +170,7 @@ export default class Discourse {
         const contentType = response.headers.get('content-type');
         if (response.ok) {
           if (contentType && contentType.indexOf('application/json') !== -1) {
-            return this.camelCase
-              ? camelizeKeys(response.json())
-              : response.json();
+            return camelizeKeys(response.json());
           } else {
             /**
              * If our response is OK but is not json
@@ -190,7 +178,7 @@ export default class Discourse {
              * This happens when we DELETE a topic
              * because nothing is returned from the request.
              */
-            return response.text()
+            return response.text();
           }
         } else {
           const { status, statusText } = response;
