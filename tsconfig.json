@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "es6",
     "target": "es5",
     "sourceMap": true,
     "outDir": "./dist",
     "allowJs": true,
     "declaration": true
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-  ],
+  "exclude": ["node_modules"],
   "include": ["./src/**/*"]
 }
