@@ -52,15 +52,15 @@ export default class Discourse {
   _API_KEY: string | null;
   _API_USERNAME: string | null;
   isUsingAdminAPI: string;
-  categories?: ICategories;
-  groups?: IGroups;
-  messages?: IMessages;
-  notifications?: INotifications;
-  posts?: IPosts;
-  preferences?: IPreferences;
-  topics?: ITopics;
-  uploads?: IUploads;
-  users?: IUsers;
+  categories: ICategories;
+  groups: IGroups;
+  messages: IMessages;
+  notifications: INotifications;
+  posts: IPosts;
+  preferences: IPreferences;
+  topics: ITopics;
+  uploads: IUploads;
+  users: IUsers;
 
   constructor(
     userApiKey: string,
