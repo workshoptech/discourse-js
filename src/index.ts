@@ -11,6 +11,9 @@ import Users, { IUsers } from './resources/Users';
 import { buildQueryString, createBody, ApiError } from './utils';
 import { decamelizeKeys, camelizeKeys } from 'humps';
 
+export * from './types/index';
+export * from './utils';
+
 const VERSION = require('../package.json').version;
 
 const resources = {
@@ -49,15 +52,15 @@ export default class Discourse {
   _API_KEY: string | null;
   _API_USERNAME: string | null;
   isUsingAdminAPI: string;
-  categories?: ICategories;
-  groups?: IGroups;
-  messages?: IMessages;
-  notifications?: INotifications;
-  posts?: IPosts;
-  preferences?: IPreferences;
-  topics?: ITopics;
-  uploads?: IUploads;
-  users?: IUsers;
+  categories: ICategories;
+  groups: IGroups;
+  messages: IMessages;
+  notifications: INotifications;
+  posts: IPosts;
+  preferences: IPreferences;
+  topics: ITopics;
+  uploads: IUploads;
+  users: IUsers;
 
   constructor(
     userApiKey: string,

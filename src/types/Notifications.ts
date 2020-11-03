@@ -1,4 +1,4 @@
-enum NotificationType {
+export enum NotificationType {
   mentioned = 1,
   replied,
   quoted,
@@ -29,7 +29,7 @@ enum NotificationType {
   eventInvitation,
 }
 
-interface GroupNotification {
+export interface GroupNotification {
   id: number;
   userId: number;
   // TODO: Build this out
@@ -49,7 +49,7 @@ interface GroupNotification {
   };
 }
 
-interface TopicNotification {
+export interface TopicNotification {
   id: number;
   // TODO: Build this out
   notificationType: NotificationType.privateMessage | NotificationType.posted;

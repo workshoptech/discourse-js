@@ -1,7 +1,7 @@
 import { Group } from './Groups';
 import { TopicBase } from './Topics';
 
-interface UserBadge {
+export interface UserBadge {
   id: number;
   grantedAt: string;
   count: number;
@@ -10,7 +10,7 @@ interface UserBadge {
   grantedById: number;
 }
 
-interface Badge {
+export interface Badge {
   id: number;
   name: string;
   description: string;
@@ -28,13 +28,13 @@ interface Badge {
   badgeTypeId: number;
 }
 
-interface BadgeType {
+export interface BadgeType {
   id: number;
   name: string;
   sortOrder: number;
 }
 
-interface AuthToken {
+export interface AuthToken {
   id: number;
   clientIp: string;
   location: string;
@@ -47,14 +47,14 @@ interface AuthToken {
   isActive: boolean;
 }
 
-interface GroupUser {
+export interface GroupUser {
   groupId: number;
   userId: number;
   notificationLevel: number;
   owner: boolean;
 }
 
-interface UserOption {
+export interface UserOption {
   userId: number;
   mailingListMode: boolean;
   mailingListModeFrequency: 1;

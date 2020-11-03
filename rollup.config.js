@@ -2,6 +2,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
+
+import ts from 'typescript';
+
 import pkg from './package.json';
 
 export default [
@@ -12,10 +15,14 @@ export default [
       name: 'DiscourseJS',
       file: pkg.browser,
       format: 'umd',
+      exports: 'named',
+      sourcemap: true,
     },
     plugins: [
       resolve(),
-      typescript(),
+      typescript({
+        typescript: ts,
+      }),
       commonjs(),
       babel({ babelHelpers: 'bundled' }),
     ],
@@ -31,9 +38,15 @@ export default [
     input: 'src/index.ts',
     external: [...Object.keys(pkg.dependencies || {})],
     output: [
-      { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' },
+      { file: pkg.main, format: 'cjs', exports: 'named', sourcemap: true },
+      { file: pkg.module, format: 'es', exports: 'named', sourcemap: true },
     ],
-    plugins: [resolve(), typescript(), babel({ babelHelpers: 'bundled' })],
+    plugins: [
+      resolve(),
+      typescript({
+        typescript: ts,
+      }),
+      babel({ babelHelpers: 'bundled' }),
+    ],
   },
 ];

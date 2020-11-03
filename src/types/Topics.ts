@@ -1,7 +1,7 @@
 import { Post } from './Posts';
 import { UserBase, UserSummary } from './Users';
 
-interface Tag {
+export interface Tag {
   id: number;
   name: string;
   topicCount: number;
