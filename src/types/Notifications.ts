@@ -52,7 +52,11 @@ export interface GroupNotification {
 export interface TopicNotification {
   id: number;
   // TODO: Build this out
-  notificationType: NotificationType.privateMessage | NotificationType.posted;
+  notificationType:
+    | NotificationType.privateMessage
+    | NotificationType.posted
+    | NotificationType.replied
+    | NotificationType.liked;
   read: boolean;
   createdAt: string;
   postNumber: number;
@@ -68,7 +72,6 @@ export interface TopicNotification {
     displayUsername: string;
   };
 }
-
 export interface NotificationList {
   notifications: Array<TopicNotification | GroupNotification>;
   seenNotificationId: number;
