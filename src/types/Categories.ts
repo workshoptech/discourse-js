@@ -1,8 +1,8 @@
 import { UserBase } from './Users';
 import { TopicList } from './Topics';
 
-export type Category = {
+export interface Category {
   users: UserBase[];
   primaryGroups: string[];
   topicList: TopicList;
-};
+}
