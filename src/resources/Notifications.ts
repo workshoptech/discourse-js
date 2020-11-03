@@ -2,7 +2,7 @@ import Discourse from '../index';
 import { buildQueryString } from '../utils';
 import { NotificationList, MarkNotificationRead } from '../types/Notifications';
 
-type NotificationParams = {
+export type NotificationParams = {
   recent?: boolean;
   limit?: number;
   offset?: number;
@@ -11,7 +11,7 @@ type NotificationParams = {
 };
 
 export interface INotifications {
-  get(inputs: NotificationParams): Promise<NotificationList>;
+  get(inputs?: NotificationParams): Promise<NotificationList>;
   markRead(params: { id: number }): Promise<MarkNotificationRead>;
 }
 

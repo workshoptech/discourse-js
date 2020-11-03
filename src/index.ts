@@ -11,6 +11,7 @@ import Users, { IUsers } from './resources/Users';
 import { buildQueryString, createBody, ApiError } from './utils';
 import { decamelizeKeys, camelizeKeys } from 'humps';
 
+export * from './resources/index';
 export * from './types/index';
 export * from './utils';
 

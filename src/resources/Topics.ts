@@ -9,7 +9,7 @@ import {
 } from '../types/Topics';
 import { Post } from '../types/Posts';
 
-type TopicParams = {
+export type TopicParams = {
   id?: number;
   reverse?: boolean;
   // TODO: Add strict type
