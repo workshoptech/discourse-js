@@ -1,27 +1,20 @@
+import { UserBase } from './Users';
+
+export interface GroupMember extends Omit<UserBase, 'moderator' | 'admin'> {
+  addedAt: string;
+  title: string;
+  lastPostedAt: string;
+  lastSeenAt: string;
+}
+
 export interface GroupMemberList {
-  members: [
-    {
-      id: number;
-      username: string;
-      avatarTemplate: string;
-    },
-  ];
-  owners: [{}];
+  members: GroupMember[];
+  owners: [];
   meta: {
     total: number;
     limit: number;
     offset: number;
   };
-}
-
-export interface GroupMember {
-  id: number;
-  username: string;
-  name: string;
-  avatarTemplate: string;
-  title: string;
-  lastPostedAt: string;
-  lastSeenAt: string;
 }
 
 export interface Group {

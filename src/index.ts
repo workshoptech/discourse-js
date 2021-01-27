@@ -11,6 +11,7 @@ import Users, { IUsers } from './resources/Users';
 import { buildQueryString, createBody, ApiError } from './utils';
 import { decamelizeKeys, camelizeKeys } from 'humps';
 
+export * from './resources/index';
 export * from './types/index';
 export * from './utils';
 
@@ -62,11 +63,7 @@ export default class Discourse {
   uploads: IUploads;
   users: IUsers;
 
-  constructor(
-    userApiKey: string,
-    baseUrl: string,
-    apiKey: string | null = null,
-  ) {
+  constructor(userApiKey?: string, baseUrl?: string, apiKey?: string | null) {
     this._BASE_URL = baseUrl;
     this._USER_API_KEY = userApiKey;
 
@@ -157,6 +154,14 @@ export default class Discourse {
 
   request = (options: FinalRequestOptions): Promise<any> => {
     const { body, method, path, headers } = options;
+
+    if (!this._BASE_URL) {
+      console.error('Please provide a valid `BASE_URL`.');
+    }
+
+    if (!this._API_KEY && !this._USER_API_KEY) {
+      console.error('Please provide either an API key or User API key.');
+    }
 
     const fetchOptions = {
       method,

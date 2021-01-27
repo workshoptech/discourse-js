@@ -37,7 +37,7 @@ export interface GroupNotification {
     | NotificationType.groupMentioned
     | NotificationType.groupMessageSummary;
   read: boolean;
-  created_at: string;
+  createdAt: string;
   postNumber: string | null;
   topicId: string | null;
   slug: string | null;
@@ -52,7 +52,11 @@ export interface GroupNotification {
 export interface TopicNotification {
   id: number;
   // TODO: Build this out
-  notificationType: NotificationType.privateMessage | NotificationType.posted;
+  notificationType:
+    | NotificationType.privateMessage
+    | NotificationType.posted
+    | NotificationType.replied
+    | NotificationType.liked;
   read: boolean;
   createdAt: string;
   postNumber: number;
@@ -67,6 +71,13 @@ export interface TopicNotification {
     revisionNumber: number | string;
     displayUsername: string;
   };
+}
+
+export interface UnknownNotification {
+  id: number;
+  notificationType:
+    | NotificationType.watchingFirstPost
+    | NotificationType.mentioned;
 }
 
 export interface NotificationList {

@@ -2,7 +2,7 @@ import Discourse from '../index';
 import { buildQueryString } from '../utils';
 import { Category } from '../types/Categories';
 
-type CategoryParams = {
+export type CategoryParams = {
   cat_id?: number;
   subcat_id?: number;
   latest: boolean;

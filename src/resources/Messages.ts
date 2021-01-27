@@ -2,12 +2,18 @@ import Discourse from '../index';
 import { PrivateMessageList } from '../types/Messages';
 import { Post } from '../types/Posts';
 
+export interface SendMessageBody {
+  topic_id: number;
+  raw: string;
+  [key: string]: string | number;
+}
+
 export interface IMessages {
   get(): Promise<PrivateMessageList>;
   getGroupMessages(params: { group_name: string }): Promise<PrivateMessageList>;
   getSentMessages(): Promise<PrivateMessageList>;
-  getAllMessages(): Promise<PrivateMessageList[]>;
-  send(params: { topic_id: number; raw: string }): Promise<Post>;
+  getAllMessages(): Promise<[PrivateMessageList, PrivateMessageList]>;
+  send(inputs: SendMessageBody): Promise<Post>;
 }
 
 export default function Messages(discourse: Discourse): void {
@@ -39,14 +45,10 @@ export default function Messages(discourse: Discourse): void {
     return Promise.all([getMessages, getSentMessages]);
   };
 
-  this.send = async ({ topic_id, raw }: { topic_id: number; raw: string }) => {
+  this.send = async (inputs: Partial<SendMessageBody> = {}) => {
     return discourse.post({
       path: 'posts',
-      body: {
-        topic_id,
-        raw,
-        archetype: 'private_message',
-      },
+      body: inputs,
     });
   };
 }

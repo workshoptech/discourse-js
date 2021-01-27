@@ -1,7 +1,7 @@
 import Discourse from '../index';
 import { Upload } from '../types/Uploads';
 
-type NewUpload = {
+export type NewUpload = {
   'files[]': { uri: string; name: string; type: string };
   type: string;
   user_id?: number;

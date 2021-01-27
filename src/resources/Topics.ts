@@ -1,3 +1,5 @@
+import { CreatePostBody } from './Posts';
+
 import Discourse from '../index';
 import { buildQueryString } from '../utils';
 import {
@@ -9,7 +11,7 @@ import {
 } from '../types/Topics';
 import { Post } from '../types/Posts';
 
-type TopicParams = {
+export type TopicParams = {
   id?: number;
   reverse?: boolean;
   // TODO: Add strict type
@@ -31,7 +33,7 @@ export interface ITopics {
     params: TopicParams,
   ): Promise<TopicByCategoryAndTag>;
   deleteTopic(params: TopicParams): Promise<string>;
-  createTopic(params: TopicParams): Promise<Post>;
+  createTopic(inputs: CreatePostBody): Promise<Post>;
 }
 
 export default function Topics(discourse: Discourse): void {
