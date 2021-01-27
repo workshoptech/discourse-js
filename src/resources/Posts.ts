@@ -1,5 +1,5 @@
 import Discourse from '../index';
-import { Post, PostActions, PostActionType } from '../types/Posts';
+import { Post, Reply, PostActions, PostActionType } from '../types/Posts';
 
 export interface CreatePostBody {
   // TODO: Add strict type
@@ -19,7 +19,7 @@ export interface IPosts {
     topic_id: number;
     raw: string;
     reply_to_post_number: number;
-  }): Promise<Post>;
+  }): Promise<Reply>;
   postAction(params: {
     method: string;
     body: PostActionBody;

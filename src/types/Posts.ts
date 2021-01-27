@@ -84,3 +84,8 @@ export interface Post {
     poll: [string];
   };
 }
+
+export interface Reply extends Post {
+  action: 'create_post';
+  success: boolean;
+}
