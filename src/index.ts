@@ -202,8 +202,7 @@ export default class Discourse {
         }
       })
       .catch(error => {
-        if (error instanceof ApiError) throw error;
-        throw new Error(error);
+        throw error;
       });
   };
 }
