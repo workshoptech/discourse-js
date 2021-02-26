@@ -85,7 +85,8 @@ export interface Post {
   };
 }
 
-export interface Reply extends Post {
+export interface Reply {
   action: 'create_post';
   success: boolean;
+  post: Post;
 }

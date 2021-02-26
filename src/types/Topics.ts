@@ -30,7 +30,7 @@ export interface TopicBase {
   archived: boolean;
   bookmarked: boolean;
   liked?: boolean;
-  tags?: Tag[];
+  tags?: Tag[] | string[];
   views?: number;
   likeCount: number;
   hasSummary?: boolean;

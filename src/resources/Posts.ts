@@ -38,13 +38,15 @@ export interface IPosts {
 export default function Posts(discourse: Discourse): void {
   this.create = async (inputs: Partial<CreatePostBody> = {}) => {
     // If an imageUri has been passed, upload the image first.
-    if (inputs.imageUri) {
+    if (inputs.imageUri || inputs.imageFile) {
+      const image = inputs.imageFile || {
+        uri: inputs.imageUri,
+        name: 'photo.jpeg',
+        type: 'image/jpeg',
+      };
+
       const { url, width, height, shortUrl } = await discourse.uploads.create({
-        'files[]': {
-          uri: inputs.imageUri,
-          name: 'photo.jpeg',
-          type: 'image/jpeg',
-        },
+        'files[]': image,
         type: 'composer',
         synchronous: true,
       });
