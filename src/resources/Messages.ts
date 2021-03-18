@@ -15,10 +15,14 @@ export interface SendMessageBody {
 }
 
 export interface IMessages {
-  get(): Promise<PrivateMessageList>;
-  getGroupMessages(params: { group_name: string }): Promise<PrivateMessageList>;
-  getSentMessages(): Promise<PrivateMessageList>;
-  getAllMessages(): Promise<[PrivateMessageList, PrivateMessageList]>;
+  get(params: MessageParams): Promise<PrivateMessageList>;
+  getGroupMessages(
+    params: { group_name: string } & MessageParams,
+  ): Promise<PrivateMessageList>;
+  getSentMessages(params: MessageParams): Promise<PrivateMessageList>;
+  getAllMessages(
+    params: MessageParams,
+  ): Promise<[PrivateMessageList, PrivateMessageList]>;
   send(inputs: SendMessageBody): Promise<Post>;
 }
 
