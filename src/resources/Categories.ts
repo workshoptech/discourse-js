@@ -5,7 +5,9 @@ import { Category } from '../types/Categories';
 export type CategoryParams = {
   cat_id?: number;
   subcat_id?: number;
-  latest: boolean;
+  latest?: boolean;
+  page?: number;
+  [key: string]: string | number | boolean;
 };
 
 export interface ICategories {

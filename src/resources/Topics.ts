@@ -14,8 +14,9 @@ import { Post } from '../types/Posts';
 export type TopicParams = {
   id?: number;
   reverse?: boolean;
+  page?: number;
   // TODO: Add strict type
-  posts?: any;
+  posts?: number[];
   username?: string;
   // By Tag
   tag?: string;
