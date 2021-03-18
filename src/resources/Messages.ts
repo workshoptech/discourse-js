@@ -1,6 +1,12 @@
 import Discourse from '../index';
+import { buildQueryString } from '../utils';
 import { PrivateMessageList } from '../types/Messages';
 import { Post } from '../types/Posts';
+
+export type MessageParams = {
+  page?: number;
+  [key: string]: string | number | boolean;
+};
 
 export interface SendMessageBody {
   topic_id: number;
@@ -17,30 +23,42 @@ export interface IMessages {
 }
 
 export default function Messages(discourse: Discourse): void {
-  this.get = async () => {
+  this.get = async (inputs: MessageParams) => {
     return discourse.get({
-      path: `topics/private-messages/${discourse._API_USERNAME}.json`,
+      path: buildQueryString(
+        `topics/private-messages/${discourse._API_USERNAME}.json`,
+        inputs,
+      ),
     });
   };
 
-  this.getGroupMessages = async ({ group_name }: { group_name: string }) => {
+  this.getGroupMessages = async ({
+    group_name,
+    ...inputs
+  }: { group_name: string } & MessageParams) => {
     return discourse.get({
-      path: `topics/private-messages-group/${discourse._API_USERNAME}/${group_name}.json`,
+      path: buildQueryString(
+        `topics/private-messages-group/${discourse._API_USERNAME}/${group_name}.json`,
+        inputs,
+      ),
       headers: {
         Accept: 'application/json',
       },
     });
   };
 
-  this.getSentMessages = async () => {
+  this.getSentMessages = async (inputs: MessageParams) => {
     return discourse.get({
-      path: `topics/private-messages-sent/${discourse._API_USERNAME}.json`,
+      path: buildQueryString(
+        `topics/private-messages-sent/${discourse._API_USERNAME}.json`,
+        inputs,
+      ),
     });
   };
 
-  this.getAllMessages = async () => {
-    const getMessages = this.get();
-    const getSentMessages = this.getSentMessages();
+  this.getAllMessages = async (inputs: MessageParams) => {
+    const getMessages = this.get(inputs);
+    const getSentMessages = this.getSentMessages(inputs);
 
     return Promise.all([getMessages, getSentMessages]);
   };
