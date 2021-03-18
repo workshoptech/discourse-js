@@ -21,7 +21,7 @@ export const createBody = (
 
 export const buildQueryString = (
   uri: string,
-  params: Record<string, string | number | boolean | string[] | number[]>,
+  params: Record<string, string | number | boolean | (string | number)[]>,
 ): string => {
   const queryString = Object.keys(params)
     .map(key => {
