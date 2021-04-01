@@ -42,6 +42,13 @@ export interface Post {
   canDelete: boolean;
   canRecover: boolean;
   canWiki: boolean;
+  linkCounts?: {
+    url: string,
+    internal: boolean,
+    reflection: boolean,
+    title: string,
+    clicks: number
+  }[];
   read: boolean;
   userTitle: string | null;
   actionsSummary: Array<{
