@@ -2,7 +2,7 @@ import Discourse from '../index';
 import { Upload } from '../types/Uploads';
 
 export type NewUpload = {
-  'files[]': { uri: string; name: string; type: string };
+  'files[]': File | { uri: string; name: string; type: string };
   type: string;
   user_id?: number;
   synchronous?: boolean;
