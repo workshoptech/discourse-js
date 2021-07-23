@@ -52,7 +52,8 @@ export default class Discourse {
   _USER_API_KEY: string;
   _API_KEY: string | null;
   _API_USERNAME: string | null;
-  isUsingAdminAPI: string;
+  isUsingAdminAPI = false;
+  isReady = false;
   categories: ICategories;
   groups: IGroups;
   messages: IMessages;
@@ -74,6 +75,8 @@ export default class Discourse {
     for (resource in resources) {
       this[resource.toLowerCase()] = new resources[resource](this);
     }
+
+    this.isReady = true;
   }
 
   config = (
@@ -92,7 +95,9 @@ export default class Discourse {
     // If we are using the Admin API then we'll need to include
     // the API key and username in each request either as part
     // of our URL params or as part of our POST body
-    this.isUsingAdminAPI = this._API_KEY && this._API_USERNAME;
+    this.isUsingAdminAPI = Boolean(this._API_KEY && this._API_USERNAME);
+
+    this.isReady = true;
   };
 
   requestHeaders(): Record<string, string> {
